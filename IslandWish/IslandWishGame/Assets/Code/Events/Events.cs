@@ -5,9 +5,7 @@ using UnityEngine;
 public enum EventTag
 {
     NONE = -1,
-    FIRST,
-    SECOND,
-    THIRD
+    DAMAGE
 }
 
 /// <summary>
@@ -18,53 +16,30 @@ public abstract class Event
     public virtual EventTag tag { get { return EventTag.NONE; } }
 }
 
-public class TestEvent : Event
+public class ExampleEvent : Event
 {
-    public TestEvent(string newName, int newAge, float newHeight) 
+    public ExampleEvent(string newName, int newAge, float newHeight) 
     { 
         name = newName; 
         age = newAge; 
         height = newHeight; 
     }
 
-    public override EventTag tag { get { return EventTag.FIRST; } }
+    public override EventTag tag { get { return EventTag.NONE; } }
 
     public string name { get; }
     public int age { get; }
     public float height { get; }
 }
 
-public class TestEvent1 : Event
+public class DamageEvent : Event
 {
-    public int num { get { return 1; } }
-
-    public override EventTag tag { get { return EventTag.FIRST; } }
-}
-public class TestEvent2 : Event
-{
-    public int num { get { return 2; } }
-
-    public override EventTag tag { get { return EventTag.SECOND; } }
-}
-public class TestEvent3 : Event
-{
-    public int num { get { return 3; } }
-
-    public override EventTag tag { get { return EventTag.THIRD; } }
-}
-
-public class TimeEvent : Event 
-{
-    public TimeEvent(int nHour, int nMin, int nSec)
+    public DamageEvent(int newDamage)
 	{
-        hour = nHour;
-        min = nMin;
-        sec = nSec;
+        damage = newDamage;
 	}
 
-    public override EventTag tag { get { return EventTag.SECOND; } }
+    public override EventTag tag { get { return EventTag.DAMAGE; } }
 
-    int hour { get; }
-    int min { get; }
-    int sec { get; }
+    public int damage { get; }
 }

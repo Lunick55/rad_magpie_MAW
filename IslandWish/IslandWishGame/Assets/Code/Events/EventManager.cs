@@ -53,7 +53,7 @@ public class EventManager : MonoBehaviour
     }
 
     //UnityEvent AddListener
-    public void AddUnityListener(UnityAction<Event> nAction, EventTag nEvent)
+    public void AddListener(UnityAction<Event> nAction, EventTag nEvent)
 	{
         if(eventDictionary.ContainsKey(nEvent))
 		{
@@ -83,7 +83,7 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="nAction"></param>
     /// <param name="nEvent"></param>
-    public void RemoveUnityListener(UnityAction<Event> nAction, EventTag nEvent)
+    public void RemoveListener(UnityAction<Event> nAction, EventTag nEvent)
 	{
         if (eventDictionary.ContainsKey(nEvent))
         {
@@ -138,7 +138,7 @@ public class EventManager : MonoBehaviour
         eventDictionary.Clear();
 	}
 
-    public void FireUnityEvent(Event myEvent)
+    public void FireEvent(Event myEvent)
 	{
         EventFunction eventFunc;
         if (eventDictionary.TryGetValue(myEvent.tag, out eventFunc))
