@@ -22,6 +22,7 @@ public class RangerBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
+        agent.stoppingDistance = outerRange;
         agent.destination = player.position;
 
         SceneLinkedSMB<RangerBehavior>.Initialise(anim, this);
@@ -44,51 +45,61 @@ public class RangerBehavior : MonoBehaviour
     {
         if ((player.position - transform.position).magnitude < innerRange)
         {
+            agent.stoppingDistance = 0;
             Vector3 dirToPlayer = transform.position - player.position;
             Vector3 fleePos = transform.position + dirToPlayer;
-            agent.SetDestination(fleePos);
+            agent.destination = fleePos;
         }
         else
 		{
+            agent.stoppingDistance = outerRange;
             anim.SetTrigger("Idle");
 		}
     }
 
     public void CheckAction()
     {
-        if ((player.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, take a breather
-        {
-            anim.SetTrigger("Attack");
-            obstacle.enabled = true;
-            agent.enabled = false;
-        }
         if ((player.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
         {
+            EnableAgent();
             anim.SetTrigger("Flee");
-            Vector3 dirToPlayer = transform.position - player.position;
-            Vector3 fleePos = transform.position + dirToPlayer;
-            agent.SetDestination(fleePos);
+        }
+        else if ((player.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, take a breather
+        {
+            EnableObstacle();
+            anim.SetTrigger("Attack");
         }
         else                                                                            //chase a bitch
         {
-            obstacle.enabled = false;
-            agent.enabled = true;
+            EnableAgent();
             FollowPlayer();
         }
     }
 
+    void EnableAgent()
+	{
+        obstacle.enabled = false;
+        agent.enabled = true;
+    }
+
+    void EnableObstacle()
+	{
+        obstacle.enabled = true;
+        agent.enabled = false;
+    }
+
     public void StartChase()
     {
-        agent.isStopped = false;
+        //agent.isStopped = false;
     }
 
     public void StopChase()
     {
-        agent.isStopped = true;
+        //agent.isStopped = true;
     }
 
-    public void MeleeAttack()
+    public void RangedAttack()
     {
-        //attack logic?
+        //instantiate attack, send it out
     }
 }
