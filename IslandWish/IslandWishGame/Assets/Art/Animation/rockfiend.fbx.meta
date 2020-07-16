@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 22faacdf560f72147adc2d3d38510b94
+guid: 76b08531864ed914ea5c340468ffa8d0
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -9,11 +9,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: enemymat
     second: {fileID: 2100000, guid: 75c4e66981b737a468cdaba4fd03297f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: eyemat
-    second: {fileID: 2100000, guid: d2f703f203ea5984c9999ac7e8c4011f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
