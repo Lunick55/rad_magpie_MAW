@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int health;
+    public PlayerStats stats;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(health <= 0)
+        if(stats.health <= 0)
 		{
             Debug.Log("ur dead bruh");
 		}
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 	{
         DamageEvent damageEvent = (DamageEvent)newDamageEvent;
 
-        health -= damageEvent.damage;
+        stats.health -= damageEvent.damage;
 	}
 
 }
