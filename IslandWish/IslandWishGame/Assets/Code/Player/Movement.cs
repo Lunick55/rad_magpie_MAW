@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
 			//apply speed
 			if (Input.GetKey(KeyCode.LeftShift))
 			{
-				inputDir *= playerSprintSpeed;
+				inputDir *= playerSprintSpeed; 
 			}
 			else
 			{
