@@ -5,7 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnityTutorialURP/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Boat Scene.unity
+    guid: 719c8c5f9c66f6b48b0c2a368fecea36
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: e12deb099cdc5c540955be8500cce05e
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: dd73f31d5a0e54a448c9834da8084569
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: c6b9c0e19b98c7448a1c1b9565a1c051
+  - enabled: 1
+    path: Assets/Scenes/FinalDoorScene.unity
+    guid: e4b4172456c3d9b4cb20b0895ff18acc
   m_configObjects: {}
