@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Enemy Stats")]
 public class EnemyStats : ScriptableObject
 {
-	string enemyName;
-	int health, attack, defense;
-	float attackRange, moveSpeed, timeBetweenAttacks;
+	public string enemyName;
+	public int health, attack, defense;
+	public float attackRange, moveSpeed, timeBetweenAttacks;
 
 }

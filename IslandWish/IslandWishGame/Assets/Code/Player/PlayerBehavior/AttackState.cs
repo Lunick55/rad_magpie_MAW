@@ -8,7 +8,13 @@ public class AttackState : SceneLinkedSMB<Player>
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
 
-		m_MonoBehaviour.Attack();
+		m_MonoBehaviour.StartAttack();
 	}
 
+	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		base.OnSLStateExit(animator, stateInfo, layerIndex);
+
+		m_MonoBehaviour.EndAttack();
+	}
 }

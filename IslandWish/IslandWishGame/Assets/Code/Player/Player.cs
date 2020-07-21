@@ -19,12 +19,18 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
 
+    [SerializeField] GameObject hurtBox;
+
+    public bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
         EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
 
         SceneLinkedSMB<Player>.Initialise(anim, this);
+
+        hurtBox.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,8 +57,11 @@ public class Player : MonoBehaviour
         stats.health -= damageEvent.damage;
 	}
 
-    public void Attack()
+    public void StartAttack()
     {
+        hurtBox.SetActive(true);
+        canMove = false;
+
         if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
         {
             currentAttackLevel++;
@@ -60,7 +69,14 @@ public class Player : MonoBehaviour
         }
     }
 
-	public void ResetAttack()
+    public void EndAttack()
+	{
+        hurtBox.SetActive(false);
+        canMove = true;
+
+    }
+
+    public void ResetAttack()
 	{
         currentAttackLevel = AttackLevel.LEVEL0;
 	}
