@@ -6,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 	[Header("Important Basics")]
-	[SerializeField] GameObject player;
+	[SerializeField] GameObject playerObj;
 	[SerializeField] Transform playerTrans;
 	[SerializeField] Camera playerCamera;
 	[SerializeField] CharacterController cc;
@@ -14,11 +14,10 @@ public class Movement : MonoBehaviour
 	[Header("Player Stats")]
 	[SerializeField] float playerSpeed = 1;
 	[SerializeField] float playerSprintSpeed = 2, playerJumpSpeed = 1, gravity = 9.8f;
+	[SerializeField] Player player;
 	float vSpeed = 0;
 	Vector3 inputDir = Vector3.zero; //the vector determining player direction
 	bool grounded = false;
-
-	bool canMovePlayer = true;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +37,7 @@ public class Movement : MonoBehaviour
 	{
 		RotateToMouse();
 
-		if (canMovePlayer)
+		if (player.canMove)
 		{
 			//sets the left and right movement
 			inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
