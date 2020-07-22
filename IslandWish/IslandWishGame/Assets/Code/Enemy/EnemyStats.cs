@@ -7,6 +7,6 @@ public class EnemyStats : ScriptableObject
 {
 	public string enemyName;
 	public int health, attack, defense;
-	public float attackRange, moveSpeed, timeBetweenAttacks;
+	public float attackRange, moveSpeed;
 
 }

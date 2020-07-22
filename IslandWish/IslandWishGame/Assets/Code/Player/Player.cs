@@ -14,11 +14,10 @@ public enum AttackLevel
 public class Player : MonoBehaviour
 {
     public PlayerStats stats;
+    [HideInInspector] public int currentHealth;
     [SerializeField] Animator anim;
 
-    [HideInInspector]
-    public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
-
+    [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
 
     public bool canMove = true;
@@ -31,12 +30,14 @@ public class Player : MonoBehaviour
         SceneLinkedSMB<Player>.Initialise(anim, this);
 
         hurtBox.SetActive(false);
+
+        currentHealth = stats.health;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(stats.health <= 0)
+        if(currentHealth <= 0)
 		{
             Debug.Log("ur dead bruh");
 		}
@@ -54,13 +55,12 @@ public class Player : MonoBehaviour
 	{
         DamageEvent damageEvent = (DamageEvent)newDamageEvent;
 
-        stats.health -= damageEvent.damage;
+        currentHealth -= damageEvent.damage;
 	}
 
     public void StartAttack()
     {
         hurtBox.SetActive(true);
-        canMove = false;
 
         if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
         {
@@ -72,8 +72,6 @@ public class Player : MonoBehaviour
     public void EndAttack()
 	{
         hurtBox.SetActive(false);
-        canMove = true;
-
     }
 
     public void ResetAttack()
