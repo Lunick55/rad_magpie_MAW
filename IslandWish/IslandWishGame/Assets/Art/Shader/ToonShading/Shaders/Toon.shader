@@ -12,6 +12,8 @@
 		[HDR]
 		_RimColor("Rim Color", Color) = (1,1,1,1)
 		_RimAmount("Rim Amount", Range (0, 1)) = 0.716
+		[HDR]
+		_Emission("Emission", Color) = (0,0,0,1)
 	}
 	SubShader
 	{
@@ -69,6 +71,7 @@
 			float4 _SpecularColor;
 			float4 _RimColor;
 			float _RimAmount;
+			float4 _Emission;
 
 			float4 frag (v2f i) : SV_Target
 			{
@@ -95,7 +98,7 @@
 
 				float4 sample = tex2D(_MainTex, i.uv);
 
-				return _Color * sample * (_AmbientColor + light + specular + rim);
+				return (_Color * sample * (_AmbientColor + light + specular + rim) ) + (_Emission);
 			}
 			ENDCG
 		}
