@@ -125,6 +125,11 @@ public class PelletBirdBehavior : MonoBehaviour
         newRangedAttack.GetComponent<Rigidbody>().velocity = transform.forward * 8;
     }
 
+    public void EndAttack()
+	{
+        EnableAgent();
+	}
+
     void EnableAgent()
     {
         obstacle.enabled = false;

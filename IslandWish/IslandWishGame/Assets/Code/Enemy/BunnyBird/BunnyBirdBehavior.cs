@@ -82,7 +82,6 @@ public class BunnyBirdBehavior : MonoBehaviour
             {
                 anim.SetTrigger(playerInRange);
             }
-
         }
         //else if the player is out of sight, go back to idle
         else if ((player.position - transform.position).magnitude > sightRange)
@@ -93,6 +92,8 @@ public class BunnyBirdBehavior : MonoBehaviour
         }
         else
         {
+            EnableAgent();
+
             canRotate = false;
             agent.destination = player.position;
         }
@@ -107,6 +108,7 @@ public class BunnyBirdBehavior : MonoBehaviour
 
     public void FinishMeleeAttack()
 	{
+        print("END ATTACK");
         hurtbox.SetActive(false);
         EnableAgent();
 	}
