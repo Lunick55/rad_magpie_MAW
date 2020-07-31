@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalDoorScene.unity
     guid: e4b4172456c3d9b4cb20b0895ff18acc
+  - enabled: 1
+    path: Assets/Scenes/UIHealthTest.unity
+    guid: b6e9675d304df2b46b9b8ba34aee2088
   m_configObjects: {}

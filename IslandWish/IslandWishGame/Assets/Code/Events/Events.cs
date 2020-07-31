@@ -5,7 +5,8 @@ using UnityEngine;
 public enum EventTag
 {
     NONE = -1,
-    DAMAGE
+    DAMAGE,
+    FAILSTATE
 }
 
 /// <summary>
@@ -42,4 +43,10 @@ public class DamageEvent : Event
     public override EventTag tag { get { return EventTag.DAMAGE; } }
 
     public int damage { get; }
+}
+
+
+public class FailstateEvent : Event
+{
+    public override EventTag tag { get { return EventTag.FAILSTATE;  } }
 }
