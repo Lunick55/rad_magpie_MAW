@@ -148,7 +148,7 @@ public class PelletBirdBehavior : MonoBehaviour
         
         // Determine which direction to rotate towards
         Vector3 targetDirection = player.position - transform.position;
-
+        targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
 
@@ -176,8 +176,11 @@ public class PelletBirdBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        UnityEditor.Handles.color = Color.green;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
+        UnityEditor.Handles.color = Color.yellow;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
+        UnityEditor.Handles.color = Color.red;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
     }
 }
