@@ -9,11 +9,11 @@ public class RockElementalBehavior : MonoBehaviour
     private NavMeshObstacle obstacle;
 
     [SerializeField] Transform player;
-    [SerializeField] GameObject hitbox, rangedAttack;
+    [SerializeField] GameObject hitbox, lobbedAttack, smashAttack;
 
     Animator anim;
 
-    [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
+    [SerializeField] float sightRange = 0, outerRange = 0, innerRange = 0, lobbedAngle = 45;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
     public EnemyStats stats;
@@ -56,7 +56,7 @@ public class RockElementalBehavior : MonoBehaviour
 
             canRotate = false;
         }
-        else if ((player.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
+        else if ((player.position - transform.position).magnitude < outerRange)  //if in range, beat 'em up
         {
             EnableObstacle();
             anim.SetTrigger(playerInRange);
@@ -70,6 +70,11 @@ public class RockElementalBehavior : MonoBehaviour
 
             canRotate = false;
         }
+        else
+		{
+            canRotate = false;
+            //Maybe patrol? I dunno man. Dancing would be cool
+		}
 
         if (agent.enabled)
             agent.destination = transform.position;
@@ -80,7 +85,7 @@ public class RockElementalBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((player.position - transform.position).magnitude < agent.stoppingDistance)
+        if ((player.position - transform.position).magnitude < outerRange)
         {
             anim.SetTrigger(idle);
             EnableObstacle();
@@ -99,33 +104,38 @@ public class RockElementalBehavior : MonoBehaviour
 
     public void SmashAttack()
     {
-        //if the player is too close, flee
-        if ((player.position - transform.position).magnitude < innerRange)
-        {
-            agent.stoppingDistance = 0;
-            Debug.Log("FIST OF HAVOK");
-        }
-        else
-        {
-            agent.stoppingDistance = outerRange;
-            anim.SetTrigger(idle);
-        }
+        Debug.Log("FIST OF HAVOK");
+        smashAttack.SetActive(true);
     }
 
-    public void RangedAttack()
+    public void LobbedAttack()
     {
         print("ATTACK");
         //instantiate attack, send it out
 
-        GameObject newRangedAttack = Instantiate(rangedAttack, transform.position, transform.rotation);
-        newRangedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
+        GameObject newLobbedAttack = Instantiate(lobbedAttack, transform.position, transform.rotation);
+        newLobbedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
+        Vector3 target = player.position;
 
-        newRangedAttack.GetComponent<Rigidbody>().velocity = transform.forward * 8;
+        Vector3 targetDir = target - transform.position; // get Target Direction
+        float height = targetDir.y; // get height difference
+        targetDir.y = 0; // retain only the horizontal difference
+        float dist = targetDir.magnitude; // get horizontal direction
+        float a = lobbedAngle * Mathf.Deg2Rad; // Convert angle to radians
+        targetDir.y = dist * Mathf.Tan(a); // set dir to the elevation angle.
+        dist += height / Mathf.Tan(a); // Correction for small height differences
+
+        // Calculate the velocity magnitude
+        float velocity = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * a));
+
+        newLobbedAttack.GetComponent<Rigidbody>().velocity = velocity * targetDir.normalized;
+        newLobbedAttack.GetComponent<Rigidbody>().useGravity = true;
     }
 
     public void EndAttack()
     {
         EnableAgent();
+        smashAttack.SetActive(false);
     }
 
     void EnableAgent()
@@ -172,13 +182,13 @@ public class RockElementalBehavior : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        UnityEditor.Handles.color = Color.green;
-        UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
-        UnityEditor.Handles.color = Color.yellow;
-        UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
-        UnityEditor.Handles.color = Color.red;
-        UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
-    }
+	private void OnDrawGizmosSelected()
+	{
+		UnityEditor.Handles.color = Color.green;
+		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
+		UnityEditor.Handles.color = Color.yellow;
+		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
+		UnityEditor.Handles.color = Color.red;
+		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
+	}
 }

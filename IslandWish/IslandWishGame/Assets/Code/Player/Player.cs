@@ -20,6 +20,15 @@ public class Player : MonoBehaviour
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
 
+    [Header("Shield Stats")]
+    [SerializeField] GameObject shield;
+    bool blocking = false;
+    bool shieldBroken = false;
+    public int shieldMaxHealth = 100;
+    public int shieldCurrentHealth;
+    public float shieldRechargeRate;
+    public bool inCombat = false;
+
     public bool canMove = true;
 
     // Start is called before the first frame update
@@ -32,6 +41,8 @@ public class Player : MonoBehaviour
         hurtBox.SetActive(false);
 
         currentHealth = stats.health;
+
+        StartCoroutine(RegenShield());
     }
 
     // Update is called once per frame
@@ -49,14 +60,36 @@ public class Player : MonoBehaviour
                 anim.SetTrigger("Attack");
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
+		{
+            Block(true);
+		}
+        if(Input.GetKeyUp(KeyCode.LeftControl))
+		{
+            Block(false);
+		}
     }
 
     public void TakeDamage(Event newDamageEvent)
 	{
         DamageEvent damageEvent = (DamageEvent)newDamageEvent;
 
+        if(blocking)
+		{
+            Vector3 damageDirection = damageEvent.position - transform.position;
+
+            float damageAngle = Vector3.Angle(transform.forward, damageDirection);
+            if(damageAngle < 90)
+			{
+                Debug.Log("BLOCKED BITCH");
+                shieldCurrentHealth -= damageEvent.damage;
+                return;
+			}
+		}
+        print("OOF OUCH");
         currentHealth -= damageEvent.damage;
-	}
+    }
 
     public void StartAttack()
     {
@@ -87,5 +120,48 @@ public class Player : MonoBehaviour
     public void Moving()
 	{
 
+	}
+
+    public void Block(bool isBlock)
+	{
+        if (isBlock)
+        {
+            shield.SetActive(true);
+            blocking = true;
+            //other stuff i dunno
+        }
+        else
+		{
+            shield.SetActive(false);
+            blocking = false;
+		}
+	}
+
+    IEnumerator RegenShield()
+	{
+        while(true)
+		{
+            if (shieldCurrentHealth <= 0)
+            {
+                shieldBroken = true;
+                Block(false);
+            }
+
+            if (shieldCurrentHealth < shieldMaxHealth)
+            {
+                shieldCurrentHealth += 1;
+
+                yield return new WaitForSeconds(shieldRechargeRate);
+            }
+            else
+			{
+                if(shieldCurrentHealth > shieldMaxHealth)
+				{
+                    shieldCurrentHealth = shieldMaxHealth;
+				}
+                shieldBroken = false;
+                yield return null;
+			}
+		}
 	}
 }
