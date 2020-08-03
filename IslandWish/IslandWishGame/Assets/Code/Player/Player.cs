@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public int shieldMaxHealth = 100;
     public int shieldCurrentHealth;
     public float shieldRechargeRate;
-
+    public bool inCombat = false;
 
     public bool canMove = true;
 
