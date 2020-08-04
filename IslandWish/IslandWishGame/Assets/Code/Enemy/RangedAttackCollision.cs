@@ -30,9 +30,7 @@ public class RangedAttackCollision : MonoBehaviour
 	{
 		if(other.tag == "Player")
 		{
-			print("HIT");
-
-			DamageEvent damageEvent = new DamageEvent(damage);
+			DamageEvent damageEvent = new DamageEvent(damage, transform.position);
 
 			EventManager.instance.FireEvent(damageEvent);
 		}

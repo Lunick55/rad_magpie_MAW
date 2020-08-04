@@ -16,3 +16,5 @@ MonoBehaviour:
   spearDamage: 5
   slingDamage: 2
   speed: 8
+  slingSpeed: 5
+  slingDuration: 5

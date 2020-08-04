@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Pellet Bird
   health: 15
-  attack: 0
+  attack: 10
   defense: 0
   attackRange: 0
   moveSpeed: 95

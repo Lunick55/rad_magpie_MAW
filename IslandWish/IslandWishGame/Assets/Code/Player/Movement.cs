@@ -13,11 +13,16 @@ public class Movement : MonoBehaviour
 
 	[Header("Player Stats")]
 	[SerializeField] float playerSpeed = 1;
-	[SerializeField] float playerSprintSpeed = 2, playerJumpSpeed = 1, gravity = 9.8f;
+	[SerializeField] float playerSprintSpeed = 2, playerJumpSpeed = 1, playerDashSpeed = 3, dashDistance = 1, gravity = 9.8f;
 	[SerializeField] Player player;
 	float vSpeed = 0;
 	Vector3 inputDir = Vector3.zero; //the vector determining player direction
+	Vector3 dashStartPosition = Vector3.zero;
+	Vector3 dashDestination = Vector3.zero;
+
 	bool grounded = false;
+	bool dashing = false;
+	bool acceptInput = true;
 
     // Start is called before the first frame update
     void Start()
@@ -39,26 +44,40 @@ public class Movement : MonoBehaviour
 
 		if (player.canMove)
 		{
-			//sets the left and right movement
-			inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-			//apply speed
-			if (Input.GetKey(KeyCode.LeftShift))
-			{
-				inputDir *= playerSprintSpeed; 
-			}
-			else
-			{
-				inputDir *= playerSpeed;
-			}
-
-			//apply movement relative to camera rotation
+			//get the direction relative to the camera
 			Vector3 camForward = playerCamera.transform.forward;
 			Vector3 camRight = playerCamera.transform.right;
-			camForward.y = 0;
-			camRight.y = 0;
+			camForward.y = camRight.y = 0;
 			camForward.Normalize();
 			camRight.Normalize();
-			inputDir = camRight * inputDir.x + camForward * inputDir.z;
+
+			//apply speed
+			if (acceptInput)
+			{
+				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+				inputDir = camRight * inputDir.x + camForward * inputDir.z;
+
+				if (Input.GetKey(KeyCode.Space) && !dashing && inputDir != Vector3.zero)
+				{
+					print("DASH");
+
+					dashing = true;
+					acceptInput = false;
+					inputDir *= playerDashSpeed;
+
+					dashStartPosition = playerTrans.position;
+					dashDestination = playerTrans.position + (inputDir.normalized * dashDistance);
+
+				}
+				else if (Input.GetKey(KeyCode.LeftShift))
+				{
+					inputDir *= playerSprintSpeed;
+				}
+				else
+				{
+					inputDir *= playerSpeed;
+				}
+			}
 
 			grounded = cc.isGrounded;			
 		
@@ -66,10 +85,10 @@ public class Movement : MonoBehaviour
 			{
 				vSpeed = -0.1f;
 
-				if (Input.GetKeyDown(KeyCode.Space))
-				{
-					Jump();
-				}
+				//if (Input.GetKeyDown(KeyCode.Space))
+				//{
+				//	Jump();
+				//}
 			}
 
 			//Fall down
@@ -78,7 +97,15 @@ public class Movement : MonoBehaviour
 			cc.Move(inputDir * Time.deltaTime);
 		}
 
-		inputDir = Vector3.zero;
+		if (!dashing)
+		{
+			inputDir = Vector3.zero;
+		}
+		else if((playerTrans.position - dashStartPosition).magnitude >= dashDistance)
+		{
+			dashing = false;
+			acceptInput = true;
+		}
 	}
 
 	private void Jump()
@@ -100,5 +127,11 @@ public class Movement : MonoBehaviour
 
 		//apply!
 		transform.rotation = Quaternion.LookRotation(lineToMouse, Vector3.up);
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		UnityEditor.Handles.DrawWireDisc(dashDestination, Vector3.up, 1);
+
 	}
 }

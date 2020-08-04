@@ -35,14 +35,16 @@ public class ExampleEvent : Event
 
 public class DamageEvent : Event
 {
-    public DamageEvent(int newDamage)
+    public DamageEvent(int newDamage, Vector3 newPosition)
 	{
         damage = newDamage;
+        position = newPosition;
 	}
 
     public override EventTag tag { get { return EventTag.DAMAGE; } }
 
     public int damage { get; }
+    public Vector3 position { get; }
 }
 
 

@@ -8,7 +8,7 @@ public class RockElementalAttack : SceneLinkedSMB<RockElementalBehavior>
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
 
-		m_MonoBehaviour.RangedAttack();
+		m_MonoBehaviour.LobbedAttack();
 	}
 
 	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
