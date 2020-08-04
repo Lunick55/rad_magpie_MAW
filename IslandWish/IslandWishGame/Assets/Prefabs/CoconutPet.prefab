@@ -119,10 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517c8e90ba5e4a646923acca523426b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTrans: {fileID: 0}
-  player: {fileID: 0}
+  cage: {fileID: 0}
   wanderRange: 4
-  wanderHeight: 1
+  wanderHeight: 2
 --- !u!1 &768634165860707582
 GameObject:
   m_ObjectHideFlags: 0
