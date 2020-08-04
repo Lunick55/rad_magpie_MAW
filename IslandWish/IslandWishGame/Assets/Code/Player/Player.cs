@@ -78,6 +78,15 @@ public class Player : MonoBehaviour
 		{
             Block(false);
 		}
+
+        if(GameManager.Instance.GetCurrentAggro() > 0)
+		{
+            inCombat = true;
+		}
+        else
+		{
+            inCombat = false;
+		}
     }
 
     public void TakeDamage(Event newDamageEvent)

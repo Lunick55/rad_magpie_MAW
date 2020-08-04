@@ -22,7 +22,7 @@ public class EnemyCage : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.tag == "PlayerAttack")
+		if(other.tag == "MeleeAttack")
 		{
             currHealth-=1;
             if(currHealth <= 0)
