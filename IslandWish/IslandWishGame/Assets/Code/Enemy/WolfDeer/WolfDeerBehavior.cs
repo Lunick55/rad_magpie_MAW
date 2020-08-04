@@ -24,6 +24,7 @@ public class WolfDeerBehavior : MonoBehaviour
     [SerializeField] float attackSpeed = 0, attackDistance = 0, safetyTimer = 1;
     float timer = 0;
     Vector3 destination = Vector3.zero;
+    private bool aggro = false;
 
     void Start()
     {
@@ -124,6 +125,18 @@ public class WolfDeerBehavior : MonoBehaviour
         }
     }
 
+    public void Aggro()
+    {
+        GameManager.Instance.IncreaseAggro();
+        aggro = true;
+    }
+
+    public void DeAggro()
+    {
+        GameManager.Instance.DecreaseAggro();
+        aggro = false;
+    }
+
     public void Aim()
 	{
         print("Aiming...");
@@ -218,6 +231,10 @@ public class WolfDeerBehavior : MonoBehaviour
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }
@@ -227,6 +244,10 @@ public class WolfDeerBehavior : MonoBehaviour
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }

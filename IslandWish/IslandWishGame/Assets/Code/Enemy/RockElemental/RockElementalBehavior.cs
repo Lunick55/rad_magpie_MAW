@@ -20,6 +20,7 @@ public class RockElementalBehavior : MonoBehaviour
     public EnemyStats stats;
     private int currentHealth;
     private bool canRotate = false;
+    private bool aggro = false;
 
     void Start()
     {
@@ -106,6 +107,18 @@ public class RockElementalBehavior : MonoBehaviour
         }
     }
 
+    public void Aggro()
+    {
+        GameManager.Instance.IncreaseAggro();
+        aggro = true;
+    }
+
+    public void DeAggro()
+    {
+        GameManager.Instance.DecreaseAggro();
+        aggro = false;
+    }
+
     public void SmashAttack()
     {
         Debug.Log("FIST OF HAVOK");
@@ -182,6 +195,10 @@ public class RockElementalBehavior : MonoBehaviour
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }
@@ -191,6 +208,10 @@ public class RockElementalBehavior : MonoBehaviour
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }

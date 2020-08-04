@@ -21,6 +21,7 @@ public class BunnyBirdBehavior : MonoBehaviour
     private int currentHealth;
 
     private bool canRotate = false;
+    private bool aggro = false;
 
     void Start()
     {
@@ -104,6 +105,18 @@ public class BunnyBirdBehavior : MonoBehaviour
 
     }
 
+    public void Aggro()
+    {
+        GameManager.Instance.IncreaseAggro();
+        aggro = true;
+    }
+
+    public void DeAggro()
+    {
+        GameManager.Instance.DecreaseAggro();
+        aggro = false;
+    }
+
     public void MeleeAttack()
     {
         print("ATTACK");
@@ -128,6 +141,7 @@ public class BunnyBirdBehavior : MonoBehaviour
         agent.enabled = false;
         obstacle.enabled = true;
     }
+
 
     void RotateTowardsPlayer()
     {
@@ -173,6 +187,10 @@ public class BunnyBirdBehavior : MonoBehaviour
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }
@@ -182,6 +200,10 @@ public class BunnyBirdBehavior : MonoBehaviour
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }

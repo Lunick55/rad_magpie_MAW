@@ -7,7 +7,7 @@ public class CoconapperIdle : SceneLinkedSMB<CoconapperBehavior>
 	public override void OnSLStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
-		GameManager.Instance.IncreaseAggro();
+		m_MonoBehaviour.Aggro();
 	}
 
 	public override void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,7 +19,6 @@ public class CoconapperIdle : SceneLinkedSMB<CoconapperBehavior>
 	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
-		GameManager.Instance.DecreaseAggro();
-
+		m_MonoBehaviour.DeAggro();
 	}
 }
