@@ -8,7 +8,7 @@ public class PelletBirdIdle : SceneLinkedSMB<PelletBirdBehavior>
 	public override void OnSLStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
-		m_MonoBehaviour.Aggro();
+		m_MonoBehaviour.DeAggro();
 	}
 
 	public override void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,6 +20,6 @@ public class PelletBirdIdle : SceneLinkedSMB<PelletBirdBehavior>
 	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
-		m_MonoBehaviour.DeAggro();
+		m_MonoBehaviour.Aggro();
 	}
 }
