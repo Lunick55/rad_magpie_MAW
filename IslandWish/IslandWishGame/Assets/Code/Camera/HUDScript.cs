@@ -90,6 +90,14 @@ public class HUDScript : MonoBehaviour
         Debug.Log("Player is dead!");
         FailstateEvent failstateEvent = (FailstateEvent)newFailstateEvent;
 
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.player.canMove = false;
+        GameManager.Instance.audioManager.Play("PCDeath");
+        Invoke("ResetScene", 2);
+    }
+
+    void ResetScene()
+	{
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

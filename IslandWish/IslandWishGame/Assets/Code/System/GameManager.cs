@@ -6,6 +6,9 @@ public class GameManager : BaseSingleton<GameManager>
 {
     public Player player;
     public Transform playerTrans;
+
+    public AudioManager audioManager;
+
     int numEnemiesAggroed = 0;
 
     // Start is called before the first frame update

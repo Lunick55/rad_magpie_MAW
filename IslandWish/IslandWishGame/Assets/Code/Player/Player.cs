@@ -56,22 +56,29 @@ public class Player : MonoBehaviour
         if(currentHealth <= 0)
 		{
             Debug.Log("ur dead bruh");
-		}
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
             if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
             {
+                GameManager.Instance.audioManager.Play("SwingSpear");
                 anim.SetTrigger("Attack");
             }
         }
-        if(Input.GetMouseButtonUp(1))
+        if(Input.GetMouseButtonDown(1))
 		{
+            GameManager.Instance.audioManager.Play("SlingshotPull");
+        }
+        else if(Input.GetMouseButtonUp(1))
+		{
+            GameManager.Instance.audioManager.Play("SlingshotRelease");
             FireSlingshotAttack();
 		}
 
         if(Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
 		{
+            GameManager.Instance.audioManager.Play("ShieldReady");
             Block(true);
 		}
         if(Input.GetKeyUp(KeyCode.LeftControl))
@@ -101,11 +108,13 @@ public class Player : MonoBehaviour
             if(damageAngle < 90)
 			{
                 Debug.Log("BLOCKED BITCH");
+                GameManager.Instance.audioManager.Play("ShieldHit");
                 shieldCurrentHealth -= damageEvent.damage;
                 return;
 			}
 		}
         print("OOF OUCH");
+        GameManager.Instance.audioManager.Play("PCDamage");
         currentHealth -= damageEvent.damage;
     }
 
@@ -169,6 +178,7 @@ public class Player : MonoBehaviour
 		{
             if (shieldCurrentHealth <= 0)
             {
+                GameManager.Instance.audioManager.Play("ShieldBreak");
                 shieldBroken = true;
                 Block(false);
             }

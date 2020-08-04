@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
          s.source.volume = s.volume;
          s.source.pitch = s.pitch;
          s.source.loop = s.loop;
-
+        
       }
     }
 
@@ -30,13 +30,15 @@ public class AudioManager : MonoBehaviour
 
    public void Play(string name)
    {
-      //looks for the name of the song
-     Sound s = Array.Find(sounds, sound => sound.name == name);
+        //looks for the name of the song
+        Sound s = Array.Find(sounds, sound => sound.name == name);
 
-      //won't play sound if spelt wrong or not existing
-      if (s == null)
-         Debug.LogWarning("Sound: " + name + " does not exist");
-         return;
-      s.source.Play();
+        //won't play sound if spelt wrong or not existing
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " does not exist");
+            return;
+        }
+        s.source.Play();
    }
 }

@@ -191,6 +191,7 @@ public class RockElementalBehavior : MonoBehaviour
     {
         if (other.tag == "MeleeAttack")
         {
+            GameManager.Instance.audioManager.Play("SpearHit");
             currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
@@ -204,6 +205,7 @@ public class RockElementalBehavior : MonoBehaviour
         }
         else if (other.tag == "SlingshotAttack")
         {
+            GameManager.Instance.audioManager.Play("SlingHit");
             currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {

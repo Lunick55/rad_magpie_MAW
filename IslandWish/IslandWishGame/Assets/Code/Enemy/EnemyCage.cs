@@ -25,7 +25,8 @@ public class EnemyCage : MonoBehaviour
 		if(other.tag == "MeleeAttack")
 		{
             currHealth-=1;
-            if(currHealth <= 0)
+            GameManager.Instance.audioManager.Play("PCCageHit");
+            if (currHealth <= 0)
 			{
                 isBroken = true;
                 gameObject.SetActive(false);

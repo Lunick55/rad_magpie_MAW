@@ -183,6 +183,7 @@ public class BunnyBirdBehavior : MonoBehaviour
     {
         if (other.tag == "MeleeAttack")
         {
+            GameManager.Instance.audioManager.Play("SpearHit");
             currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
@@ -196,6 +197,7 @@ public class BunnyBirdBehavior : MonoBehaviour
         }
         else if (other.tag == "SlingshotAttack")
         {
+            GameManager.Instance.audioManager.Play("SlingHit");
             currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
