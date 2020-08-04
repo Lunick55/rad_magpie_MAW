@@ -13,6 +13,7 @@ public enum AttackLevel
 
 public class Player : MonoBehaviour
 {
+    [Header("Player Info")]
     public PlayerStats stats;
     [HideInInspector] public int currentHealth;
     [SerializeField] Animator anim;
@@ -28,6 +29,10 @@ public class Player : MonoBehaviour
     public int shieldCurrentHealth;
     public float shieldRechargeRate;
     public bool inCombat = false;
+
+    [Header("Slingshot")]
+    [SerializeField] GameObject slingshotBullet;
+
 
     public bool canMove = true;
 
@@ -60,6 +65,10 @@ public class Player : MonoBehaviour
                 anim.SetTrigger("Attack");
             }
         }
+        if(Input.GetMouseButtonUp(1))
+		{
+            FireSlingshotAttack();
+		}
 
         if(Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
 		{
@@ -89,6 +98,14 @@ public class Player : MonoBehaviour
 		}
         print("OOF OUCH");
         currentHealth -= damageEvent.damage;
+    }
+
+    public void FireSlingshotAttack()
+	{
+        GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
+        newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
+
+        newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
     }
 
     public void StartAttack()
