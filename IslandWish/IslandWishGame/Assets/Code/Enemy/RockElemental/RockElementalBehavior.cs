@@ -172,17 +172,27 @@ public class RockElementalBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "PlayerAttack")
+        if (other.tag == "MeleeAttack")
         {
-            currentHealth -= 1;
+            currentHealth -= GameManager.Instance.player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                Destroy(gameObject);
+            }
+        }
+        else if (other.tag == "SlingshotAttack")
+        {
+            currentHealth -= GameManager.Instance.player.stats.slingDamage;
+            if (currentHealth <= 0)
+            {
+                print("Enemy is Dead and You Killed Them You Monster");
+                Destroy(gameObject);
             }
         }
     }
 
-	private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
 	{
 		UnityEditor.Handles.color = Color.green;
 		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
