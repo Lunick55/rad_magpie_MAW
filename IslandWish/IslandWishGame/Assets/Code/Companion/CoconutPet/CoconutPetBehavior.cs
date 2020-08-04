@@ -10,6 +10,7 @@ public class CoconutPetBehavior : MonoBehaviour
 
     [SerializeField] Transform playerTrans;
     [SerializeField] Player player;
+    [SerializeField] EnemyCage cage;
 
     Animator anim;
 
@@ -31,8 +32,10 @@ public class CoconutPetBehavior : MonoBehaviour
         obstacle = GetComponent<NavMeshObstacle>();
 
         //agent.stoppingDistance = outerRange;
-        EnableAgent();
+        EnableObstacle();
         SceneLinkedSMB<CoconutPetBehavior>.Initialise(anim, this);
+        anim.SetBool("Trapped", true);
+
         maxRangeReciprical = 1 / wanderRange;
 
         CoconutManager.Instance.AddCoconut(this);
@@ -45,6 +48,21 @@ public class CoconutPetBehavior : MonoBehaviour
         //{
         //    RotateTowardsPlayer();
         //}
+    }
+
+    public void Trapped()
+	{
+        if (cage && !cage.isBroken)
+        {
+            EnableObstacle();
+            anim.SetBool("Trapped", true);
+        }
+        else
+        {
+            EnableAgent();
+            anim.SetBool("Trapped", false);
+        }
+
     }
 
     public void Wander()
