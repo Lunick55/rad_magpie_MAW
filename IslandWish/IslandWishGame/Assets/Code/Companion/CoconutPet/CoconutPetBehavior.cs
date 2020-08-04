@@ -8,8 +8,8 @@ public class CoconutPetBehavior : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
-    [SerializeField] Transform playerTrans;
-    [SerializeField] Player player;
+    Transform playerTrans;
+    Player player;
     [SerializeField] EnemyCage cage;
 
     Animator anim;
@@ -27,6 +27,9 @@ public class CoconutPetBehavior : MonoBehaviour
 
     void Start()
     {
+        player = GameManager.Instance.player;
+        playerTrans = GameManager.Instance.playerTrans;
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();

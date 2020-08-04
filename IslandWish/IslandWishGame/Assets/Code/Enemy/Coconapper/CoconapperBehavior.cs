@@ -8,7 +8,8 @@ public class CoconapperBehavior : MonoBehaviour
     NavMeshAgent agent;
     NavMeshObstacle obstacle;
 
-    [SerializeField] Transform player;
+    Player player;
+    Transform playerTrans;
     [SerializeField] GameObject hitbox, hurtbox;
 
     Animator anim;
@@ -23,6 +24,9 @@ public class CoconapperBehavior : MonoBehaviour
 
     void Start()
     {
+        player = GameManager.Instance.player;
+        playerTrans = GameManager.Instance.playerTrans;
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -56,7 +60,7 @@ public class CoconapperBehavior : MonoBehaviour
         //agent should already be enabled
 
         //if the player is within sight of the enemy, enable agent, and give chase
-        if ((player.position - transform.position).magnitude < sightRange)
+        if ((playerTrans.position - transform.position).magnitude < sightRange)
         {
             anim.SetBool(playerInSight, true);
             EnableAgent();
@@ -73,7 +77,7 @@ public class CoconapperBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((player.position - transform.position).magnitude < attackRange)
+        if ((playerTrans.position - transform.position).magnitude < attackRange)
         {
             canRotate = true;
             EnableObstacle();
@@ -85,7 +89,7 @@ public class CoconapperBehavior : MonoBehaviour
 
         }
         //else if the player is out of sight, go back to idle
-        else if ((player.position - transform.position).magnitude > sightRange)
+        else if ((playerTrans.position - transform.position).magnitude > sightRange)
         {
             canRotate = false;
             anim.SetBool(playerInSight, false);
@@ -96,7 +100,7 @@ public class CoconapperBehavior : MonoBehaviour
             EnableAgent();
 
             canRotate = false;
-            agent.destination = player.position;
+            agent.destination = playerTrans.position;
         }
 
     }
@@ -130,7 +134,7 @@ public class CoconapperBehavior : MonoBehaviour
         // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
 
         // Determine which direction to rotate towards
-        Vector3 targetDirection = player.position - transform.position;
+        Vector3 targetDirection = playerTrans.position - transform.position;
         targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
@@ -148,7 +152,7 @@ public class CoconapperBehavior : MonoBehaviour
     {
         float minAngle = 15;
 
-        Vector3 dirToPlayer = player.position - transform.position;
+        Vector3 dirToPlayer = playerTrans.position - transform.position;
 
         dirToPlayer.y = 0;
 
@@ -165,7 +169,7 @@ public class CoconapperBehavior : MonoBehaviour
     {
         if (other.tag == "MeleeAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.spearDamage;
+            currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
@@ -174,7 +178,7 @@ public class CoconapperBehavior : MonoBehaviour
         }
         else if (other.tag == "SlingshotAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.slingDamage;
+            currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");

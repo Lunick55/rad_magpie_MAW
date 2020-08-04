@@ -8,7 +8,8 @@ public class WolfDeerBehavior : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
-    [SerializeField] Transform player;
+    Player player;
+    Transform playerTrans;
     [SerializeField] GameObject hitbox, hurtbox;
 
     Animator anim;
@@ -26,6 +27,9 @@ public class WolfDeerBehavior : MonoBehaviour
 
     void Start()
     {
+        player = GameManager.Instance.player;
+        playerTrans = GameManager.Instance.playerTrans;
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -53,21 +57,21 @@ public class WolfDeerBehavior : MonoBehaviour
         print("Idle");
         //agent should already be enabled
 
-        if ((player.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
+        if ((playerTrans.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
         {
             EnableAgent();
             anim.SetTrigger(playerTooClose);
 
             canRotate = false;
         }
-        else if ((player.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
+        else if ((playerTrans.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
         {
             EnableObstacle();
             anim.SetTrigger(playerInRange);
 
             canRotate = true;
         }
-        else if ((player.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
+        else if ((playerTrans.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
         {
             EnableAgent();
             anim.SetTrigger(playerInSight);
@@ -84,13 +88,13 @@ public class WolfDeerBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((player.position - transform.position).magnitude < agent.stoppingDistance)
+        if ((playerTrans.position - transform.position).magnitude < agent.stoppingDistance)
         {
             anim.SetTrigger(idle);
             EnableObstacle();
         }
         //else if the player is out of sight, go back to idle
-        else if ((player.position - transform.position).magnitude > sightRange)
+        else if ((playerTrans.position - transform.position).magnitude > sightRange)
         {
             anim.SetTrigger(idle);
             EnableAgent();
@@ -99,17 +103,17 @@ public class WolfDeerBehavior : MonoBehaviour
         {
             EnableAgent();
 
-            agent.destination = player.position;
+            agent.destination = playerTrans.position;
         }
     }
 
     public void FleePlayer()
     {
         //if the player is too close, flee
-        if ((player.position - transform.position).magnitude < innerRange)
+        if ((playerTrans.position - transform.position).magnitude < innerRange)
         {
             agent.stoppingDistance = 0;
-            Vector3 dirToPlayer = transform.position - player.position;
+            Vector3 dirToPlayer = transform.position - playerTrans.position;
             Vector3 fleePos = transform.position + dirToPlayer;
             agent.destination = fleePos;
         }
@@ -174,7 +178,7 @@ public class WolfDeerBehavior : MonoBehaviour
     {
         float minAngle = 15;
 
-        Vector3 dirToPlayer = player.position - transform.position;
+        Vector3 dirToPlayer = playerTrans.position - transform.position;
         dirToPlayer.y = 0;
 
         if (Vector3.Angle(transform.forward, dirToPlayer) < minAngle)
@@ -191,7 +195,7 @@ public class WolfDeerBehavior : MonoBehaviour
         // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
 
         // Determine which direction to rotate towards
-        Vector3 targetDirection = player.position - transform.position;
+        Vector3 targetDirection = playerTrans.position - transform.position;
         targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
@@ -210,7 +214,7 @@ public class WolfDeerBehavior : MonoBehaviour
     {
         if (other.tag == "MeleeAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.spearDamage;
+            currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
@@ -219,7 +223,7 @@ public class WolfDeerBehavior : MonoBehaviour
         }
         else if (other.tag == "SlingshotAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.slingDamage;
+            currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");

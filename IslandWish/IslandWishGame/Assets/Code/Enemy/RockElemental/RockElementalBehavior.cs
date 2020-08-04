@@ -8,7 +8,8 @@ public class RockElementalBehavior : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
-    [SerializeField] Transform player;
+    Player player;
+    Transform playerTrans;
     [SerializeField] GameObject hitbox, lobbedAttack, smashAttack;
 
     Animator anim;
@@ -22,6 +23,9 @@ public class RockElementalBehavior : MonoBehaviour
 
     void Start()
     {
+        player = GameManager.Instance.player;
+        playerTrans = GameManager.Instance.playerTrans;
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -49,21 +53,21 @@ public class RockElementalBehavior : MonoBehaviour
         print("Idle");
         //agent should already be enabled
 
-        if ((player.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
+        if ((playerTrans.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
         {
             EnableAgent();
             anim.SetTrigger(playerTooClose);
 
             canRotate = false;
         }
-        else if ((player.position - transform.position).magnitude < outerRange)  //if in range, beat 'em up
+        else if ((playerTrans.position - transform.position).magnitude < outerRange)  //if in range, beat 'em up
         {
             EnableObstacle();
             anim.SetTrigger(playerInRange);
 
             canRotate = true;
         }
-        else if ((player.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
+        else if ((playerTrans.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
         {
             EnableAgent();
             anim.SetTrigger(playerInSight);
@@ -85,20 +89,20 @@ public class RockElementalBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((player.position - transform.position).magnitude < outerRange)
+        if ((playerTrans.position - transform.position).magnitude < outerRange)
         {
             anim.SetTrigger(idle);
             EnableObstacle();
         }
         //else if the player is out of sight, go back to idle
-        else if ((player.position - transform.position).magnitude > sightRange)
+        else if ((playerTrans.position - transform.position).magnitude > sightRange)
         {
             anim.SetTrigger(idle);
             EnableAgent();
         }
         else
         {
-            agent.destination = player.position;
+            agent.destination = playerTrans.position;
         }
     }
 
@@ -115,7 +119,7 @@ public class RockElementalBehavior : MonoBehaviour
 
         GameObject newLobbedAttack = Instantiate(lobbedAttack, transform.position, transform.rotation);
         newLobbedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
-        Vector3 target = player.position;
+        Vector3 target = playerTrans.position;
 
         Vector3 targetDir = target - transform.position; // get Target Direction
         float height = targetDir.y; // get height difference
@@ -155,7 +159,7 @@ public class RockElementalBehavior : MonoBehaviour
         // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
 
         // Determine which direction to rotate towards
-        Vector3 targetDirection = player.position - transform.position;
+        Vector3 targetDirection = playerTrans.position - transform.position;
         targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
@@ -174,7 +178,7 @@ public class RockElementalBehavior : MonoBehaviour
     {
         if (other.tag == "MeleeAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.spearDamage;
+            currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
@@ -183,7 +187,7 @@ public class RockElementalBehavior : MonoBehaviour
         }
         else if (other.tag == "SlingshotAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.slingDamage;
+            currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
