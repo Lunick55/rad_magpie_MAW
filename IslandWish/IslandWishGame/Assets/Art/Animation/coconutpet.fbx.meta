@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Master
+    second: {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: coconutpet
-    second: {fileID: 2100000, guid: cca7536e624ee704590f8fec60acaa71, type: 2}
+    second: {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
