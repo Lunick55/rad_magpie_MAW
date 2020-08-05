@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
+        EventManager.instance.AddListener(GoToCheckpoint, EventTag.FAILSTATE);
 
         SceneLinkedSMB<Player>.Initialise(anim, this);
 
@@ -200,4 +201,11 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
+
+    void GoToCheckpoint(Event newFailstateEvent)
+    {
+        transform.position = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint();
+        Debug.Log(GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint());
+        canMove = true;
+    }
 }

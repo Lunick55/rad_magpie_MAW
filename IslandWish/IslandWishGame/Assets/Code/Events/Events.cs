@@ -6,7 +6,9 @@ public enum EventTag
 {
     NONE = -1,
     DAMAGE,
-    FAILSTATE
+    FAILSTATE,
+    CHECKPOINT
+
 }
 
 /// <summary>

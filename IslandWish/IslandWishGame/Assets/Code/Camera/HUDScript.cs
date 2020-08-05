@@ -12,12 +12,16 @@ public class HUDScript : MonoBehaviour
     public GameObject slingshotImage;
     public int playerHealth;
 
+    GameObject checkpointManager;
+    public Animation anim;
+
     // Start is called before the first frame update
     void Start()
     {
         EventManager.instance.AddListener(IncomingDamage, EventTag.DAMAGE);
         EventManager.instance.AddListener(SetbackPlayer, EventTag.FAILSTATE);
 
+        checkpointManager = GameObject.Find("CheckpointManager");
         playerHealth = 5;
     }
 
@@ -61,7 +65,11 @@ public class HUDScript : MonoBehaviour
 
         if(playerHealth <= 0)
         {
-            FailState();
+            GameManager.Instance.player.canMove = false;
+            GameManager.Instance.audioManager.Play("PCDeath");
+            anim.Play();
+            Invoke("FailState", 2);
+
         }
     }
 
@@ -82,6 +90,18 @@ public class HUDScript : MonoBehaviour
     {
         FailstateEvent failstateEvent = new FailstateEvent();
         EventManager.instance.FireEvent(failstateEvent);
+        foreach(GameObject lifeImage in uiLives)
+        {
+            lifeImage.SetActive(true);
+        }
+
+        foreach(GameObject lifeBackground in uiLifeBackgrounds)
+        {
+            lifeBackground.SetActive(false);
+
+        }
+
+        playerHealth = 5;
     }
 
     void SetbackPlayer(Event newFailstateEvent)
@@ -91,13 +111,15 @@ public class HUDScript : MonoBehaviour
         FailstateEvent failstateEvent = (FailstateEvent)newFailstateEvent;
 
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        GameManager.Instance.player.canMove = false;
-        GameManager.Instance.audioManager.Play("PCDeath");
-        Invoke("ResetScene", 2);
+        //GameManager.Instance.player.canMove = false;
+        //GameManager.Instance.audioManager.Play("PCDeath");
+        //Invoke("ResetScene", 2);
     }
 
     void ResetScene()
 	{
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
     }
+
 }
