@@ -107,7 +107,7 @@ Material:
     - _Ambient: 1
     - _Displacement: 0.27863377
     - _DisplacementTiling: 18.586807
-    - _DistortionPower: 5
+    - _DistortionPower: 4.33
     - _FadeExp: 0.91503274
     - _FoamWaveDependency: 0.10205479
     - _FresnelPower: 1.7931035
@@ -117,7 +117,7 @@ Material:
     - _InvFade: 0.628783
     - _InvFadeDepthFade: 0.07197756
     - _InvFadeFoam: 0.1217
-    - _MaxTreshold: 0.5
+    - _MaxTreshold: 0.18
     - _MaxTreshould: 0.5
     - _NormalsDisplacement: 0
     - _ReflDistort: 0.9267696
@@ -125,7 +125,7 @@ Material:
     - _Shininess: 318.04
     - _ShoreTiling: 56.862743
     - _Speed: 0.4137931
-    - _TargetValue: 0
+    - _TargetValue: 0.27
     - _TimeScale1: 30
     - _TimeScale2: 5
     - _TresholdDensity: 20
@@ -136,12 +136,12 @@ Material:
     - _WaveCapsAmount: 0.18275861
     - _WaveFoamDistort: 0.27931035
     - _WaveScale: 0.046289656
-    - _WavesDensity: 8
+    - _WavesDensity: 7.16
     m_Colors:
     - WaveSpeed: {r: 1.086165, g: 4.440575, b: 12.105146, a: -3.0206447}
     - _AnimationDirection: {r: 2, g: 4, b: 2, a: -1}
     - _AnimationTiling: {r: 0.04582553, g: 0.0182, b: 0.045714468, a: 0.027129691}
-    - _BaseColor: {r: 0.24567473, g: 0.46407616, b: 0.52205884, a: 0.353}
+    - _BaseColor: {r: 0.41117832, g: 0.74040073, b: 0.8301887, a: 1}
     - _BumpDirection: {r: 2, g: 1, b: -1, a: 1.5}
     - _BumpMap_ST: {r: 1, g: 1, b: 0, a: 0}
     - _BumpTiling: {r: 0.05, g: 0.05, b: 0.05, a: 0.05}
@@ -179,7 +179,7 @@ Material:
     - _UnderwaterColor: {r: 0.6950323, g: 0.89552236, b: 0.7502397, a: 1}
     - _WaveOffset: {r: 1, g: 1, b: -0.01, a: -0.01}
     - _WaveScale4: {r: 0.1, g: 0.1, b: 0.01, a: 0.01}
-    - _WavesColor: {r: 0.6691177, g: 0.71247464, b: 1, a: 0.347}
+    - _WavesColor: {r: 0.6691177, g: 0.71247464, b: 1, a: 0.8}
     - _WorldLightDir: {r: -0.030375138, g: -0.20139083, b: -0.97903997, a: 0}
 --- !u!1002 &2100001
 EditorExtensionImpl:
