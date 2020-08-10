@@ -204,8 +204,10 @@ public class Player : MonoBehaviour
 
     void GoToCheckpoint(Event newFailstateEvent)
     {
+        GetComponent<CharacterController>().enabled = false;
         transform.position = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint();
-        Debug.Log(GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint());
+        GetComponent<CharacterController>().enabled = true;
+        Debug.Log("Checkpoint is:" + GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint());
         canMove = true;
     }
 }
