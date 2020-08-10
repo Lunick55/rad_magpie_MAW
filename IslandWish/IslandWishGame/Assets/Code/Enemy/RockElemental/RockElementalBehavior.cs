@@ -15,9 +15,10 @@ public class RockElementalBehavior : MonoBehaviour
     Animator anim;
 
     [SerializeField] float sightRange = 0, outerRange = 0, innerRange = 0, lobbedAngle = 45;
-    private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
+    private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle", smash = "Smash";
 
     public EnemyStats stats;
+    public float timeBetweenAttacks, timer;
     private int currentHealth;
     private bool canRotate = false;
     private bool aggro = false;
@@ -54,32 +55,14 @@ public class RockElementalBehavior : MonoBehaviour
         print("Idle");
         //agent should already be enabled
 
-        if ((playerTrans.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
-        {
-            EnableAgent();
-            anim.SetTrigger(playerTooClose);
-
-            canRotate = false;
-        }
-        else if ((playerTrans.position - transform.position).magnitude < outerRange)  //if in range, beat 'em up
-        {
-            EnableObstacle();
-            anim.SetTrigger(playerInRange);
-
-            canRotate = true;
-        }
-        else if ((playerTrans.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
+        if (GetPlayerDistanceSquared() < (sightRange * sightRange))      //if the player is within sight of the enemy, enable agent, and give chase
         {
             EnableAgent();
             anim.SetTrigger(playerInSight);
 
             canRotate = false;
+            return;
         }
-        else
-		{
-            canRotate = false;
-            //Maybe patrol? I dunno man. Dancing would be cool
-		}
 
         if (agent.enabled)
             agent.destination = transform.position;
@@ -90,21 +73,73 @@ public class RockElementalBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((playerTrans.position - transform.position).magnitude < outerRange)
+        if (GetPlayerDistanceSquared() < (outerRange * outerRange))
         {
-            anim.SetTrigger(idle);
+            anim.SetTrigger(playerInRange);
             EnableObstacle();
+            canRotate = true;
+            return;
         }
         //else if the player is out of sight, go back to idle
-        else if ((playerTrans.position - transform.position).magnitude > sightRange)
+        else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             anim.SetTrigger(idle);
             EnableAgent();
+            return;
         }
-        else
+
+        agent.destination = playerTrans.position;
+    }
+
+    public void RangedAttack()
+	{
+        print("am in combat baybee");
+
+        if (GetPlayerDistanceSquared() < (innerRange * innerRange)) //player too close, flee
         {
-            agent.destination = playerTrans.position;
+            anim.SetTrigger(playerTooClose);
+            timer = 0;
+            EnableAgent();
+            canRotate = false;
+            return;
         }
+        else if (GetPlayerDistanceSquared() > (outerRange * outerRange))                                //player too far, chase
+        {
+            anim.SetTrigger(playerInSight);
+            timer = 0;
+            EnableAgent();
+            canRotate = false;
+            return;
+        }
+
+        timer += Time.deltaTime;
+        if (timer >= timeBetweenAttacks)
+        {
+            LobbedAttack();
+        }
+
+        //something??
+    }
+
+    public void SmashAttack()
+    {
+        if (GetPlayerDistanceSquared() > (innerRange * innerRange))
+        {
+            agent.stoppingDistance = outerRange;
+            anim.SetTrigger(playerInRange);
+            EnableObstacle();
+            canRotate = true;
+            return;
+        }
+
+        timer += Time.deltaTime;
+        if (timer >= timeBetweenAttacks)
+        {
+            timer = 0;
+            anim.SetTrigger(smash);
+        }
+
+        //something??
     }
 
     public void Aggro()
@@ -119,16 +154,11 @@ public class RockElementalBehavior : MonoBehaviour
         aggro = false;
     }
 
-    public void SmashAttack()
-    {
-        Debug.Log("FIST OF HAVOK");
-        smashAttack.SetActive(true);
-    }
-
     public void LobbedAttack()
     {
         print("ATTACK");
         //instantiate attack, send it out
+        timer = 0;
 
         GameObject newLobbedAttack = Instantiate(lobbedAttack, transform.position, transform.rotation);
         newLobbedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
@@ -149,9 +179,14 @@ public class RockElementalBehavior : MonoBehaviour
         newLobbedAttack.GetComponent<Rigidbody>().useGravity = true;
     }
 
-    public void EndAttack()
+    public void StartSmash()
     {
-        EnableAgent();
+        Debug.Log("FIST OF HAVOK");
+        smashAttack.SetActive(true);
+    }
+
+    public void EndSmash()
+    {
         smashAttack.SetActive(false);
     }
 
@@ -185,6 +220,11 @@ public class RockElementalBehavior : MonoBehaviour
 
         // Calculate a rotation a step closer to the target and applies rotation to this object
         transform.rotation = Quaternion.LookRotation(newDirection);
+    }
+
+    float GetPlayerDistanceSquared()
+    {
+        return (playerTrans.position - transform.position).sqrMagnitude;
     }
 
     private void OnTriggerEnter(Collider other)

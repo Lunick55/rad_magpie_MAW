@@ -36,7 +36,10 @@ public class GameManager : BaseSingleton<GameManager>
 
     public void DecreaseAggro()
 	{
-        numEnemiesAggroed--;
+        if(numEnemiesAggroed > 0)
+		{
+            numEnemiesAggroed--;
+        }
     }
 
     public int GetCurrentAggro()
