@@ -77,7 +77,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Rim: 0
-    - _RimAmount: 0.93
+    - _RimAmount: 0.71
     - _RimPower: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -96,10 +96,10 @@ Material:
     - _wind_size: 15
     m_Colors:
     - _AmbientColor: {r: 0.8113208, g: 0.6349207, b: 0.5855287, a: 1}
-    - _Color: {r: 0.75471693, g: 0.72942215, b: 0.6799572, a: 1}
+    - _Color: {r: 0.9607843, g: 0.9254902, b: 0.84705883, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 1, g: 0.92795044, b: 0.8066038, a: 1}
+    - _RimColor: {r: 1, g: 0.9116288, b: 0.759434, a: 1}
     - _ShadowTint: {r: 0.43529412, g: 0.5294118, b: 0.5566037, a: 1}
     - _SpecularColor: {r: 0.8679245, g: 0.8323238, b: 0.79013884, a: 1}
     - _wind_dir: {r: 0.5, g: 0.05, b: 0.5, a: 0}

@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 6e64d5b981738eb479621950c2b2798a
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -639090582929910051
+    second: Armature_bunnybird|Armature_bunnybirdAction
   externalObjects:
   - first:
       type: UnityEngine:Material

@@ -12,6 +12,7 @@ Shader "ToonBetter" {
         _ShadowTint ("Shadow Color", Color) = (0.5,0.5,0.5,1)
         _RimColor ("Rim Color", Color) = (0.26,0.19,0.16,0.0)
         _RimAmount ("Rim Amount", Range(0,1)) = 0.5
+        _RimThreshold("Rim Threshold", Range(0, 1)) = 0.1
 
     }
  
@@ -27,6 +28,7 @@ Shader "ToonBetter" {
         fixed4 _Color;
         float4 _RimColor;
         float _RimAmount;
+        float _RimThreshold;
 
         half3 _Emission;
 
@@ -62,15 +64,24 @@ Shader "ToonBetter" {
         };
 
             //Surface Shader
-            void surf (Input i, inout SurfaceOutput o) {
+            void surf (Input i, inout SurfaceOutput o) 
+            {
+                float NdotL = dot(_WorldSpaceLightPos0, o.Normal);
+                float lightIntensity = smoothstep(0, 0.01, NdotL);
+
+
                 fixed4 col = tex2D(_MainTex, i.uv_MainTex);
                 col *= _Color;
                 
                 //rim lighting
+                
                 float4 rimDot = 1 - dot(i.viewDir, o.Normal);
-                float rimIntensity = smoothstep(_RimAmount - 0.01, _RimAmount + 0.01, rimDot);
+                //float rimIntensity = smoothstep(_RimAmount - 0.01, _RimAmount + 0.01, rimDot);
+                float rimIntensity = rimDot * pow(NdotL, _RimThreshold);
+                rimIntensity = smoothstep(_RimAmount - 0.01, _RimAmount + 0.01, rimIntensity);
                 float4 rim = rimIntensity * _RimColor;
                 col += rim;
+                
 
                 o.Albedo = col.rgb;
                 o.Alpha = col.a;
