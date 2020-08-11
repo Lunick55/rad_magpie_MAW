@@ -58,26 +58,27 @@ public class WolfDeerBehavior : MonoBehaviour
         print("Idle");
         //agent should already be enabled
 
-        if ((playerTrans.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
-        {
-            EnableAgent();
-            anim.SetTrigger(playerTooClose);
+        //if ((playerTrans.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
+        //{
+        //    EnableAgent();
+        //    anim.SetTrigger(playerTooClose);
 
-            canRotate = false;
-        }
-        else if ((playerTrans.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
-        {
-            EnableObstacle();
-            anim.SetTrigger(playerInRange);
+        //    canRotate = false;
+        //}
+        //else if ((playerTrans.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
+        //{
+        //    EnableObstacle();
+        //    anim.SetTrigger(playerInRange);
 
-            canRotate = true;
-        }
-        else if ((playerTrans.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
+        //    canRotate = true;
+        //}
+        if (GetPlayerDistanceSquared() < (sightRange * sightRange))                   //if the player is within sight of the enemy, enable agent, and give chase
         {
             EnableAgent();
             anim.SetTrigger(playerInSight);
 
             canRotate = false;
+            return;
         }
 
         if (agent.enabled)
@@ -89,20 +90,23 @@ public class WolfDeerBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((playerTrans.position - transform.position).magnitude < agent.stoppingDistance)
+        if (GetPlayerDistanceSquared() < (outerRange * outerRange))
         {
-            anim.SetTrigger(idle);
+            anim.SetTrigger(playerInRange);
             EnableObstacle();
+            canRotate = true;
+            return;
         }
         //else if the player is out of sight, go back to idle
-        else if ((playerTrans.position - transform.position).magnitude > sightRange)
+        else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             anim.SetTrigger(idle);
             EnableAgent();
+            return;
         }
         else
         {
-            EnableAgent();
+            //EnableAgent();
 
             agent.destination = playerTrans.position;
         }
@@ -110,19 +114,75 @@ public class WolfDeerBehavior : MonoBehaviour
 
     public void FleePlayer()
     {
-        //if the player is too close, flee
-        if ((playerTrans.position - transform.position).magnitude < innerRange)
-        {
-            agent.stoppingDistance = 0;
-            Vector3 dirToPlayer = transform.position - playerTrans.position;
-            Vector3 fleePos = transform.position + dirToPlayer;
-            agent.destination = fleePos;
-        }
-        else
+        //if the player is too far, attack
+        if (GetPlayerDistanceSquared() > (innerRange * innerRange))
         {
             agent.stoppingDistance = outerRange;
-            anim.SetTrigger(idle);
+            anim.SetTrigger(playerInRange);
+            EnableObstacle();
+            canRotate = true;
+            return;
         }
+
+        agent.stoppingDistance = 0;
+        Vector3 dirToPlayer = transform.position - playerTrans.position;
+        Vector3 fleePos = transform.position + dirToPlayer;
+        agent.destination = fleePos;
+
+    }
+
+    public void Aim()
+    {
+        print("Aiming...");
+
+        if(GetPlayerDistanceSquared() < (innerRange * innerRange))      //player too close flee
+		{
+            anim.SetTrigger(playerTooClose);
+            EnableAgent();
+            canRotate = false;
+            return;
+        }
+        else if(GetPlayerDistanceSquared() > (outerRange * outerRange)) //player too far chase
+		{
+            anim.SetTrigger(playerInSight);
+            EnableAgent();
+            canRotate = false;
+            return;
+        }
+
+        if (IsFacingPlayer())
+        {
+            canRotate = false;
+            anim.SetTrigger(attack);
+        }
+    }
+
+    public void StartAttack()
+    {
+        //start collisions n' stuff
+        timer = 0;
+
+        //TODO: maybe don't fly off the edge. try to math it out with spherecasts or something
+        destination = transform.position + transform.forward * attackDistance;
+
+    }
+
+    public void ChargeAttack()
+    {
+        timer += Time.deltaTime;
+
+        transform.Translate(Vector3.forward * attackSpeed);
+
+        if ((transform.position - destination).magnitude < 1f || timer > safetyTimer)
+        {
+            anim.SetTrigger("DoneAttacking");
+        }
+    }
+
+    public void EndAttack()
+    {
+        //disable collisions n'stuff
+        canRotate = true;
     }
 
     public void Aggro()
@@ -136,44 +196,6 @@ public class WolfDeerBehavior : MonoBehaviour
         GameManager.Instance.DecreaseAggro();
         aggro = false;
     }
-
-    public void Aim()
-	{
-        print("Aiming...");
-
-        if(IsFacingPlayer())
-		{
-            canRotate = false;
-            anim.SetTrigger(attack);
-		}
-	}
-
-    public void StartAttack()
-	{
-        //start collisions n' stuff
-        timer = 0;
-        
-        //TODO: maybe don't fly off the edge. try to math it out with spherecasts or something
-        destination = transform.position + transform.forward * attackDistance;
-
-    }
-
-    public void ChargeAttack()
-    {
-        timer += Time.deltaTime;
-
-        transform.Translate(Vector3.forward * attackSpeed);
-
-        if ((transform.position - destination).magnitude < 1f || timer > safetyTimer)
-		{
-            anim.SetTrigger("DoneAttacking");
-		}
-    }
-
-    public void EndAttack()
-	{
-        //disable collisions n'stuff
-	}
 
     void EnableAgent()
     {
@@ -221,6 +243,11 @@ public class WolfDeerBehavior : MonoBehaviour
 
         // Calculate a rotation a step closer to the target and applies rotation to this object
         transform.rotation = Quaternion.LookRotation(newDirection);
+    }
+
+    float GetPlayerDistanceSquared()
+    {
+        return (playerTrans.position - transform.position).sqrMagnitude;
     }
 
     private void OnTriggerEnter(Collider other)

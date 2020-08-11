@@ -36,7 +36,7 @@ public class CoconapperBehavior : MonoBehaviour
 
         currentHealth = stats.health;
 
-        agent.stoppingDistance = attackRange;
+        agent.stoppingDistance = attackRange * 0.5f;
 
         hurtbox.SetActive(false);
     }
