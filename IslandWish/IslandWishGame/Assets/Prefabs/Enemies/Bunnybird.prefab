@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cbce0253ed312e49815af37932ce1e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   hitbox: {fileID: 536744673248403499}
   hurtbox: {fileID: 5618671285673956211}
   sightRange: 8
@@ -306,7 +305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75c4e66981b737a468cdaba4fd03297f, type: 2}
+  - {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -867,7 +866,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75c4e66981b737a468cdaba4fd03297f, type: 2}
+  - {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -971,7 +970,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75c4e66981b737a468cdaba4fd03297f, type: 2}
+  - {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   - {fileID: 2100000, guid: d2f703f203ea5984c9999ac7e8c4011f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
