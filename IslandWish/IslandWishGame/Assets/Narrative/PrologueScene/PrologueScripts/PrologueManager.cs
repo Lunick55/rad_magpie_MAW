@@ -69,10 +69,11 @@ public class PrologueManager : MonoBehaviour
         {
             narr.text = "Wait no longer, no ifs, ands, or buts. Venture forth and rescue these poor coconuts.".ToString();
         }
-        else
+        else if (prologueClick > 7)
         {
             narr.text = "".ToString();
             stills.SetActive(false);
+            SceneLoader.Instance.LoadScene("Level 1");
         }
     }
 }

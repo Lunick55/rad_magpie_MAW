@@ -22,10 +22,11 @@ public class EnemyCage : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.tag == "PlayerAttack")
+		if(other.tag == "MeleeAttack")
 		{
             currHealth-=1;
-            if(currHealth <= 0)
+            GameManager.Instance.audioManager.Play("PCCageHit");
+            if (currHealth <= 0)
 			{
                 isBroken = true;
                 gameObject.SetActive(false);

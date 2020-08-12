@@ -6,7 +6,10 @@ public enum EventTag
 {
     NONE = -1,
     DAMAGE,
-    FAILSTATE
+    HEAL,
+    FAILSTATE,
+    CHECKPOINT
+
 }
 
 /// <summary>
@@ -47,6 +50,19 @@ public class DamageEvent : Event
     public Vector3 position { get; }
 }
 
+public class HealEvent : Event
+{
+    public HealEvent(int newHeal, Vector3 newPosition)
+    {
+        heal = newHeal;
+        position = newPosition;
+    }
+
+    public override EventTag tag { get { return EventTag.HEAL; } }
+
+    public int heal { get; }
+    public Vector3 position { get; }
+}
 
 public class FailstateEvent : Event
 {

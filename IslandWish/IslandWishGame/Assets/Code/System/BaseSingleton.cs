@@ -58,6 +58,6 @@ public class BaseSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void OnDestroy()
     {
-        m_ShuttingDown = true;
+        //m_ShuttingDown = true;
     }
 }

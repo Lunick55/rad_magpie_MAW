@@ -8,7 +8,8 @@ public class PelletBirdBehavior : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
-    [SerializeField] Transform player;
+    Player player;
+    Transform playerTrans;
     [SerializeField] GameObject hitbox, rangedAttack;
 
     Animator anim;
@@ -16,12 +17,16 @@ public class PelletBirdBehavior : MonoBehaviour
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
+    public EnemyStats stats; public float timeBetweenAttacks, timer;
     private int currentHealth;
     private bool canRotate = false;
+    private bool aggro = false;
 
     void Start()
     {
+        player = GameManager.Instance.player;
+        playerTrans = GameManager.Instance.playerTrans;
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -45,30 +50,17 @@ public class PelletBirdBehavior : MonoBehaviour
     }
 
     public void Idle()
-    {
+    {   
         print("Idle");
         //agent should already be enabled
 
-        if ((player.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
-        {
-            EnableAgent();
-            anim.SetTrigger(playerTooClose);
-
-            canRotate = false;
-        }
-        else if ((player.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
-        {
-            EnableObstacle();
-            anim.SetTrigger(playerInRange);
-
-            canRotate = true;
-        }
-        else if ((player.position - transform.position).magnitude < sightRange)                   //if the player is within sight of the enemy, enable agent, and give chase
+        if (GetPlayerDistanceSquared() < (sightRange * sightRange))      //if the player is within sight of the enemy, enable agent, and give chase
         {
             EnableAgent();
             anim.SetTrigger(playerInSight);
 
             canRotate = false;
+            return;
         }
 
         if (agent.enabled)
@@ -80,38 +72,82 @@ public class PelletBirdBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((player.position - transform.position).magnitude < agent.stoppingDistance)
+        if (GetPlayerDistanceSquared() < (agent.stoppingDistance * agent.stoppingDistance))
         {
-            anim.SetTrigger(idle);
+            anim.SetTrigger(playerInRange);
             EnableObstacle();
+            canRotate = true;
+            return;
         }
         //else if the player is out of sight, go back to idle
-        else if ((player.position - transform.position).magnitude > sightRange)
+        else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             anim.SetTrigger(idle);
             EnableAgent();
+            return;
         }
-        else
+        
+        agent.destination = playerTrans.position;
+    }
+
+    public void AttackPlayer()
+	{
+        print("am in combat baybee");
+
+        if(GetPlayerDistanceSquared() < (innerRange * innerRange)) //player too close, flee
+		{
+            anim.SetTrigger(playerTooClose);
+            timer = 0;
+            EnableAgent();
+            canRotate = false;
+            return;
+		}
+        else if(GetPlayerDistanceSquared() > (outerRange * outerRange))                                //player too far, chase
         {
-            agent.destination = player.position;
+            anim.SetTrigger(playerInSight);
+            timer = 0;
+            EnableAgent();
+            canRotate = false;
+            return;
         }
+
+        timer += Time.deltaTime;
+        if(timer >= timeBetweenAttacks)
+		{
+            RangedAttack();
+		}
+
+        //something??
     }
 
     public void FleePlayer()
     {
-        //if the player is too close, flee
-        if ((player.position - transform.position).magnitude < innerRange)
-        {
-            agent.stoppingDistance = 0;
-            Vector3 dirToPlayer = transform.position - player.position;
-            Vector3 fleePos = transform.position + dirToPlayer;
-            agent.destination = fleePos;
-        }
-        else
+        //if the player is in range, attack
+        if (GetPlayerDistanceSquared() > (innerRange * innerRange))
         {
             agent.stoppingDistance = outerRange;
-            anim.SetTrigger(idle);
+            anim.SetTrigger(playerInRange);
+            EnableObstacle();
+            canRotate = true;
+            return;
         }
+        
+        agent.stoppingDistance = 0;
+        Vector3 dirToPlayer = transform.position - playerTrans.position;
+        Vector3 fleePos = transform.position + dirToPlayer;
+        agent.destination = fleePos;
+    }
+
+    public void Aggro()
+    {
+        GameManager.Instance.IncreaseAggro();
+        aggro = true;
+    }
+
+    public void DeAggro()
+    {
+        GameManager.Instance.DecreaseAggro();
+        aggro = false;
     }
 
     public void RangedAttack()
@@ -119,6 +155,7 @@ public class PelletBirdBehavior : MonoBehaviour
         print("ATTACK");
         //instantiate attack, send it out
 
+        timer = 0;
         GameObject newRangedAttack = Instantiate(rangedAttack, transform.position, transform.rotation);
         newRangedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
         
@@ -147,7 +184,7 @@ public class PelletBirdBehavior : MonoBehaviour
         // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
         
         // Determine which direction to rotate towards
-        Vector3 targetDirection = player.position - transform.position;
+        Vector3 targetDirection = playerTrans.position - transform.position;
         targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
@@ -162,23 +199,38 @@ public class PelletBirdBehavior : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
+    float GetPlayerDistanceSquared()
+	{
+        return (playerTrans.position - transform.position).sqrMagnitude;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "MeleeAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.spearDamage;
+            GameManager.Instance.audioManager.Play("SpearHit");
+            currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
         {
-            currentHealth -= GameManager.Instance.player.stats.slingDamage;
+            GameManager.Instance.audioManager.Play("SlingHit");
+            currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                if (aggro)
+                {
+                    DeAggro();
+                }
                 Destroy(gameObject);
             }
         }
@@ -186,11 +238,13 @@ public class PelletBirdBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+#if UNITY_EDITOR
         UnityEditor.Handles.color = Color.green;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
         UnityEditor.Handles.color = Color.yellow;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
         UnityEditor.Handles.color = Color.red;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
+#endif
     }
 }

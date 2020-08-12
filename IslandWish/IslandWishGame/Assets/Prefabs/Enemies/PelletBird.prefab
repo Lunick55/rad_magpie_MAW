@@ -110,7 +110,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75c4e66981b737a468cdaba4fd03297f, type: 2}
+  - {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   - {fileID: 2100000, guid: d2f703f203ea5984c9999ac7e8c4011f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -341,7 +341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6af460d260cc514c86b1659bef7faf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   hitbox: {fileID: 2058027804621333548}
   rangedAttack: {fileID: 3928775837094120575, guid: 8fc41e45f6ed24f4b94c6d92929ccd0c,
     type: 3}
@@ -349,6 +348,8 @@ MonoBehaviour:
   innerRange: 3
   sightRange: 10
   stats: {fileID: 11400000, guid: 6b96c26dff3ce8f4d84a26a9c29c3f2e, type: 2}
+  timeBetweenAttacks: 0
+  timer: 0
 --- !u!1 &3183844119000620378
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +644,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75c4e66981b737a468cdaba4fd03297f, type: 2}
+  - {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

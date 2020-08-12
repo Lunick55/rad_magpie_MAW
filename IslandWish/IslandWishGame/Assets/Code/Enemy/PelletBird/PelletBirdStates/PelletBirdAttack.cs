@@ -9,13 +9,20 @@ public class PelletBirdAttack : SceneLinkedSMB<PelletBirdBehavior>
 	{
 		base.OnSLStateEnter(animator, stateInfo, layerIndex);
 
-		m_MonoBehaviour.RangedAttack();
+		//m_MonoBehaviour.RangedAttack();
+	}
+
+	public override void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		base.OnSLStateNoTransitionUpdate(animator, stateInfo, layerIndex);
+
+		m_MonoBehaviour.AttackPlayer();
 	}
 
 	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnSLStateExit(animator, stateInfo, layerIndex);
 
-		m_MonoBehaviour.EndAttack();
+		//m_MonoBehaviour.EndAttack();
 	}
 }

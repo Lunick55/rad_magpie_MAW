@@ -55,11 +55,16 @@ public class Movement : MonoBehaviour
 			if (acceptInput)
 			{
 				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+				if(inputDir != Vector3.zero)
+				{
+					GameManager.Instance.audioManager.Play("PCWalking");
+				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
 				if (Input.GetKey(KeyCode.Space) && !dashing && inputDir != Vector3.zero)
 				{
 					print("DASH");
+					GameManager.Instance.audioManager.Play("PCDash");
 
 					dashing = true;
 					acceptInput = false;
@@ -131,7 +136,8 @@ public class Movement : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
+#if UNITY_EDITOR
 		UnityEditor.Handles.DrawWireDisc(dashDestination, Vector3.up, 1);
-
+#endif
 	}
 }

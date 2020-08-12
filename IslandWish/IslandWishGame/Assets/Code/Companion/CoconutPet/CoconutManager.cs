@@ -6,7 +6,10 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 {
     public List<CoconutPetBehavior> coconuts;
 
+    public List<GameObject> coconutsFreed;
+
     public List<Transform> hidingSpots;
+
 
     void Init()
     {
@@ -61,5 +64,19 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 
 
         return hidingSpot;
+	}
+
+    public void CoconutFreed(GameObject newRecruit)
+	{
+        if (!coconutsFreed.Contains(newRecruit))
+        {
+            coconutsFreed.Add(newRecruit);
+            if(coconutsFreed.Count >= coconuts.Count)
+			{
+                //go to next level
+                SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
+                SceneLoader.Instance.LoadScene("TempWin");
+			}
+        }
 	}
 }

@@ -8,8 +8,8 @@ public class CoconutPetBehavior : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
-    [SerializeField] Transform playerTrans;
-    [SerializeField] Player player;
+    Transform playerTrans;
+    Player player;
     [SerializeField] EnemyCage cage;
 
     Animator anim;
@@ -24,9 +24,13 @@ public class CoconutPetBehavior : MonoBehaviour
     //private bool canRotate = false;
 
     Vector3 destination = Vector3.zero;
+    private Vector3 debugDest = Vector3.zero;
 
     void Start()
     {
+        player = GameManager.Instance.player;
+        playerTrans = GameManager.Instance.playerTrans;
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -61,6 +65,7 @@ public class CoconutPetBehavior : MonoBehaviour
         {
             EnableAgent();
             anim.SetBool("Trapped", false);
+            CoconutManager.Instance.CoconutFreed(gameObject);
         }
 
     }
@@ -92,6 +97,7 @@ public class CoconutPetBehavior : MonoBehaviour
             //put that point in context of a position
             randomDestination += playerTrans.position;
             float randDestHeight = randomDestination.y * wanderHeight * maxRangeReciprical;
+            debugDest = randomDestination;
             randomDestination.y = randDestHeight;
 
             NavMeshHit navHit;
@@ -220,11 +226,18 @@ public class CoconutPetBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, wanderRange);
-        Vector3 seekRange = transform.position;
-        seekRange.y += wanderHeight;
-        UnityEditor.Handles.DrawWireDisc(seekRange, Vector3.up, wanderRange);
+#if UNITY_EDITOR
+        if (Application.isPlaying)
+        {
+            UnityEditor.Handles.DrawWireDisc(playerTrans.position, Vector3.up, wanderRange);
+            Vector3 seekRange = playerTrans.position;
+            seekRange.y += wanderHeight;
+            UnityEditor.Handles.DrawWireDisc(seekRange, Vector3.up, wanderRange);
 
-        UnityEditor.Handles.DrawWireDisc(destination, Vector3.up, 1);
+            UnityEditor.Handles.DrawWireDisc(destination, Vector3.up, 1);
+
+            Gizmos.DrawWireSphere(debugDest, wanderHeight);
+        }
+#endif
     }
 }

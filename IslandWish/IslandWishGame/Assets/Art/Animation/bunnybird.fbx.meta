@@ -2,8 +2,16 @@ fileFormatVersion: 2
 guid: 6e64d5b981738eb479621950c2b2798a
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -639090582929910051
+    second: Armature_bunnybird|Armature_bunnybirdAction
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Master
+    second: {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

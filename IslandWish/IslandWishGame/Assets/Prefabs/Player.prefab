@@ -369,6 +369,8 @@ MonoBehaviour:
   shieldCurrentHealth: 100
   shieldRechargeRate: 0.2
   inCombat: 0
+  slingshotBullet: {fileID: 5044857425206683539, guid: b09bd56c5456659408c6be64261e4314,
+    type: 3}
   canMove: 1
 --- !u!143 &8803282158920041010
 CharacterController:

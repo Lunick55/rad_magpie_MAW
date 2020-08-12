@@ -11,14 +11,20 @@ public class HUDScript : MonoBehaviour
     public GameObject spearImage;
     public GameObject slingshotImage;
     public int playerHealth;
+    public int playerHealthMax = 5;
+
+    GameObject checkpointManager;
+    public Animation anim;
 
     // Start is called before the first frame update
     void Start()
     {
         EventManager.instance.AddListener(IncomingDamage, EventTag.DAMAGE);
+        EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
         EventManager.instance.AddListener(SetbackPlayer, EventTag.FAILSTATE);
 
-        playerHealth = 5;
+        checkpointManager = GameObject.Find("CheckpointManager");
+        playerHealth = playerHealthMax;
     }
 
     void IncomingDamage(Event newDamageEvent)
@@ -32,6 +38,10 @@ public class HUDScript : MonoBehaviour
         
     }
 
+    void HealDamage(Event newHealEvent)
+	{
+        GainLife();
+	}
 
     // Update is called once per frame
     void Update()
@@ -54,22 +64,31 @@ public class HUDScript : MonoBehaviour
 
     public void LoseLife()
     {
-        playerHealth--;
-        uiLives[playerHealth].SetActive(false);
-        uiLifeBackgrounds[playerHealth].SetActive(true);
-        
+        if (playerHealth > 0)
+        {
+            playerHealth--;
+            uiLives[playerHealth].SetActive(false);
+            uiLifeBackgrounds[playerHealth].SetActive(true);
+        }        
 
         if(playerHealth <= 0)
         {
-            FailState();
+            GameManager.Instance.player.canMove = false;
+            GameManager.Instance.audioManager.Play("PCDeath");
+            anim.Play();
+            Invoke("FailState", 2);
+
         }
     }
 
     public void GainLife()
     {
-        uiLives[playerHealth].SetActive(true);
-        uiLifeBackgrounds[playerHealth].SetActive(false);
-        playerHealth++;
+        if (playerHealth < playerHealthMax)
+        {
+            uiLives[playerHealth].SetActive(true);
+            uiLifeBackgrounds[playerHealth].SetActive(false);
+            playerHealth++;
+        }
     }
 
     public void ToggleWeapon()
@@ -82,6 +101,18 @@ public class HUDScript : MonoBehaviour
     {
         FailstateEvent failstateEvent = new FailstateEvent();
         EventManager.instance.FireEvent(failstateEvent);
+        foreach(GameObject lifeImage in uiLives)
+        {
+            lifeImage.SetActive(true);
+        }
+
+        foreach(GameObject lifeBackground in uiLifeBackgrounds)
+        {
+            lifeBackground.SetActive(false);
+
+        }
+
+        playerHealth = playerHealthMax;
     }
 
     void SetbackPlayer(Event newFailstateEvent)
@@ -90,6 +121,16 @@ public class HUDScript : MonoBehaviour
         Debug.Log("Player is dead!");
         FailstateEvent failstateEvent = (FailstateEvent)newFailstateEvent;
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //GameManager.Instance.player.canMove = false;
+        //GameManager.Instance.audioManager.Play("PCDeath");
+        //Invoke("ResetScene", 2);
     }
+
+    void ResetScene()
+	{
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+    }
+
 }

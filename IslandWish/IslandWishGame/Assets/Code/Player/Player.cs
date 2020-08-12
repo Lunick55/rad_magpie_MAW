@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
+        EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
+        EventManager.instance.AddListener(GoToCheckpoint, EventTag.FAILSTATE);
 
         SceneLinkedSMB<Player>.Initialise(anim, this);
 
@@ -56,27 +58,43 @@ public class Player : MonoBehaviour
         if(currentHealth <= 0)
 		{
             Debug.Log("ur dead bruh");
-		}
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
             if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
             {
+                GameManager.Instance.audioManager.Play("SwingSpear");
                 anim.SetTrigger("Attack");
             }
         }
-        if(Input.GetMouseButtonUp(1))
+        if(Input.GetMouseButtonDown(1))
 		{
+            GameManager.Instance.audioManager.Play("SlingshotPull");
+        }
+        else if(Input.GetMouseButtonUp(1))
+		{
+            GameManager.Instance.audioManager.Play("SlingshotRelease");
             FireSlingshotAttack();
 		}
 
         if(Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
 		{
+            GameManager.Instance.audioManager.Play("ShieldReady");
             Block(true);
 		}
         if(Input.GetKeyUp(KeyCode.LeftControl))
 		{
             Block(false);
+		}
+
+        if(GameManager.Instance.GetCurrentAggro() > 0)
+		{
+            inCombat = true;
+		}
+        else
+		{
+            inCombat = false;
 		}
     }
 
@@ -92,13 +110,29 @@ public class Player : MonoBehaviour
             if(damageAngle < 90)
 			{
                 Debug.Log("BLOCKED BITCH");
+                GameManager.Instance.audioManager.Play("ShieldHit");
                 shieldCurrentHealth -= damageEvent.damage;
                 return;
 			}
 		}
         print("OOF OUCH");
+        GameManager.Instance.audioManager.Play("PCDamage");
         currentHealth -= damageEvent.damage;
     }
+
+    public void HealDamage(Event newHealEvent)
+	{
+        HealEvent healEvent = (HealEvent)newHealEvent;
+
+        if(currentHealth + healEvent.heal > stats.health)
+		{
+            currentHealth = stats.health;
+		}
+        else
+		{
+            currentHealth += stats.health;
+		}
+	}
 
     public void FireSlingshotAttack()
 	{
@@ -160,6 +194,7 @@ public class Player : MonoBehaviour
 		{
             if (shieldCurrentHealth <= 0)
             {
+                GameManager.Instance.audioManager.Play("ShieldBreak");
                 shieldBroken = true;
                 Block(false);
             }
@@ -181,4 +216,13 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
+
+    void GoToCheckpoint(Event newFailstateEvent)
+    {
+        GetComponent<CharacterController>().enabled = false;
+        transform.position = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint();
+        GetComponent<CharacterController>().enabled = true;
+        Debug.Log("Checkpoint is:" + GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint());
+        canMove = true;
+    }
 }
