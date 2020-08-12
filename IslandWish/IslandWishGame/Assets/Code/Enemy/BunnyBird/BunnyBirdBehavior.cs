@@ -213,7 +213,9 @@ public class BunnyBirdBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+#if UNITY_EDITOR
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, attackRange);
+#endif
     }
 }

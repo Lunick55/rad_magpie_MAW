@@ -19,6 +19,8 @@ public class GameManager : BaseSingleton<GameManager>
 
     public void Init()
 	{
+        SceneLoader.Instance.Init();
+
         if (!player)
         {
             Debug.LogError("Fill out the Player field");

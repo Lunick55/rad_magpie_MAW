@@ -261,11 +261,13 @@ public class RockElementalBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
 	{
-		UnityEditor.Handles.color = Color.green;
+#if UNITY_EDITOR
+        UnityEditor.Handles.color = Color.green;
 		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
 		UnityEditor.Handles.color = Color.yellow;
 		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
 		UnityEditor.Handles.color = Color.red;
 		UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
-	}
+#endif
+    }
 }

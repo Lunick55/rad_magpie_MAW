@@ -11,6 +11,7 @@ public class HUDScript : MonoBehaviour
     public GameObject spearImage;
     public GameObject slingshotImage;
     public int playerHealth;
+    public int playerHealthMax = 5;
 
     GameObject checkpointManager;
     public Animation anim;
@@ -19,10 +20,11 @@ public class HUDScript : MonoBehaviour
     void Start()
     {
         EventManager.instance.AddListener(IncomingDamage, EventTag.DAMAGE);
+        EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
         EventManager.instance.AddListener(SetbackPlayer, EventTag.FAILSTATE);
 
         checkpointManager = GameObject.Find("CheckpointManager");
-        playerHealth = 5;
+        playerHealth = playerHealthMax;
     }
 
     void IncomingDamage(Event newDamageEvent)
@@ -36,6 +38,10 @@ public class HUDScript : MonoBehaviour
         
     }
 
+    void HealDamage(Event newHealEvent)
+	{
+        GainLife();
+	}
 
     // Update is called once per frame
     void Update()
@@ -58,10 +64,12 @@ public class HUDScript : MonoBehaviour
 
     public void LoseLife()
     {
-        playerHealth--;
-        uiLives[playerHealth].SetActive(false);
-        uiLifeBackgrounds[playerHealth].SetActive(true);
-        
+        if (playerHealth > 0)
+        {
+            playerHealth--;
+            uiLives[playerHealth].SetActive(false);
+            uiLifeBackgrounds[playerHealth].SetActive(true);
+        }        
 
         if(playerHealth <= 0)
         {
@@ -75,9 +83,12 @@ public class HUDScript : MonoBehaviour
 
     public void GainLife()
     {
-        uiLives[playerHealth].SetActive(true);
-        uiLifeBackgrounds[playerHealth].SetActive(false);
-        playerHealth++;
+        if (playerHealth < playerHealthMax)
+        {
+            uiLives[playerHealth].SetActive(true);
+            uiLifeBackgrounds[playerHealth].SetActive(false);
+            playerHealth++;
+        }
     }
 
     public void ToggleWeapon()
@@ -101,7 +112,7 @@ public class HUDScript : MonoBehaviour
 
         }
 
-        playerHealth = 5;
+        playerHealth = playerHealthMax;
     }
 
     void SetbackPlayer(Event newFailstateEvent)

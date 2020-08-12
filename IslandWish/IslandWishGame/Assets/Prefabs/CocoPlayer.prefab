@@ -137,8 +137,8 @@ GameObject:
   - component: {fileID: 180864102612757718}
   - component: {fileID: 180864102612757713}
   m_Layer: 0
-  m_Name: TEMPAttack
-  m_TagString: PlayerAttack
+  m_Name: Attack
+  m_TagString: MeleeAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1463,7 +1463,7 @@ GameObject:
   - component: {fileID: 180864101691658529}
   m_Layer: 0
   m_Name: CocoPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

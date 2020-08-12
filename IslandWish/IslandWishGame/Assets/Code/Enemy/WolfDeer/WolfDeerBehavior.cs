@@ -284,11 +284,13 @@ public class WolfDeerBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+#if UNITY_EDITOR
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
 
         UnityEditor.Handles.DrawLine(transform.position, transform.position + transform.forward * attackDistance);
         UnityEditor.Handles.DrawWireDisc(destination, Vector3.up, 1);
+#endif
     }
 }

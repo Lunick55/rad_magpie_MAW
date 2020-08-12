@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
+        EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
         EventManager.instance.AddListener(GoToCheckpoint, EventTag.FAILSTATE);
 
         SceneLinkedSMB<Player>.Initialise(anim, this);
@@ -118,6 +119,20 @@ public class Player : MonoBehaviour
         GameManager.Instance.audioManager.Play("PCDamage");
         currentHealth -= damageEvent.damage;
     }
+
+    public void HealDamage(Event newHealEvent)
+	{
+        HealEvent healEvent = (HealEvent)newHealEvent;
+
+        if(currentHealth + healEvent.heal > stats.health)
+		{
+            currentHealth = stats.health;
+		}
+        else
+		{
+            currentHealth += stats.health;
+		}
+	}
 
     public void FireSlingshotAttack()
 	{

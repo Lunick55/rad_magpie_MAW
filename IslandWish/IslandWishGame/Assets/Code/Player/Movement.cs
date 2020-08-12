@@ -136,7 +136,8 @@ public class Movement : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
+#if UNITY_EDITOR
 		UnityEditor.Handles.DrawWireDisc(dashDestination, Vector3.up, 1);
-
+#endif
 	}
 }
