@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     [Header("Slingshot")]
     [SerializeField] GameObject slingshotBullet;
-
+    [SerializeField] int slingCurrentAmmo = 1;
 
     public bool canMove = true;
 
@@ -71,6 +71,8 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonDown(1))
 		{
             GameManager.Instance.audioManager.Play("SlingshotPull");
+            //maybe change this to GetMouseButton() 
+            //draw the "aim" line
         }
         else if(Input.GetMouseButtonUp(1))
 		{
@@ -136,11 +138,27 @@ public class Player : MonoBehaviour
 
     public void FireSlingshotAttack()
 	{
-        GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
-        newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
+        if (slingCurrentAmmo > 0)
+        {
+            GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
+            newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
 
-        newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
+            newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
+            slingCurrentAmmo--;
+        }
     }
+
+    public void PickupSlingAmmo(int ammo)
+	{
+        if(slingCurrentAmmo < stats.slingMaxAmmo)
+		{
+            slingCurrentAmmo += ammo;
+            if(slingCurrentAmmo > stats.slingMaxAmmo)
+			{
+                slingCurrentAmmo = stats.slingMaxAmmo;
+			}
+		}
+	}
 
     public void StartAttack()
     {

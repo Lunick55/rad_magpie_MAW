@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : BaseSingleton<GameManager>
 {
     public Player player;
-    public Transform playerTrans;
+    [HideInInspector] public Transform playerTrans;
 
     public AudioManager audioManager;
 
@@ -25,10 +25,7 @@ public class GameManager : BaseSingleton<GameManager>
         {
             Debug.LogError("Fill out the Player field");
         }
-        if (!playerTrans)
-        {
-            Debug.LogError("Fill out the Player Trans field");
-        }
+        playerTrans = player.GetComponent<Transform>();
     }
 
     public void IncreaseAggro()
