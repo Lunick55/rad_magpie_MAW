@@ -121,7 +121,7 @@ ModelImporter:
       takeName: Armature_coconutpet|Armature_coconutpetAction
       internalID: 0
       firstFrame: 40
-      lastFrame: 55
+      lastFrame: 53
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -232,7 +232,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

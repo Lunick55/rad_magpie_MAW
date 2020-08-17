@@ -77,7 +77,7 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DetailReductionFactor: 0.9
+    - _DetailReductionFactor: 0
     - _DstBlend: 0
     - _EnableBasePlane: 1
     - _EnableGradient: 1
@@ -92,31 +92,32 @@ Material:
     - _GradientCenter: 0.11
     - _GrassShapeType: 1
     - _LODDistance: 100
-    - _LeafCuts: 3.9
+    - _LeafCuts: 3
     - _LeafMultiplier: 1
-    - _LengthIntensity: 1.5
-    - _LengthMaxDiference: 0.5
-    - _LowerWidth: 0.18
+    - _LengthIntensity: 1.57
+    - _LengthMaxDiference: 0.96
+    - _LowerWidth: 0.05
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseStrength: 0.1
+    - _NoiseStrength: 0.19
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PressureStrength: 1
-    - _Size: 0.5
+    - _Size: 0.4
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UpperWidth: 0.18
+    - _UpperWidth: 0.05
     - _VisibleRange: 60
     - _WindSpeed: 0.005
-    - _WindStrength: 0.05
+    - _WindStrength: 0.54
     - _WindTexCol: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.3270737, g: 0.6603774, b: 0.3270737, a: 1}
+    - _BaseColor: {r: 0.6117647, g: 0.73333335, b: 0.3647059, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MiddleColor: {r: 0.32941177, g: 0.6627451, b: 0.32941177, a: 1}
-    - _TopColor: {r: 0.6087974, g: 1, b: 0.46698105, a: 0.6039216}
+    - _MiddleColor: {r: 0.6117647, g: 0.73333335, b: 0.3647059, a: 1}
+    - _ShadowTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _TopColor: {r: 0.6679461, g: 0.7924528, b: 0.41491634, a: 0.6039216}
