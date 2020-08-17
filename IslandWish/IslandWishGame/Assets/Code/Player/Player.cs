@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     [Header("Slingshot")]
     [SerializeField] GameObject slingshotBullet;
-    [SerializeField] int slingCurrentAmmo = 1;
+    [SerializeField] public int slingCurrentAmmo = 1;
 
     public bool canMove = true;
 
@@ -148,17 +148,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PickupSlingAmmo(int ammo)
+    public bool PickupSlingAmmo(int ammo)
 	{
+        //are we low on ammo?
         if(slingCurrentAmmo < stats.slingMaxAmmo)
 		{
+            //get ammo, and shave off any extra
             slingCurrentAmmo += ammo;
             if(slingCurrentAmmo > stats.slingMaxAmmo)
 			{
                 slingCurrentAmmo = stats.slingMaxAmmo;
 			}
+            return true;
 		}
-	}
+        return false;
+    }
 
     public void StartAttack()
     {
@@ -243,4 +247,26 @@ public class Player : MonoBehaviour
         Debug.Log("Checkpoint is:" + GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint());
         canMove = true;
     }
+}
+
+[System.Serializable]
+public class PlayerData
+{
+    public PlayerData(Player player)
+    {
+        position = new float[3];
+        Transform playerTrans = player.transform;
+
+        position[0] = playerTrans.position.x;
+        position[1] = playerTrans.position.y;
+        position[2] = playerTrans.position.z;
+
+        health = player.currentHealth;
+        ammo = player.slingCurrentAmmo;
+    }
+
+
+    public float[] position;
+    public int health;
+    public int ammo;
 }
