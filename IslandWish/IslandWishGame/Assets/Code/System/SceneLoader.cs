@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : BasePersistentSingleton<SceneLoader>
 {
-	List<string> coconutNames; //for now. gameobjects to instantiate later
+	List<CoconutData> coconuts;
 	bool isInit = false;
 
 	public void Init()
 	{
 		if(!isInit)
 		{
-			coconutNames = new List<string>();
+			coconuts = new List<CoconutData>();
 			isInit = true;
 		}
 	}
@@ -22,23 +22,24 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 		SceneManager.LoadScene(scene);
 	}
 
-	public void AddSavedCoconuts(List<GameObject> coconuts)
+	public void AddSavedCoconuts(List<CoconutPetBehavior> savedCoconuts)
 	{
-		foreach (GameObject coconut in coconuts)
+		foreach (CoconutPetBehavior coconut in savedCoconuts)
 		{
-			coconutNames.Add(coconut.name);
+			CoconutData cocoData = new CoconutData(coconut.name, coconut.accessory);
+			coconuts.Add(cocoData);
 		}
 	}
 
-	public List<string> GetSavedCoconuts()
+	public List<CoconutData> GetSavedCoconuts()
 	{
-		return coconutNames;
+		return coconuts;
 	}
 
 	public void Reset()
 	{
-		coconutNames.Clear();
-		coconutNames.Capacity = 0;
+		coconuts.Clear();
+		coconuts.Capacity = 0;
 
 	}
 }

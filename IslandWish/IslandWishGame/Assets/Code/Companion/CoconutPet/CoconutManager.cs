@@ -2,11 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class CoconutData
+{
+    public CoconutData(string newName) 
+    {
+        name = newName; 
+    }
+
+    public CoconutData(string newName, GameObject newAccessory)
+	{
+        name = newName;
+        accessory = newAccessory;
+	}
+
+    public string name;
+    public GameObject accessory;
+}
+
 public class CoconutManager : BaseSingleton<CoconutManager>
 {
     public List<CoconutPetBehavior> coconuts;
 
-    public List<GameObject> coconutsFreed;
+    public List<CoconutPetBehavior> coconutsFreed;
 
     public List<Transform> hidingSpots;
 
@@ -66,7 +83,7 @@ public class CoconutManager : BaseSingleton<CoconutManager>
         return hidingSpot;
 	}
 
-    public void CoconutFreed(GameObject newRecruit)
+    public void CoconutFreed(CoconutPetBehavior newRecruit)
 	{
         if (!coconutsFreed.Contains(newRecruit))
         {
@@ -75,7 +92,7 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 			{
                 //go to next level
                 SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
-                SceneLoader.Instance.LoadScene("TempWin");
+                SceneLoader.Instance.LoadScene("Boat Scene");
 			}
         }
 	}

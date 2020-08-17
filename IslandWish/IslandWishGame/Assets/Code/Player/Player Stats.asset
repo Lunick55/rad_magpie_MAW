@@ -18,3 +18,4 @@ MonoBehaviour:
   speed: 8
   slingSpeed: 15
   slingDuration: 5
+  slingMaxAmmo: 8
