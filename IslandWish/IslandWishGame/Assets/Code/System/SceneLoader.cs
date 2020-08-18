@@ -7,6 +7,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 {
 	List<CoconutData> coconuts;
 	bool isInit = false;
+	public bool loadData = false;
 
 	public void Init()
 	{

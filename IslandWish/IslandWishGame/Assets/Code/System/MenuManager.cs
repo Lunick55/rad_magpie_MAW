@@ -22,6 +22,12 @@ public class MenuManager : MonoBehaviour
         SceneLoader.Instance.LoadScene(scene);
 	}
 
+    public void LoadGame(string scene)
+	{
+        SceneLoader.Instance.loadData = true;
+        SceneLoader.Instance.LoadScene(scene);
+    }
+
     public void QuitGame()
 	{
         Application.Quit();

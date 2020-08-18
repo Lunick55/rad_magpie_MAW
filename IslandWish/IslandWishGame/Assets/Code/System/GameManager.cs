@@ -11,8 +11,8 @@ public class GameManager : BaseSingleton<GameManager>
 
     int numEnemiesAggroed = 0;
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Awake()
     {
         Init();
     }
@@ -47,8 +47,12 @@ public class GameManager : BaseSingleton<GameManager>
 	}
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SaveSystem.SavePlayer(player);
+        }
     }
+
 }

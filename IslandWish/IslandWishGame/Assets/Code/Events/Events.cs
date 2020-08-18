@@ -36,33 +36,33 @@ public class ExampleEvent : Event
     public float height { get; }
 }
 
-public class DamageEvent : Event
-{
-    public DamageEvent(int newDamage, Vector3 newPosition)
-	{
-        damage = newDamage;
-        position = newPosition;
-	}
+//public class DamageEvent : Event
+//{
+//    public DamageEvent(int newDamage, Vector3 newPosition)
+//	{
+//        damage = newDamage;
+//        position = newPosition;
+//	}
 
-    public override EventTag tag { get { return EventTag.DAMAGE; } }
+//    public override EventTag tag { get { return EventTag.DAMAGE; } }
 
-    public int damage { get; }
-    public Vector3 position { get; }
-}
+//    public int damage { get; }
+//    public Vector3 position { get; }
+//}
 
-public class HealEvent : Event
-{
-    public HealEvent(int newHeal, Vector3 newPosition)
-    {
-        heal = newHeal;
-        position = newPosition;
-    }
+//public class HealEvent : Event
+//{
+//    public HealEvent(int newHeal, Vector3 newPosition)
+//    {
+//        heal = newHeal;
+//        position = newPosition;
+//    }
 
-    public override EventTag tag { get { return EventTag.HEAL; } }
+//    public override EventTag tag { get { return EventTag.HEAL; } }
 
-    public int heal { get; }
-    public Vector3 position { get; }
-}
+//    public int heal { get; }
+//    public Vector3 position { get; }
+//}
 
 public class FailstateEvent : Event
 {

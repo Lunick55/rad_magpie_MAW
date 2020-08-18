@@ -10,8 +10,6 @@ public class HUDScript : MonoBehaviour
     public GameObject[] uiLifeBackgrounds;
     public GameObject spearImage;
     public GameObject slingshotImage;
-    public int playerHealth;
-    public int playerHealthMax = 5;
 
     GameObject checkpointManager;
     public Animation anim;
@@ -19,29 +17,12 @@ public class HUDScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.instance.AddListener(IncomingDamage, EventTag.DAMAGE);
-        EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
+        //EventManager.instance.AddListener(IncomingDamage, EventTag.DAMAGE);
+        //EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
         EventManager.instance.AddListener(SetbackPlayer, EventTag.FAILSTATE);
 
         checkpointManager = GameObject.Find("CheckpointManager");
-        playerHealth = playerHealthMax;
     }
-
-    void IncomingDamage(Event newDamageEvent)
-    {
-        DamageEvent damageEvent = (DamageEvent)newDamageEvent;
-        //Debug.Log("Damage taken: " + damageEvent.damage);
-        //for(int i = 0; i < damageEvent.damage; i++)
-        {
-            LoseLife();
-        }
-        
-    }
-
-    void HealDamage(Event newHealEvent)
-	{
-        GainLife();
-	}
 
     // Update is called once per frame
     void Update()
@@ -62,11 +43,27 @@ public class HUDScript : MonoBehaviour
         }
     }
 
+    public void InitLife()
+	{
+        int playerHealth = GameManager.Instance.player.currentHealth;
+        int playerMaxHealth = GameManager.Instance.player.stats.health;
+
+        if (playerHealth < playerMaxHealth)
+		{
+            for(int i = playerMaxHealth; i > playerHealth; i--)
+			{
+                uiLives[i-1].SetActive(false);
+                uiLifeBackgrounds[i-1].SetActive(true);
+            }
+        }
+    }
+
     public void LoseLife()
     {
+        int playerHealth = GameManager.Instance.player.currentHealth;
+
         if (playerHealth > 0)
         {
-            playerHealth--;
             uiLives[playerHealth].SetActive(false);
             uiLifeBackgrounds[playerHealth].SetActive(true);
         }        
@@ -83,11 +80,12 @@ public class HUDScript : MonoBehaviour
 
     public void GainLife()
     {
-        if (playerHealth < playerHealthMax)
+        int playerHealth = GameManager.Instance.player.currentHealth;
+
+        if (playerHealth < GameManager.Instance.player.stats.health)
         {
             uiLives[playerHealth].SetActive(true);
             uiLifeBackgrounds[playerHealth].SetActive(false);
-            playerHealth++;
         }
     }
 
@@ -112,12 +110,11 @@ public class HUDScript : MonoBehaviour
 
         }
 
-        playerHealth = playerHealthMax;
+        GameManager.Instance.player.currentHealth = GameManager.Instance.player.stats.health;
     }
 
     void SetbackPlayer(Event newFailstateEvent)
     {
-
         Debug.Log("Player is dead!");
         FailstateEvent failstateEvent = (FailstateEvent)newFailstateEvent;
 

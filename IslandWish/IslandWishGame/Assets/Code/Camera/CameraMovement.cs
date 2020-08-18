@@ -8,7 +8,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] Transform offsetSource;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //set up the offsets so the camera doesn't hug what its following
         xOffset = transform.position.x - offsetSource.position.x;
