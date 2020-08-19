@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class CoconutPetBehavior : MonoBehaviour
 {
+    public GameObject accessory;
+
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
@@ -26,8 +28,19 @@ public class CoconutPetBehavior : MonoBehaviour
     Vector3 destination = Vector3.zero;
     private Vector3 debugDest = Vector3.zero;
 
+    public bool displayMode = false;
+
     void Start()
     {
+        if(displayMode)
+		{
+            GetComponent<Animator>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            GetComponent<NavMeshObstacle>().enabled = false;
+            enabled = false;
+            return;
+		}
+
         player = GameManager.Instance.player;
         playerTrans = GameManager.Instance.playerTrans;
 
@@ -65,7 +78,7 @@ public class CoconutPetBehavior : MonoBehaviour
         {
             EnableAgent();
             anim.SetBool("Trapped", false);
-            CoconutManager.Instance.CoconutFreed(gameObject);
+            CoconutManager.Instance.CoconutFreed(this);
         }
 
     }
@@ -227,7 +240,7 @@ public class CoconutPetBehavior : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
-        if (Application.isPlaying)
+        if (Application.isPlaying && !displayMode)
         {
             UnityEditor.Handles.DrawWireDisc(playerTrans.position, Vector3.up, wanderRange);
             Vector3 seekRange = playerTrans.position;

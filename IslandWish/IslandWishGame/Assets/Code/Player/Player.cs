@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public PlayerStats stats;
     [HideInInspector] public int currentHealth;
     [SerializeField] Animator anim;
-
+    [SerializeField] HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
 
@@ -32,24 +32,36 @@ public class Player : MonoBehaviour
 
     [Header("Slingshot")]
     [SerializeField] GameObject slingshotBullet;
-
+    [SerializeField] public int slingCurrentAmmo = 1;
 
     public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
-        EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
+        //EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
+        //EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
         EventManager.instance.AddListener(GoToCheckpoint, EventTag.FAILSTATE);
 
         SceneLinkedSMB<Player>.Initialise(anim, this);
 
         hurtBox.SetActive(false);
 
-        currentHealth = stats.health;
+        if (SceneLoader.Instance.loadData)
+        {
+            SceneLoader.Instance.loadData = false;
+
+            //load all the data calls needed here
+            LoadPlayer();
+        }
+        else
+		{
+            currentHealth = stats.health;
+        }
 
         StartCoroutine(RegenShield());
+
+        hud.InitLife();
     }
 
     // Update is called once per frame
@@ -71,6 +83,8 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonDown(1))
 		{
             GameManager.Instance.audioManager.Play("SlingshotPull");
+            //maybe change this to GetMouseButton() 
+            //draw the "aim" line
         }
         else if(Input.GetMouseButtonUp(1))
 		{
@@ -98,48 +112,66 @@ public class Player : MonoBehaviour
 		}
     }
 
-    public void TakeDamage(Event newDamageEvent)
+    public void TakeDamage(Transform damageSource, int damage)
 	{
-        DamageEvent damageEvent = (DamageEvent)newDamageEvent;
-
         if(blocking)
 		{
-            Vector3 damageDirection = damageEvent.position - transform.position;
+            Vector3 damageDirection = damageSource.position - transform.position;
 
             float damageAngle = Vector3.Angle(transform.forward, damageDirection);
             if(damageAngle < 90)
 			{
                 Debug.Log("BLOCKED BITCH");
                 GameManager.Instance.audioManager.Play("ShieldHit");
-                shieldCurrentHealth -= damageEvent.damage;
+                shieldCurrentHealth -= damage;
                 return;
 			}
 		}
         print("OOF OUCH");
         GameManager.Instance.audioManager.Play("PCDamage");
-        currentHealth -= damageEvent.damage;
+        currentHealth -= damage;
+        hud.LoseLife();
     }
 
-    public void HealDamage(Event newHealEvent)
+    public void HealDamage(int heal)
 	{
-        HealEvent healEvent = (HealEvent)newHealEvent;
-
-        if(currentHealth + healEvent.heal > stats.health)
+        hud.GainLife();
+        if (currentHealth + heal > stats.health)
 		{
             currentHealth = stats.health;
 		}
         else
 		{
-            currentHealth += stats.health;
+            currentHealth += heal;
 		}
 	}
 
     public void FireSlingshotAttack()
 	{
-        GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
-        newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
+        if (slingCurrentAmmo > 0)
+        {
+            GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
+            newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
 
-        newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
+            newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
+            slingCurrentAmmo--;
+        }
+    }
+
+    public bool PickupSlingAmmo(int ammo)
+	{
+        //are we low on ammo?
+        if(slingCurrentAmmo < stats.slingMaxAmmo)
+		{
+            //get ammo, and shave off any extra
+            slingCurrentAmmo += ammo;
+            if(slingCurrentAmmo > stats.slingMaxAmmo)
+			{
+                slingCurrentAmmo = stats.slingMaxAmmo;
+			}
+            return true;
+		}
+        return false;
     }
 
     public void StartAttack()
@@ -217,6 +249,19 @@ public class Player : MonoBehaviour
 		}
 	}
 
+    public void LoadPlayer()
+	{
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        GetComponent<CharacterController>().enabled = false;
+        transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        GetComponent<CharacterController>().enabled = true;
+
+        currentHealth = data.health;
+        slingCurrentAmmo = data.ammo;
+
+    }
+
     void GoToCheckpoint(Event newFailstateEvent)
     {
         GetComponent<CharacterController>().enabled = false;
@@ -225,4 +270,25 @@ public class Player : MonoBehaviour
         Debug.Log("Checkpoint is:" + GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint());
         canMove = true;
     }
+}
+
+[System.Serializable]
+public class PlayerData
+{
+    public PlayerData(Player player)
+    {
+        position = new float[3];
+        Transform playerTrans = player.transform;
+
+        position[0] = playerTrans.position.x;
+        position[1] = playerTrans.position.y;
+        position[2] = playerTrans.position.z;
+
+        health = player.currentHealth;
+        ammo = player.slingCurrentAmmo;
+    }
+
+    public float[] position;
+    public int health;
+    public int ammo;
 }

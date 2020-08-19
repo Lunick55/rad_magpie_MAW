@@ -9,5 +9,5 @@ public class PlayerStats : ScriptableObject
 	public int spearDamage, slingDamage;
 	public float speed;
 	public float slingSpeed, slingDuration;
-
+	public int slingMaxAmmo;
 }

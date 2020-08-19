@@ -37,14 +37,3 @@ public static class SaveSystem
 		}
 	}
 }
-
-[System.Serializable]
-public class PlayerData
-{
-	//i dunno yet
-	public PlayerData(Player player)
-	{
-		//get yo shit in here biatch
-	}
-
-}

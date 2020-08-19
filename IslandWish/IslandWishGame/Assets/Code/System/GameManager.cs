@@ -5,14 +5,14 @@ using UnityEngine;
 public class GameManager : BaseSingleton<GameManager>
 {
     public Player player;
-    public Transform playerTrans;
+    [HideInInspector] public Transform playerTrans;
 
     public AudioManager audioManager;
 
     int numEnemiesAggroed = 0;
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Awake()
     {
         Init();
     }
@@ -25,10 +25,7 @@ public class GameManager : BaseSingleton<GameManager>
         {
             Debug.LogError("Fill out the Player field");
         }
-        if (!playerTrans)
-        {
-            Debug.LogError("Fill out the Player Trans field");
-        }
+        playerTrans = player.GetComponent<Transform>();
     }
 
     public void IncreaseAggro()
@@ -50,8 +47,12 @@ public class GameManager : BaseSingleton<GameManager>
 	}
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SaveSystem.SavePlayer(player);
+        }
     }
+
 }

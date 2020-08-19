@@ -20,8 +20,7 @@ public class HealingItem : MonoBehaviour
 	{
 		if(other.tag == "Player")
 		{
-            HealEvent heal = new HealEvent(1, transform.position);
-            EventManager.instance.FireEvent(heal);
+            GameManager.Instance.player.HealDamage(1);
             Destroy(gameObject);
 		}
 	}

@@ -20,9 +20,7 @@ public class MeleeAttackCollision : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			DamageEvent damageEvent = new DamageEvent(damage, transform.position);
-			
-			EventManager.instance.FireEvent(damageEvent);
+			GameManager.Instance.player.TakeDamage(transform, 1);
 		}
 	}
 }
