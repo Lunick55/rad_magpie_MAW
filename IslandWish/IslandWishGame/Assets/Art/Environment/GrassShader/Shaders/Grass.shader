@@ -21,6 +21,8 @@ Shader "Keronius/Environment/Grass" {
 
 		[Toggle] _EnableBasePlane("Active Base Plane", Float) = 1
 
+		_ShadowTint ("Shadow Color", Color) = (0.5,0.5,0.5,1)
+
 		// Gradient Color
 		[Toggle] _EnableGradient("Active Gradient", Float) = 0		
 		_BaseColor("Base Color", Color) = (0, 0, 0, 1)
@@ -66,7 +68,8 @@ Shader "Keronius/Environment/Grass" {
 
 			CGPROGRAM
 			#pragma target 5.0
-			#pragma vertex vertexShader
+			#pragma vertex vertexShader addshadow
+			#pragma lighting Stepped
 			#pragma geometry geometryShader
 			#pragma fragment fragmentShader
 			
@@ -82,7 +85,7 @@ Shader "Keronius/Environment/Grass" {
 		}
 		
 		Pass {
-            Tags {"LightMode"="ShadowCaster"}
+            Tags {"LightMode"="ShadowCaster" "Queue" = "Geometry"}
 
             CGPROGRAM
 			#pragma target 5.0

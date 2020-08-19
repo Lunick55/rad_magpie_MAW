@@ -12,6 +12,9 @@ ModelImporter:
   - first:
       74: -6515942137001085821
     second: Hop
+  - first:
+      74: -4917721445252819994
+    second: Fear
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -118,7 +121,36 @@ ModelImporter:
       takeName: Armature_coconutpet|Armature_coconutpetAction
       internalID: 0
       firstFrame: 40
-      lastFrame: 50
+      lastFrame: 53
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 2
+    - serializedVersion: 16
+      name: Fear
+      takeName: Armature_coconutpet|Armature_coconutpetAction
+      internalID: 0
+      firstFrame: 60
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -200,7 +232,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

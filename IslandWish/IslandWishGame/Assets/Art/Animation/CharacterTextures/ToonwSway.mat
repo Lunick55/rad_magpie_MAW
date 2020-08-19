@@ -70,24 +70,25 @@ Material:
     - _Parallax: 0.02
     - _Rim: 0.1
     - _RimAmount: 0.93
+    - _RimThreshold: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _b_influence: 1
-    - _branches_disp: 0.217
-    - _leaves_wiggle_disp: 0.07
-    - _leaves_wiggle_speed: 0.77
-    - _r_influence: 1
-    - _tree_sway_disp: 0.07
-    - _tree_sway_speed: 1
-    - _tree_sway_stutter: 1.5
-    - _tree_sway_stutter_influence: 0.2
-    - _wind_size: 45
+    - _b_influence: 0
+    - _branches_disp: 0.3
+    - _leaves_wiggle_disp: 58.44
+    - _leaves_wiggle_speed: 0.33
+    - _r_influence: 0
+    - _tree_sway_disp: 0.25
+    - _tree_sway_speed: 0.5
+    - _tree_sway_stutter: 1
+    - _tree_sway_stutter_influence: 0.11
+    - _wind_size: 7
     m_Colors:
     - _AmbientColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-    - _Color: {r: 0.9622642, g: 0.9264301, b: 0.84878963, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.92941177, b: 0.80784315, a: 1}

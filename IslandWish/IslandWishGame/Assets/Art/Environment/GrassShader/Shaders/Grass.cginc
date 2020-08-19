@@ -26,6 +26,7 @@ fixed4 _BaseColor;
 fixed4 _MiddleColor;
 fixed4 _TopColor;
 float _GradientCenter;
+float3 _ShadowTint;
 
 // Noise
 float _EnableNoise;
@@ -437,7 +438,8 @@ fixed4 fragmentShader(g2f i): SV_Target {
 
 		half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
 		fixed3 diff = nl * _LightColor0.rgb;
-		fixed3 ambientL = ShadeSH9(half4(worldNormal, 1));
+		//fixed3 ambientL = ShadeSH9(half4(worldNormal, 1));
+		fixed3 ambientL =_ShadowTint;
 
 		fixed shadow = SHADOW_ATTENUATION(i);
 
@@ -452,7 +454,9 @@ fixed4 fragmentShader(g2f i): SV_Target {
 
 		half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
 		fixed3 diff = nl * _LightColor0.rgb;
-		fixed3 ambientL = ShadeSH9(half4(worldNormal, 1));
+		//fixed3 ambientL = ShadeSH9(half4(worldNormal, 1));
+		fixed3 ambientL =_ShadowTint;
+
 
 		fixed shadow = SHADOW_ATTENUATION(i);
 

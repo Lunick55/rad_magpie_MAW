@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
 	[SerializeField] Transform playerTrans;
 	[SerializeField] Camera playerCamera;
 	[SerializeField] CharacterController cc;
+	private Animator anim;
 
 	[Header("Player Stats")]
 	[SerializeField] float playerSpeed = 1;
@@ -27,7 +28,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+		anim = player.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -55,9 +56,17 @@ public class Movement : MonoBehaviour
 			if (acceptInput)
 			{
 				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-				if(inputDir != Vector3.zero)
+				anim.SetFloat("MovementForward", inputDir.z);
+				//anim.SetFloat("MovementSide", inputDir.x);
+
+				if (inputDir != Vector3.zero)
 				{
 					GameManager.Instance.audioManager.Play("PCWalking");
+					anim.SetBool("Moving", true);
+				}
+				else
+				{
+					anim.SetBool("Moving", false);
 				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
