@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Basic Green
   m_Shader: {fileID: 4800000, guid: 2c01637ff9f844449825db862100b930, type: 3}
-  m_ShaderKeywords: _ENABLEBASEPLANE_ON _ENABLEGRADIENT_ON _ENABLENOISE_ON _ENABLEPRESSURE_ON
-    _ENABLERANDOMLENGTH_ON _ENABLEWIND_ON
+  m_ShaderKeywords: _ENABLEBASEPLANE_ON _ENABLEGRADIENT_ON _ENABLEMASK_ON _ENABLENOISE_ON
+    _ENABLEPRESSURE_ON _ENABLERANDOMLENGTH_ON _ENABLEWIND_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -55,7 +55,7 @@ Material:
     - _NoiseTex:
         m_Texture: {fileID: 2800000, guid: 32e9119439e4d5c4e8f321cce64826b1, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: -1.07, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -71,17 +71,17 @@ Material:
     - _WindTex:
         m_Texture: {fileID: 2800000, guid: c802f5ff5ef80b447ad3923ee6aa09f6, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0.26, y: 0.36}
     m_Floats:
     - _AffectBase: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DetailReductionFactor: 0
+    - _DetailReductionFactor: 0.99
     - _DstBlend: 0
     - _EnableBasePlane: 1
     - _EnableGradient: 1
-    - _EnableMask: 0
+    - _EnableMask: 1
     - _EnableNoise: 1
     - _EnablePressure: 1
     - _EnableRandomLength: 1
@@ -91,25 +91,25 @@ Material:
     - _GlossyReflections: 1
     - _GradientCenter: 0.11
     - _GrassShapeType: 1
-    - _LODDistance: 100
+    - _LODDistance: 536
     - _LeafCuts: 3
     - _LeafMultiplier: 1
-    - _LengthIntensity: 1.57
-    - _LengthMaxDiference: 0.96
+    - _LengthIntensity: 2.78
+    - _LengthMaxDiference: 0.71
     - _LowerWidth: 0.05
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseStrength: 0.19
+    - _NoiseStrength: 0.5
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PressureStrength: 1
-    - _Size: 0.4
+    - _Size: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _UpperWidth: 0.05
-    - _VisibleRange: 60
+    - _VisibleRange: 345
     - _WindSpeed: 0.005
     - _WindStrength: 0.54
     - _WindTexCol: 0
@@ -120,4 +120,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MiddleColor: {r: 0.6117647, g: 0.73333335, b: 0.3647059, a: 1}
     - _ShadowTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _TopColor: {r: 0.6679461, g: 0.7924528, b: 0.41491634, a: 0.6039216}
+    - _TopColor: {r: 0.7790436, g: 0.9811321, b: 0.37486652, a: 0.6039216}
