@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class HUDScript : MonoBehaviour
 {
-
     public GameObject[] uiLives;
     public GameObject[] uiLifeBackgrounds;
     public GameObject spearImage;
@@ -13,6 +13,17 @@ public class HUDScript : MonoBehaviour
 
     GameObject checkpointManager;
     public Animation anim;
+
+    [Header("Replace These Petra")]
+    //you can change the type to be whatever you want (text object, game object, image?), however you see fit to display the info. 
+    //I can set the logic up to better match your vision once you've decided on how the final thing should look.act
+    public TextMeshProUGUI uiCoconut;
+    public TextMeshProUGUI uiSlingerAmmo;
+    public TextMeshProUGUI uiShieldHealth;
+
+    private int coconutsRescued = 0;
+    private int slingerAmmo = 0;
+    private int shieldHealth = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +54,7 @@ public class HUDScript : MonoBehaviour
         }
     }
 
+    //can become a full InitUI function as things get added and need to be saved
     public void InitLife()
 	{
         int playerHealth = GameManager.Instance.player.currentHealth;
@@ -58,6 +70,7 @@ public class HUDScript : MonoBehaviour
         }
     }
 
+    //health functions
     public void LoseLife()
     {
         int playerHealth = GameManager.Instance.player.currentHealth;
@@ -88,6 +101,54 @@ public class HUDScript : MonoBehaviour
             uiLifeBackgrounds[playerHealth].SetActive(false);
         }
     }
+
+    //Coconut functions
+    public void GainCoconut()
+	{
+        //if something more complex happens than just changing a text field
+	}
+
+    public void LoseCoconut()
+	{
+        //if something more complex happens than just changing a text field
+    }
+
+    public void UpdateCoconut(int updatedCoconutsRescued)
+	{
+        uiCoconut.text = "Coconuts Saved: " + updatedCoconutsRescued;
+	}
+
+    //Slinger functions
+    public void GainSlingAmmo()
+	{
+        //if something more complex happens than just changing a text field
+    }
+
+    public void LoseSlingAmmo()
+	{
+        //if something more complex happens than just changing a text field
+    }
+
+    public void UpdateSlingAmmo(int playerAmmo)
+	{
+        uiSlingerAmmo.text = "Sling Ammo: " + playerAmmo;
+	}
+
+    //Shield Functions(s)? //might be both an add/remove shield or just an updateShield
+    public void UpdateShield(int playerShield)
+	{
+        uiShieldHealth.text = "Shield: " + playerShield;
+	}
+    public void FixedShield()
+	{
+        uiShieldHealth.text = "Shield: " + 100;
+
+        //indicate fixed shield somehow
+    }
+    public void BreakShield()
+	{
+        //indicate broken shield somehow
+	}
 
     public void ToggleWeapon()
     {
