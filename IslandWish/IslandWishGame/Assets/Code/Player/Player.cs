@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public PlayerStats stats;
     [HideInInspector] public int currentHealth;
     [SerializeField] Animator anim;
-    [SerializeField] HUDScript hud;
+    public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
 
@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(Transform damageSource, int damage)
 	{
+        damage = 10;
         if(blocking)
 		{
             Vector3 damageDirection = damageSource.position - transform.position;
@@ -124,6 +125,7 @@ public class Player : MonoBehaviour
                 Debug.Log("BLOCKED BITCH");
                 GameManager.Instance.audioManager.Play("ShieldHit");
                 shieldCurrentHealth -= damage;
+                hud.UpdateShield(shieldCurrentHealth);
                 return;
 			}
 		}
@@ -155,6 +157,8 @@ public class Player : MonoBehaviour
 
             newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
             slingCurrentAmmo--;
+            hud.LoseSlingAmmo(); //just in case. remove UpdateSling if used
+            hud.UpdateSlingAmmo(slingCurrentAmmo);
         }
     }
 
@@ -169,6 +173,8 @@ public class Player : MonoBehaviour
 			{
                 slingCurrentAmmo = stats.slingMaxAmmo;
 			}
+            hud.GainSlingAmmo(); //just in case. remove UpdateSling if used
+            hud.UpdateSlingAmmo(slingCurrentAmmo);
             return true;
 		}
         return false;
@@ -220,6 +226,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
+    //can move to Update if needed
     IEnumerator RegenShield()
 	{
         while(true)
@@ -227,6 +234,7 @@ public class Player : MonoBehaviour
             if (shieldCurrentHealth <= 0)
             {
                 GameManager.Instance.audioManager.Play("ShieldBreak");
+                hud.BreakShield();
                 shieldBroken = true;
                 Block(false);
             }
@@ -234,7 +242,7 @@ public class Player : MonoBehaviour
             if (shieldCurrentHealth < shieldMaxHealth)
             {
                 shieldCurrentHealth += 1;
-
+                hud.UpdateShield(shieldCurrentHealth);
                 yield return new WaitForSeconds(shieldRechargeRate);
             }
             else
@@ -243,6 +251,7 @@ public class Player : MonoBehaviour
 				{
                     shieldCurrentHealth = shieldMaxHealth;
 				}
+                hud.FixedShield();
                 shieldBroken = false;
                 yield return null;
 			}

@@ -88,6 +88,9 @@ public class CoconutManager : BaseSingleton<CoconutManager>
         if (!coconutsFreed.Contains(newRecruit))
         {
             coconutsFreed.Add(newRecruit);
+            GameManager.Instance.player.hud.GainCoconut();
+            GameManager.Instance.player.hud.UpdateCoconut(coconutsFreed.Count);
+
             if(coconutsFreed.Count >= coconuts.Count)
 			{
                 //go to next level
