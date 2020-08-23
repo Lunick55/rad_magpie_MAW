@@ -15,9 +15,11 @@ public class PelletBirdBehavior : MonoBehaviour
     Animator anim;
 
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
+    [SerializeField] Transform pelletSpawn;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats; public float timeBetweenAttacks, timer;
+    public EnemyStats stats;
+    private float timer;
     private int currentHealth;
     private bool canRotate = false;
     private bool aggro = false;
@@ -92,8 +94,6 @@ public class PelletBirdBehavior : MonoBehaviour
 
     public void AttackPlayer()
 	{
-        print("am in combat baybee");
-
         if(GetPlayerDistanceSquared() < (innerRange * innerRange)) //player too close, flee
 		{
             anim.SetTrigger(playerTooClose);
@@ -112,10 +112,11 @@ public class PelletBirdBehavior : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if(timer >= timeBetweenAttacks)
+        if(timer >= stats.timeBetweenAttacks)
 		{
-            RangedAttack();
-		}
+            anim.SetTrigger("Shoot");
+            //RangedAttack();
+        }
 
         //something??
     }
@@ -156,7 +157,7 @@ public class PelletBirdBehavior : MonoBehaviour
         //instantiate attack, send it out
 
         timer = 0;
-        GameObject newRangedAttack = Instantiate(rangedAttack, transform.position, transform.rotation);
+        GameObject newRangedAttack = Instantiate(rangedAttack, pelletSpawn.position, transform.rotation);
         newRangedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
         
         newRangedAttack.GetComponent<Rigidbody>().velocity = transform.forward * 8;

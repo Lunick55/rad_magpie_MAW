@@ -30,6 +30,8 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 
     void Init()
     {
+        EventManager.instance.AddListener(ScatterCoconuts, EventTag.FAILSTATE);
+
         coconuts = new List<CoconutPetBehavior>();
         if (hidingSpots == null)
         {
@@ -99,4 +101,19 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 			}
         }
 	}
+
+    public void ScatterCoconuts(Event failstateEvent)
+	{
+        foreach(CoconutPetBehavior coconut in coconutsFreed)
+		{
+            coconut.hide = true;
+            int randNum = Random.Range(0, hidingSpots.Count);
+            coconut.transform.position = hidingSpots[randNum].position;
+            GameManager.Instance.player.hud.LoseCoconut();
+        }
+
+        coconutsFreed.Clear();
+        coconutsFreed.Capacity = 0;
+        GameManager.Instance.player.hud.UpdateCoconut(coconutsFreed.Count);
+    }
 }

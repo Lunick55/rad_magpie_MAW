@@ -10,12 +10,13 @@ public class RockElementalBehavior : MonoBehaviour
 
     Player player;
     Transform playerTrans;
-    [SerializeField] GameObject hitbox, lobbedAttack, smashAttack;
+    [SerializeField] GameObject hitbox, lobbedAttack;
+    [SerializeField] Collider[] smashAttack;
 
     Animator anim;
 
     [SerializeField] float sightRange = 0, outerRange = 0, innerRange = 0, lobbedAngle = 45;
-    private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle", smash = "Smash";
+    private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
     public EnemyStats stats;
     public float timeBetweenAttacks, timer;
@@ -115,7 +116,9 @@ public class RockElementalBehavior : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= timeBetweenAttacks)
         {
+            anim.SetTrigger("Throw");
             LobbedAttack();
+            return;
         }
 
         //something??
@@ -136,7 +139,23 @@ public class RockElementalBehavior : MonoBehaviour
         if (timer >= timeBetweenAttacks)
         {
             timer = 0;
-            anim.SetTrigger(smash);
+
+            int randNum = Random.Range(0, 2);
+
+            switch (randNum)
+            {
+                case 0:
+                    anim.SetTrigger("AttackLeft");
+                    break;
+
+                case 1:
+                    anim.SetTrigger("AttackRight");
+                    break;
+
+                default:
+                    anim.SetTrigger("AttackLeft");
+                    break;
+            }
         }
 
         //something??
@@ -156,7 +175,6 @@ public class RockElementalBehavior : MonoBehaviour
 
     public void LobbedAttack()
     {
-        print("ATTACK");
         //instantiate attack, send it out
         timer = 0;
 
@@ -179,15 +197,17 @@ public class RockElementalBehavior : MonoBehaviour
         newLobbedAttack.GetComponent<Rigidbody>().useGravity = true;
     }
 
-    public void StartSmash()
+    public void StartSmash(bool leftSmash, bool rightSmash)
     {
         Debug.Log("FIST OF HAVOK");
-        smashAttack.SetActive(true);
+        smashAttack[0].enabled = leftSmash;
+        smashAttack[1].enabled = rightSmash;
     }
 
     public void EndSmash()
     {
-        smashAttack.SetActive(false);
+        smashAttack[0].enabled = false;
+        smashAttack[1].enabled = false;
     }
 
     void EnableAgent()

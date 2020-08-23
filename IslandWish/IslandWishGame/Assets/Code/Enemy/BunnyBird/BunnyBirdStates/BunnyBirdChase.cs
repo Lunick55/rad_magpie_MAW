@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class BunnyBirdChase : SceneLinkedSMB<BunnyBirdBehavior>
 {
-	public override void OnSLStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
-		base.OnSLStateEnter(animator, stateInfo, layerIndex);
-	}
-
 	public override void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnSLStateNoTransitionUpdate(animator, stateInfo, layerIndex);
