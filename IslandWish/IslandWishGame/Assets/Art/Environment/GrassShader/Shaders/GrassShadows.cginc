@@ -214,10 +214,12 @@ void GenerateLeaf(triangle v2g IN[3], float4 TriangleMiddle, float3 TriangleNorm
 				tristream.RestartStrip();
 			}
 		}
+		
 
 
 		float maskV = MaskNormal;
 		maskV = clamp(maskV, 0, 1);
+		
 		for (int i = 0; i < finalLeafCuts && maskV > 0; i++) {
 			if (_GrassShapeType == 0 && (i + 1) == finalLeafCuts) {
 				normalFace = normalize((normalFace + windNormal + noiseNormal)) * pressureNormal * MaskNormal;
@@ -306,6 +308,7 @@ void GenerateLeaf(triangle v2g IN[3], float4 TriangleMiddle, float3 TriangleNorm
 		}
 	}
 }
+
 
 void DoubleLeafs(triangle v2g IN[3], inout TriangleStream < g2f > tristream){
 	float4 VertexA = IN[0].vertex;

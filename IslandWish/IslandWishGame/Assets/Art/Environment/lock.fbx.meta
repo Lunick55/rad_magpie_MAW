@@ -1,0 +1,236 @@
+fileFormatVersion: 2
+guid: e5c38a191b798764facb30a47469baea
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: 8990301779617788992
+    second: sail|coconutpetAction
+  - first:
+      74: 2885981452007442751
+    second: sail|CubeAction
+  - first:
+      74: 2167052559004533759
+    second: sail|grassAction.002
+  - first:
+      74: 7919270848592614337
+    second: sail|lvl1.001Action
+  - first:
+      74: -4786263975769137410
+    second: sail|lvl1.001Action.001
+  - first:
+      74: -6472384021897439288
+    second: sail|lvl1.001Action.003
+  - first:
+      74: 9161684429554307796
+    second: sail|lvl1.001Action.004
+  - first:
+      74: 5016495641945007986
+    second: sail|lvl1Action
+  - first:
+      74: -1872252490725129080
+    second: sail|lvl1Action.001
+  - first:
+      74: -883069175665128819
+    second: sail|PlaneAction
+  - first:
+      74: 8191019456032529463
+    second: sail|PlaneAction.002
+  - first:
+      74: 1779897846167920889
+    second: sail|sailAction
+  - first:
+      74: -3856726573192824182
+    second: sail|slingshotAction
+  - first:
+      74: 6997690816182478284
+    second: sail|sword2Action
+  - first:
+      74: -1511079446150499152
+    second: sail|swordAction
+  - first:
+      74: 2229436560078366682
+    second: jail|coconutpetAction
+  - first:
+      74: 4156878950728392916
+    second: jail|CubeAction
+  - first:
+      74: 6597662908550387641
+    second: jail|grassAction.002
+  - first:
+      74: 5213098997952855558
+    second: jail|lvl1.001Action
+  - first:
+      74: -2727907895611680189
+    second: jail|lvl1.001Action.001
+  - first:
+      74: -2984036978403476346
+    second: jail|lvl1.001Action.003
+  - first:
+      74: 7328942440674922239
+    second: jail|lvl1.001Action.004
+  - first:
+      74: -1674833242932406995
+    second: jail|lvl1Action
+  - first:
+      74: -1930191971582549457
+    second: jail|lvl1Action.001
+  - first:
+      74: 1699153628091955384
+    second: jail|PlaneAction
+  - first:
+      74: -3291384592438267848
+    second: jail|PlaneAction.002
+  - first:
+      74: -5475191207282405231
+    second: jail|sailAction
+  - first:
+      74: 7326496513216753546
+    second: jail|slingshotAction
+  - first:
+      74: 872901109455812590
+    second: jail|sword2Action
+  - first:
+      74: -1590538341843253934
+    second: jail|swordAction
+  - first:
+      74: -4488561038969548497
+    second: lock|coconutpetAction
+  - first:
+      74: 3237736483439224371
+    second: lock|CubeAction
+  - first:
+      74: -4017706347170631547
+    second: lock|grassAction.002
+  - first:
+      74: 7498897605931683
+    second: lock|lvl1.001Action
+  - first:
+      74: -4018647600734891819
+    second: lock|lvl1.001Action.001
+  - first:
+      74: -6924602169330504972
+    second: lock|lvl1.001Action.003
+  - first:
+      74: 6008154974912409189
+    second: lock|lvl1.001Action.004
+  - first:
+      74: 167213429041077942
+    second: lock|lvl1Action
+  - first:
+      74: 7996515079738794321
+    second: lock|lvl1Action.001
+  - first:
+      74: -2007015988811684432
+    second: lock|PlaneAction
+  - first:
+      74: -2900988914676350777
+    second: lock|PlaneAction.002
+  - first:
+      74: -3950342445266065394
+    second: lock|sailAction
+  - first:
+      74: -923370058265536337
+    second: lock|slingshotAction
+  - first:
+      74: -12457167753048755
+    second: lock|sword2Action
+  - first:
+      74: -9118502742560696586
+    second: lock|swordAction
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Master
+    second: {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

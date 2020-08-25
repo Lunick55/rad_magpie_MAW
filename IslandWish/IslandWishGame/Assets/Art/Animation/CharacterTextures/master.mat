@@ -101,6 +101,6 @@ Material:
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.9116288, b: 0.759434, a: 1}
-    - _ShadowTint: {r: 0.43529412, g: 0.5294118, b: 0.5566037, a: 1}
+    - _ShadowTint: {r: 0.43529412, g: 0.4851589, b: 0.5568628, a: 1}
     - _SpecularColor: {r: 0.8679245, g: 0.8323238, b: 0.79013884, a: 1}
     - _wind_dir: {r: 0.5, g: 0.05, b: 0.5, a: 0}
