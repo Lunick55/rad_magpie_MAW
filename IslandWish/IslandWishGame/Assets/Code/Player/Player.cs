@@ -47,17 +47,17 @@ public class Player : MonoBehaviour
 
         hurtBox.SetActive(false);
 
-        if (SceneLoader.Instance.loadData)
-        {
-            SceneLoader.Instance.loadData = false;
+  //      if (SceneLoader.Instance.loadData)
+  //      {
+  //          SceneLoader.Instance.loadData = false;
 
-            //load all the data calls needed here
-            LoadPlayer();
-        }
-        else
-		{
-            currentHealth = stats.health;
-        }
+  //          //load all the data calls needed here
+  //          LoadPlayer();
+  //      }
+  //      else
+		//{
+  //          currentHealth = stats.health;
+  //      }
 
         StartCoroutine(RegenShield());
 

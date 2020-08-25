@@ -3,27 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CoconapperBehavior : MonoBehaviour
+public class CoconapperBehavior : EnemyBehavior
 {
-    NavMeshAgent agent;
-    NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox;
     [SerializeField] Collider[] hurtbox;
-
-    Animator anim;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
     private string playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    private int currentHealth;
-
     private bool canRotate = false;
-    private bool aggro = false;
-    private float timer = 0;
 
     void Start()
     {
@@ -239,7 +226,9 @@ public class CoconapperBehavior : MonoBehaviour
 				{
                     DeAggro();
 				}
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -253,7 +242,9 @@ public class CoconapperBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

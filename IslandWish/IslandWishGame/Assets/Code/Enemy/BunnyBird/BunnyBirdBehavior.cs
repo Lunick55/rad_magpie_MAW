@@ -3,29 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BunnyBirdBehavior : MonoBehaviour
+public class BunnyBirdBehavior : EnemyBehavior
 {
-    NavMeshAgent agent;
-    NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
     [SerializeField] GameObject hitbox;
     [SerializeField] GameObject hurtbox;
     [SerializeField] Transform modelHolder;
-
-    [SerializeField] Animator anim;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
     [SerializeField] float attackHeight, attackBuffer;
     private string playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    private int currentHealth;
-
     private bool canRotate = false;
-    private bool aggro = false;
-    private float timer = 0;
     private Vector3 preHuntPos = Vector3.zero;
 
     void Start()
@@ -251,7 +239,9 @@ public class BunnyBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -265,7 +255,9 @@ public class BunnyBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

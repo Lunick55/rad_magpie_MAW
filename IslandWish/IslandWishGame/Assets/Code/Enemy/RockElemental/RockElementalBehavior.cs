@@ -3,26 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RockElementalBehavior : MonoBehaviour
+public class RockElementalBehavior : EnemyBehavior
 {
-    private NavMeshAgent agent;
-    private NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, lobbedAttack;
+    [SerializeField] GameObject lobbedAttack;
     [SerializeField] Collider[] smashAttack;
-
-    Animator anim;
 
     [SerializeField] float sightRange = 0, outerRange = 0, innerRange = 0, lobbedAngle = 45;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    public float timeBetweenAttacks, timer;
-    private int currentHealth;
     private bool canRotate = false;
-    private bool aggro = false;
 
     void Start()
     {
@@ -114,7 +103,7 @@ public class RockElementalBehavior : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks)
+        if (timer >= stats.timeBetweenAttacks)
         {
             anim.SetTrigger("Throw");
             LobbedAttack();
@@ -136,7 +125,7 @@ public class RockElementalBehavior : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks)
+        if (timer >= stats.timeBetweenAttacks)
         {
             timer = 0;
 
@@ -260,7 +249,9 @@ public class RockElementalBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -274,7 +265,9 @@ public class RockElementalBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

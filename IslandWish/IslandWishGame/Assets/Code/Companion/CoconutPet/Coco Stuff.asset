@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f9ad6c5987dc9b49bb677b80f355c84, type: 3}
+  m_Name: Coco Stuff
+  m_EditorClassIdentifier: 
+  nums: 01000000020000000300000004000000
+  attachments:
+  - {fileID: 430560764435239514, guid: 67b1011173fdaac479acff93167d2db4, type: 3}
+  - {fileID: 8496771396450337707, guid: c53fcf6e07149dd44bc100ef15990e89, type: 3}
+  - {fileID: 5857010476983838601, guid: 1ea7997adf87d614884b7b431179b357, type: 3}
+  - {fileID: 3812261878320664407, guid: 1b5b414543ef8a94dab5b8055c8e5823, type: 3}

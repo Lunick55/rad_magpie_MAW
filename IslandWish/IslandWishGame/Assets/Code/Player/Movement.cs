@@ -20,7 +20,10 @@ public class Movement : MonoBehaviour
 	Vector3 inputDir = Vector3.zero; //the vector determining player direction
 	Vector3 dashStartPosition = Vector3.zero;
 	Vector3 dashDestination = Vector3.zero;
+	[SerializeField] float dashSafetyTimer = 1;
+	private float timer = 0;
 
+	Vector3 lookDirection = Vector3.zero;
 	bool grounded = false;
 	bool dashing = false;
 	bool acceptInput = true;
@@ -56,8 +59,17 @@ public class Movement : MonoBehaviour
 			if (acceptInput)
 			{
 				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-				anim.SetFloat("MovementForward", inputDir.z);
-				//anim.SetFloat("MovementSide", inputDir.x);
+
+				Vector2 directionMoving = new Vector2(inputDir.x, inputDir.z);
+				lookDirection = camRight * lookDirection.x + camForward * lookDirection.z;
+				Vector2 directionLooking = new Vector2(lookDirection.x, lookDirection.z);
+
+				float angle = Vector2.Angle(Vector2.up, directionLooking);
+				//Debug.Log(angle);
+				directionMoving = Quaternion.AngleAxis(angle, Vector3.forward) * directionLooking;
+
+				anim.SetFloat("MovementForward", directionMoving.y);
+				anim.SetFloat("MovementSide", directionMoving.x);
 
 				if (inputDir != Vector3.zero)
 				{
@@ -115,10 +127,15 @@ public class Movement : MonoBehaviour
 		{
 			inputDir = Vector3.zero;
 		}
-		else if((playerTrans.position - dashStartPosition).magnitude >= dashDistance)
+		else 
 		{
-			dashing = false;
-			acceptInput = true;
+			timer += Time.deltaTime;
+			if (((playerTrans.position - dashStartPosition).magnitude >= dashDistance) || timer > dashSafetyTimer)
+			{
+				timer = 0;
+				dashing = false;
+				acceptInput = true;
+			}
 		}
 	}
 
@@ -139,6 +156,7 @@ public class Movement : MonoBehaviour
 		//nullify any rotations along the y axis. don't need it
 		lineToMouse = new Vector3(lineToMouse.x, 0, lineToMouse.z);
 
+		lookDirection = lineToMouse;
 		//apply!
 		transform.rotation = Quaternion.LookRotation(lineToMouse, Vector3.up);
 	}

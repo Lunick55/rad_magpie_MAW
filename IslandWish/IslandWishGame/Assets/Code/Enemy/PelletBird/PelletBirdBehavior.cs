@@ -3,26 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PelletBirdBehavior : MonoBehaviour
+public class PelletBirdBehavior : EnemyBehavior
 {
-    private NavMeshAgent agent;
-    private NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, rangedAttack;
-
-    Animator anim;
+    [SerializeField] GameObject rangedAttack;
 
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
     [SerializeField] Transform pelletSpawn;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    private float timer;
-    private int currentHealth;
     private bool canRotate = false;
-    private bool aggro = false;
 
     void Start()
     {
@@ -218,7 +207,9 @@ public class PelletBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -232,7 +223,9 @@ public class PelletBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }
