@@ -3,32 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BunnyBirdBehavior : MonoBehaviour
+public class BunnyBirdBehavior : EnemyBehavior
 {
-    NavMeshAgent agent;
-    NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, hurtbox;
-
-    Animator anim;
+    [SerializeField] GameObject hitbox;
+    [SerializeField] GameObject hurtbox;
+    [SerializeField] Transform modelHolder;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
+    [SerializeField] float attackHeight, attackBuffer;
     private string playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    private int currentHealth;
-
     private bool canRotate = false;
-    private bool aggro = false;
+    private Vector3 preHuntPos = Vector3.zero;
 
     void Start()
     {
         player = GameManager.Instance.player;
         playerTrans = GameManager.Instance.playerTrans;
 
-        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
@@ -57,14 +49,12 @@ public class BunnyBirdBehavior : MonoBehaviour
 
     public void Idle()
     {
-        print("Idle");
-        //agent should already be enabled
-
         //if the player is within sight of the enemy, enable agent, and give chase
-        if ((playerTrans.position - transform.position).magnitude < sightRange)
+        if (GetPlayerDistanceSquared() < (sightRange * sightRange))
         {
-            anim.SetBool(playerInSight, true);
+            anim.SetTrigger(playerInSight);
             EnableAgent();
+            return;
         }
 
         if (agent.enabled)
@@ -75,34 +65,49 @@ public class BunnyBirdBehavior : MonoBehaviour
 
     public void ChasePlayer()
     {
-        print("Chase Player");
-
         //if player is within attack range, stop and attack
-        if ((playerTrans.position - transform.position).magnitude < attackRange)
+        if (GetPlayerDistanceSquared() < (attackRange * attackRange))
         {
             canRotate = true;
             EnableObstacle();
 
-            if (IsFacingPlayer())
-            {
-                anim.SetTrigger(playerInRange);
-            }
+            anim.SetTrigger(playerInRange);
+
+            return;
         }
         //else if the player is out of sight, go back to idle
-        else if ((playerTrans.position - transform.position).magnitude > sightRange)
+        else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             canRotate = false;
-            anim.SetBool(playerInSight, false);
+            anim.SetTrigger(idle);
             EnableAgent();
+
+            return;
         }
-        else
+
+        canRotate = false;
+        agent.destination = playerTrans.position;
+    }
+
+    public void Attack()
+    {
+        if (GetPlayerDistanceSquared() > (attackRange * attackRange))                                //player too far, chase
         {
+            anim.SetTrigger(playerInSight);
+            timer = 0;
             EnableAgent();
-
             canRotate = false;
-            agent.destination = playerTrans.position;
+            return;
         }
 
+        timer += Time.deltaTime;
+        if (timer >= stats.timeBetweenAttacks)
+        {
+            if (IsFacingPlayer())
+            {
+                anim.SetTrigger("Swipe");
+            }
+        }
     }
 
     public void Aggro()
@@ -119,15 +124,38 @@ public class BunnyBirdBehavior : MonoBehaviour
 
     public void MeleeAttack()
     {
-        print("ATTACK");
+        timer = 0;
+        preHuntPos = modelHolder.position;
+
+        //get the vector in the direction of the player
+        Vector3 targetVector = playerTrans.position - modelHolder.position;
+        //make it flat, I don't care about y-axis, so I won't include it
+        targetVector.y = modelHolder.position.y;
+
+        //gimme the buffer. 
+        targetVector -= (targetVector.normalized * attackBuffer);
+
+        //I don't want the bird going backwards, so I uh, send them straight down. Will it work? maybe.
+        if (targetVector.sqrMagnitude < (attackBuffer * attackBuffer))
+        {
+            Debug.Log("TOO CLOSE");
+            targetVector = modelHolder.position;
+        }
+
+        //put it back in relation to itself
+        targetVector += modelHolder.position;
+
+        //set my height up
+        targetVector.y = (modelHolder.position.y - attackHeight);
+
+        StartCoroutine(LerpToPos(targetVector, 0.15f));
         hurtbox.SetActive(true);
     }
 
     public void FinishMeleeAttack()
 	{
-        print("END ATTACK");
+        StartCoroutine(LerpToPos(preHuntPos, 0.15f));
         hurtbox.SetActive(false);
-        EnableAgent();
 	}
 
     public void EnableAgent()
@@ -162,6 +190,20 @@ public class BunnyBirdBehavior : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
+    IEnumerator LerpToPos(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = modelHolder.position;
+
+        while (time < duration)
+        {
+            modelHolder.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        modelHolder.position = targetPosition;
+    }
+
     private bool IsFacingPlayer()
 	{
         float minAngle = 15;
@@ -179,6 +221,11 @@ public class BunnyBirdBehavior : MonoBehaviour
         return false;
 	}
 
+    float GetPlayerDistanceSquared()
+    {
+        return (playerTrans.position - transform.position).sqrMagnitude;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "MeleeAttack")
@@ -192,7 +239,9 @@ public class BunnyBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -206,7 +255,9 @@ public class BunnyBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

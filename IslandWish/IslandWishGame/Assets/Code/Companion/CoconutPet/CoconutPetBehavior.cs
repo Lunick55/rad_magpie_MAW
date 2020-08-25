@@ -13,17 +13,16 @@ public class CoconutPetBehavior : MonoBehaviour
     Transform playerTrans;
     Player player;
     [SerializeField] EnemyCage cage;
+    public bool hide = false;
 
     Animator anim;
 
-    [SerializeField] float wanderRange = 0, wanderHeight = 1;
+    [SerializeField] float wanderRange = 0, wanderHeight = 1, findRange = 1;
     private float maxRangeReciprical;
-    bool isWandering = false;
+    public bool isWandering = false;
     //private float timeBetweenWander;
 
     private string playerInCombat = "PlayerInCombat", playerTooFar = "PlayerTooFar", wander = "Wander";
-
-    //private bool canRotate = false;
 
     Vector3 destination = Vector3.zero;
     private Vector3 debugDest = Vector3.zero;
@@ -51,59 +50,97 @@ public class CoconutPetBehavior : MonoBehaviour
         //agent.stoppingDistance = outerRange;
         EnableObstacle();
         SceneLinkedSMB<CoconutPetBehavior>.Initialise(anim, this);
-        anim.SetBool("Trapped", true);
 
         maxRangeReciprical = 1 / wanderRange;
 
         CoconutManager.Instance.AddCoconut(this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (canRotate)
-        //{
-        //    RotateTowardsPlayer();
-        //}
-    }
-
-    public void Trapped()
+    public void Flee()
 	{
-        if (cage && !cage.isBroken)
+        if (!player.inCombat)
         {
-            EnableObstacle();
-            anim.SetBool("Trapped", true);
+            if (GetPlayerDistanceSquared() > (wanderRange * wanderRange)) //if out of wanderRange follow the player directly
+            {
+                anim.SetTrigger(playerTooFar);
+                isWandering = false;
+                return;
+            }
+            if (GetPlayerDistanceSquared() < (wanderRange * wanderRange))                  //if within wanderRange, wander
+            {
+                anim.SetTrigger(wander);
+                return;
+            }
+            else if ((cage && !cage.isBroken) || hide) //caged again, or commanded to hide
+            {
+                anim.SetTrigger("Hide");
+                isWandering = false;
+                EnableObstacle();
+                return;
+            }
         }
         else
         {
-            EnableAgent();
-            anim.SetBool("Trapped", false);
-            CoconutManager.Instance.CoconutFreed(this);
+            if((transform.position - destination).magnitude < 1f)
+			{
+                anim.SetTrigger("Hide");
+                isWandering = false;
+                EnableObstacle();
+                return;
+            }
         }
+    }
+
+    public void Idle()
+	{
+        if (GetPlayerDistanceSquared() > (wanderRange * wanderRange)) //if out of wanderRange follow the player directly
+        {
+            anim.SetTrigger(playerTooFar);
+            isWandering = false;
+            return;
+        }
+        else if (player.inCombat)                   //if the player is in combat, flee
+        {
+            anim.SetTrigger(playerInCombat);
+            isWandering = false;
+            return;
+        }
+        else if ((cage && !cage.isBroken) || hide) //caged again, or commanded to hide
+        {
+            anim.SetTrigger("Hide");
+            isWandering = false;
+            EnableObstacle();
+            return;
+        }
+
 
     }
 
     public void Wander()
     {
-        float distanceToPlayer = (playerTrans.position - transform.position).magnitude;
-
-        if (distanceToPlayer > wanderRange) //if out of wanderRange follow the player directly
+        if (GetPlayerDistanceSquared() > (wanderRange * wanderRange)) //if out of wanderRange follow the player directly
         {
             anim.SetTrigger(playerTooFar);
             isWandering = false;
             return;
-            //canRotate = true;
         }
-        else if (player.inCombat)                   //if the player is in combat, hide
+        else if (player.inCombat)                   //if the player is in combat, flee
         {
             anim.SetTrigger(playerInCombat);
             isWandering = false;
             return;
-            //canRotate = false;
         }
+        else if ((cage && !cage.isBroken) || hide) //caged again, or commanded to hide
+		{
+            anim.SetTrigger("Hide");
+            EnableObstacle();
+            isWandering = false;
+            return;
+		}
 
         if (!isWandering)
         {
+            //TODO: fix this, it doesn't work
             //Pick a point somwhere inside of a x-sized unit sphere
             Vector3 randomDestination = Random.insideUnitSphere * wanderRange;
 
@@ -134,59 +171,77 @@ public class CoconutPetBehavior : MonoBehaviour
 
     public void FollowPlayer()
     {
-        print("Chase Player");
-
-        float distanceToPlayer = (playerTrans.position - transform.position).magnitude;
-
-        if (distanceToPlayer < wanderRange)                  //if within wanderRange, wander
+        if (GetPlayerDistanceSquared() < (wanderRange * wanderRange))                  //if within wanderRange, wander
         {
             anim.SetTrigger(wander);
-
-            //canRotate = false;
+            return;
         }
         else if (player.inCombat)                   //if the player is in combat, hide
         {
             anim.SetTrigger(playerInCombat);
-
-            //canRotate = false;
+            return;
         }
-        else
+        else if ((cage && !cage.isBroken) || hide) //caged again, or commanded to hide
         {
-            agent.destination = playerTrans.position;
+            anim.SetTrigger("Hide");
+            EnableObstacle();
+            return;
         }
+
+        agent.destination = playerTrans.position;
     }
 
     public void FindHidingSpot()
 	{
         destination = CoconutManager.Instance.GetClosestHidingSpot(transform).position;
-	}
+        agent.destination = destination;
+    }
+
     public void Hide()
     {
-        float distanceToPlayer = (playerTrans.position - transform.position).magnitude;
-
-        if (!player.inCombat)
+        if ((cage && !cage.isBroken) || hide || player.inCombat)
         {
-            if (distanceToPlayer > wanderRange) //if out of wanderRange follow the player directly
-            {
-                anim.SetTrigger(playerTooFar);
+            EnableObstacle();
 
-                //canRotate = true;
-            }
-            else if (distanceToPlayer < wanderRange)                  //if within wanderRange, wander
+            if (hide && (GetPlayerDistanceSquared() < (findRange * findRange)))
             {
-                anim.SetTrigger(wander);
-
-                //canRotate = false;
+                hide = false;
             }
-        }
-        else
-        {
-            agent.destination = destination;
+
+            return;
         }
 
 
-        //pick a hiding place
-        //then pathfind there
+        if (GetPlayerDistanceSquared() > (wanderRange * wanderRange)) //if out of wanderRange follow the player directly
+        {
+            anim.SetTrigger(playerTooFar);
+            EnableAgent();
+            CoconutManager.Instance.CoconutFreed(this);
+            hide = false;
+            return;
+        }
+        else if (GetPlayerDistanceSquared() < (wanderRange * wanderRange))                  //if within wanderRange, wander
+        {
+            anim.SetTrigger(wander);
+            EnableAgent();
+            CoconutManager.Instance.CoconutFreed(this);
+            hide = false;
+            return;
+        }
+        else if (player.inCombat)                   //if the player is in combat, flee
+        {
+            anim.SetTrigger(playerInCombat);
+            EnableAgent();
+            CoconutManager.Instance.CoconutFreed(this);
+            hide = false;
+            return;
+        }
+
+    }
+
+    float GetPlayerDistanceSquared()
+    {
+        return (playerTrans.position - transform.position).sqrMagnitude;
     }
 
     void EnableAgent()
@@ -201,48 +256,13 @@ public class CoconutPetBehavior : MonoBehaviour
         agent.enabled = false;
     }
 
-    private bool IsFacingPlayer()
-    {
-        float minAngle = 15;
-
-        Vector3 dirToPlayer = playerTrans.position - transform.position;
-        dirToPlayer.y = 0;
-
-        if (Vector3.Angle(transform.forward, dirToPlayer) < minAngle)
-        {
-            //canRotate = false;
-            return true;
-        }
-
-        return false;
-    }
-
-    void RotateTowardsPlayer()
-    {
-        // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
-
-        // Determine which direction to rotate towards
-        Vector3 targetDirection = playerTrans.position - transform.position;
-        targetDirection.y = 0;
-        // The step size is equal to speed times frame time.
-        float singleStep = 5 * Time.deltaTime;
-
-        // Rotate the forward vector towards the target direction by one step
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-
-        // Draw a ray pointing at our target in
-        Debug.DrawRay(transform.position, newDirection, Color.red);
-
-        // Calculate a rotation a step closer to the target and applies rotation to this object
-        transform.rotation = Quaternion.LookRotation(newDirection);
-    }
-
     private void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
         if (Application.isPlaying && !displayMode)
         {
             UnityEditor.Handles.DrawWireDisc(playerTrans.position, Vector3.up, wanderRange);
+            UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, findRange);
             Vector3 seekRange = playerTrans.position;
             seekRange.y += wanderHeight;
             UnityEditor.Handles.DrawWireDisc(seekRange, Vector3.up, wanderRange);

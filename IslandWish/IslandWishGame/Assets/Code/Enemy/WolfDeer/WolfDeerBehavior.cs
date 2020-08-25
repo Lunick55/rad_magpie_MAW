@@ -3,28 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WolfDeerBehavior : MonoBehaviour
+public class WolfDeerBehavior : EnemyBehavior
 {
-    private NavMeshAgent agent;
-    private NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, hurtbox;
-
-    Animator anim;
+    [SerializeField] GameObject hurtbox;
 
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle", attack = "Attack";
 
-    public EnemyStats stats;
-    private int currentHealth;
     private bool canRotate = false;
 
     [SerializeField] float attackSpeed = 0, attackDistance = 0, safetyTimer = 1;
-    float timer = 0;
     Vector3 destination = Vector3.zero;
-    private bool aggro = false;
 
     void Start()
     {
@@ -263,7 +252,9 @@ public class WolfDeerBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -277,7 +268,9 @@ public class WolfDeerBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

@@ -1561,7 +1561,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 7726272066844937325}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -1616,6 +1616,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 165de68ad808e8b48970dfb7891285be, type: 2}
   currentHealth: 0
   anim: {fileID: 180864101691658534}
+  hud: {fileID: 0}
   currentAttackLevel: -1
   hurtBox: {fileID: 180864102612757712}
   shield: {fileID: 180864102255717382}
@@ -1625,6 +1626,7 @@ MonoBehaviour:
   inCombat: 0
   slingshotBullet: {fileID: 5044857425206683539, guid: b09bd56c5456659408c6be64261e4314,
     type: 3}
+  slingCurrentAmmo: 1
   canMove: 1
 --- !u!114 &180864101691658529
 MonoBehaviour:

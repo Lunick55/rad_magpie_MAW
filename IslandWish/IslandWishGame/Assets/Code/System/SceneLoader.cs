@@ -37,10 +37,27 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 		return coconuts;
 	}
 
+	public string GetCurrentLevelName()
+	{
+		return SceneManager.GetActiveScene().name;
+	}
+
 	public void Reset()
 	{
 		coconuts.Clear();
 		coconuts.Capacity = 0;
 
+	}
+
+	public void LoadCoconuts()
+	{
+		CoconutSaveData data = SaveSystem.LoadCoconuts();
+
+		for (int i = 0; i < data.name.Length; i++)
+		{
+			coconuts[i].name = data.name[i];
+			coconuts[i].isSaved = data.isSaved[i];
+			coconuts[i].accessory = CoconutManager.Instance.cocoAttach.GetAccessoryFromID(data.accessoryID[i]);
+		}
 	}
 }

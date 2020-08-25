@@ -47,17 +47,17 @@ public class Player : MonoBehaviour
 
         hurtBox.SetActive(false);
 
-        if (SceneLoader.Instance.loadData)
-        {
-            SceneLoader.Instance.loadData = false;
+  //      if (SceneLoader.Instance.loadData)
+  //      {
+  //          SceneLoader.Instance.loadData = false;
 
-            //load all the data calls needed here
-            LoadPlayer();
-        }
-        else
-		{
-            currentHealth = stats.health;
-        }
+  //          //load all the data calls needed here
+  //          LoadPlayer();
+  //      }
+  //      else
+		//{
+  //          currentHealth = stats.health;
+  //      }
 
         StartCoroutine(RegenShield());
 
@@ -114,7 +114,6 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(Transform damageSource, int damage)
 	{
-        damage = 10;
         if(blocking)
 		{
             Vector3 damageDirection = damageSource.position - transform.position;
@@ -122,6 +121,7 @@ public class Player : MonoBehaviour
             float damageAngle = Vector3.Angle(transform.forward, damageDirection);
             if(damageAngle < 90)
 			{
+                damage = 10;
                 Debug.Log("BLOCKED BITCH");
                 GameManager.Instance.audioManager.Play("ShieldHit");
                 shieldCurrentHealth -= damage;

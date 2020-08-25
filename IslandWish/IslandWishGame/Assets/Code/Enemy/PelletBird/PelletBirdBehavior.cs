@@ -3,24 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PelletBirdBehavior : MonoBehaviour
+public class PelletBirdBehavior : EnemyBehavior
 {
-    private NavMeshAgent agent;
-    private NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, rangedAttack;
-
-    Animator anim;
+    [SerializeField] GameObject rangedAttack;
 
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
+    [SerializeField] Transform pelletSpawn;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats; public float timeBetweenAttacks, timer;
-    private int currentHealth;
     private bool canRotate = false;
-    private bool aggro = false;
 
     void Start()
     {
@@ -92,8 +83,6 @@ public class PelletBirdBehavior : MonoBehaviour
 
     public void AttackPlayer()
 	{
-        print("am in combat baybee");
-
         if(GetPlayerDistanceSquared() < (innerRange * innerRange)) //player too close, flee
 		{
             anim.SetTrigger(playerTooClose);
@@ -112,10 +101,11 @@ public class PelletBirdBehavior : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if(timer >= timeBetweenAttacks)
+        if(timer >= stats.timeBetweenAttacks)
 		{
-            RangedAttack();
-		}
+            anim.SetTrigger("Shoot");
+            //RangedAttack();
+        }
 
         //something??
     }
@@ -156,7 +146,7 @@ public class PelletBirdBehavior : MonoBehaviour
         //instantiate attack, send it out
 
         timer = 0;
-        GameObject newRangedAttack = Instantiate(rangedAttack, transform.position, transform.rotation);
+        GameObject newRangedAttack = Instantiate(rangedAttack, pelletSpawn.position, transform.rotation);
         newRangedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
         
         newRangedAttack.GetComponent<Rigidbody>().velocity = transform.forward * 8;
@@ -217,7 +207,9 @@ public class PelletBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -231,7 +223,9 @@ public class PelletBirdBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

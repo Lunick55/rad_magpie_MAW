@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class CoconutData
 {
     public CoconutData(string newName) 
@@ -16,7 +17,44 @@ public class CoconutData
 	}
 
     public string name;
+    public bool isSaved = false;
     public GameObject accessory;
+}
+
+[System.Serializable]
+//public class CoconutSaveData
+//{
+//    public CoconutSaveData(List<CoconutData> coconuts)
+//    {
+//        coconutsSaved = new bool[coconuts.Count];
+
+//        for (int i = 0; i < coconuts.Count; i++)
+//        {
+//            coconutsSaved[i] = coconuts[i].isSaved;
+//        }
+//    }
+
+//    public bool[] coconutsSaved;
+//}
+public class CoconutSaveData
+{
+	public CoconutSaveData(List<CoconutData> coconuts)
+	{
+		name = new string[coconuts.Count];
+		isSaved = new bool[coconuts.Count];
+        accessoryID = new int[coconuts.Count];
+
+		for (int i = 0; i < coconuts.Count; i++)
+		{
+			name[i] = coconuts[i].name;
+			isSaved[i] = coconuts[i].isSaved;
+            accessoryID[i] = CoconutManager.Instance.cocoAttach.GetIDFromAccessory(coconuts[i].accessory);
+		}
+	}
+
+    public string[] name;
+    public bool[] isSaved;
+    public int[] accessoryID;
 }
 
 public class CoconutManager : BaseSingleton<CoconutManager>
@@ -27,9 +65,12 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 
     public List<Transform> hidingSpots;
 
+    public CoconutAttachments cocoAttach;
 
     void Init()
     {
+        EventManager.instance.AddListener(ScatterCoconuts, EventTag.FAILSTATE);
+
         coconuts = new List<CoconutPetBehavior>();
         if (hidingSpots == null)
         {
@@ -42,7 +83,6 @@ public class CoconutManager : BaseSingleton<CoconutManager>
         if (!coconuts.Contains(newCoconut))
         {
             coconuts.Add(newCoconut);
-            Debug.Log(newCoconut.name);
         }
 	}
 
@@ -55,7 +95,10 @@ public class CoconutManager : BaseSingleton<CoconutManager>
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.C))
+		{
+            SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
+        }
     }
 
     public Transform GetClosestHidingSpot(Transform point)
@@ -99,4 +142,20 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 			}
         }
 	}
+
+    public void ScatterCoconuts(Event failstateEvent)
+	{
+        foreach(CoconutPetBehavior coconut in coconutsFreed)
+		{
+            coconut.hide = true;
+            int randNum = Random.Range(0, hidingSpots.Count);
+            coconut.transform.position = hidingSpots[randNum].position;
+            GameManager.Instance.player.hud.LoseCoconut();
+        }
+
+        coconutsFreed.Clear();
+        coconutsFreed.Capacity = 0;
+        GameManager.Instance.player.hud.UpdateCoconut(coconutsFreed.Count);
+    }
+
 }

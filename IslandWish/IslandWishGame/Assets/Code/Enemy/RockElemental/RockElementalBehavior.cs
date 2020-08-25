@@ -3,25 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RockElementalBehavior : MonoBehaviour
+public class RockElementalBehavior : EnemyBehavior
 {
-    private NavMeshAgent agent;
-    private NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, lobbedAttack, smashAttack;
-
-    Animator anim;
+    [SerializeField] GameObject lobbedAttack;
+    [SerializeField] Collider[] smashAttack;
 
     [SerializeField] float sightRange = 0, outerRange = 0, innerRange = 0, lobbedAngle = 45;
-    private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle", smash = "Smash";
+    private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    public float timeBetweenAttacks, timer;
-    private int currentHealth;
     private bool canRotate = false;
-    private bool aggro = false;
 
     void Start()
     {
@@ -113,9 +103,11 @@ public class RockElementalBehavior : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks)
+        if (timer >= stats.timeBetweenAttacks)
         {
+            anim.SetTrigger("Throw");
             LobbedAttack();
+            return;
         }
 
         //something??
@@ -133,10 +125,26 @@ public class RockElementalBehavior : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks)
+        if (timer >= stats.timeBetweenAttacks)
         {
             timer = 0;
-            anim.SetTrigger(smash);
+
+            int randNum = Random.Range(0, 2);
+
+            switch (randNum)
+            {
+                case 0:
+                    anim.SetTrigger("AttackLeft");
+                    break;
+
+                case 1:
+                    anim.SetTrigger("AttackRight");
+                    break;
+
+                default:
+                    anim.SetTrigger("AttackLeft");
+                    break;
+            }
         }
 
         //something??
@@ -156,7 +164,6 @@ public class RockElementalBehavior : MonoBehaviour
 
     public void LobbedAttack()
     {
-        print("ATTACK");
         //instantiate attack, send it out
         timer = 0;
 
@@ -179,15 +186,17 @@ public class RockElementalBehavior : MonoBehaviour
         newLobbedAttack.GetComponent<Rigidbody>().useGravity = true;
     }
 
-    public void StartSmash()
+    public void StartSmash(bool leftSmash, bool rightSmash)
     {
         Debug.Log("FIST OF HAVOK");
-        smashAttack.SetActive(true);
+        smashAttack[0].enabled = leftSmash;
+        smashAttack[1].enabled = rightSmash;
     }
 
     public void EndSmash()
     {
-        smashAttack.SetActive(false);
+        smashAttack[0].enabled = false;
+        smashAttack[1].enabled = false;
     }
 
     void EnableAgent()
@@ -240,7 +249,9 @@ public class RockElementalBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -254,7 +265,9 @@ public class RockElementalBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }

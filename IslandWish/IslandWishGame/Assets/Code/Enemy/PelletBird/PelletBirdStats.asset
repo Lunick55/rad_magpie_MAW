@@ -18,3 +18,4 @@ MonoBehaviour:
   defense: 0
   attackRange: 0
   moveSpeed: 95
+  timeBetweenAttacks: 2

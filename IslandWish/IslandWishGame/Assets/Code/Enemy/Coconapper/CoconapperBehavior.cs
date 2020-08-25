@@ -3,25 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CoconapperBehavior : MonoBehaviour
+public class CoconapperBehavior : EnemyBehavior
 {
-    NavMeshAgent agent;
-    NavMeshObstacle obstacle;
-
-    Player player;
-    Transform playerTrans;
-    [SerializeField] GameObject hitbox, hurtbox;
-
-    Animator anim;
+    [SerializeField] Collider[] hurtbox;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
     private string playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
 
-    public EnemyStats stats;
-    private int currentHealth;
-
     private bool canRotate = false;
-    private bool aggro = false;
 
     void Start()
     {
@@ -38,7 +27,8 @@ public class CoconapperBehavior : MonoBehaviour
 
         agent.stoppingDistance = attackRange * 0.5f;
 
-        hurtbox.SetActive(false);
+        hurtbox[0].enabled = false;
+        hurtbox[1].enabled = false;
     }
 
     private void Update()
@@ -61,7 +51,7 @@ public class CoconapperBehavior : MonoBehaviour
         //agent should already be enabled
 
         //if the player is within sight of the enemy, enable agent, and give chase
-        if ((playerTrans.position - transform.position).magnitude < sightRange)
+        if (GetPlayerDistanceSquared() < (sightRange * sightRange))
         {
             anim.SetBool(playerInSight, true);
             EnableAgent();
@@ -78,7 +68,7 @@ public class CoconapperBehavior : MonoBehaviour
         print("Chase Player");
 
         //if player is within attack range, stop and attack
-        if ((playerTrans.position - transform.position).magnitude < attackRange)
+        if (GetPlayerDistanceSquared() < (attackRange * attackRange))
         {
             canRotate = true;
             EnableObstacle();
@@ -90,7 +80,7 @@ public class CoconapperBehavior : MonoBehaviour
 
         }
         //else if the player is out of sight, go back to idle
-        else if ((playerTrans.position - transform.position).magnitude > sightRange)
+        else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             canRotate = false;
             anim.SetBool(playerInSight, false);
@@ -106,6 +96,46 @@ public class CoconapperBehavior : MonoBehaviour
 
     }
 
+    public void AttackPlayer()
+	{
+        if (GetPlayerDistanceSquared() > (attackRange * attackRange))                                //player too far, chase
+        {
+            anim.SetBool(playerInRange, false);
+            timer = 0;
+            EnableAgent();
+            canRotate = false;
+            return;
+        }
+
+        timer += Time.deltaTime;
+        if (timer >= stats.timeBetweenAttacks)
+        {
+            timer = 0;
+            int randNum = Random.Range(0, 3);
+
+            switch (randNum)
+			{
+                case 0:
+                    anim.SetTrigger("AttackBoth");
+                    break;
+
+                case 1:
+                    anim.SetTrigger("AttackLeft");
+                    break;
+
+                case 2:
+                    anim.SetTrigger("AttackRight");
+                    break;
+
+                default:
+                    anim.SetTrigger("AttackBoth");
+                    break;
+			}
+
+            return;
+        }
+    }
+
     public void Aggro()
 	{
         GameManager.Instance.IncreaseAggro();
@@ -118,16 +148,16 @@ public class CoconapperBehavior : MonoBehaviour
         aggro = false;
     }
 
-    public void MeleeAttack()
+    public void MeleeAttack(bool leftMelee, bool rightMelee)
     {
-        print("ATTACK");
-        hurtbox.SetActive(true);
+        hurtbox[0].enabled = leftMelee;
+        hurtbox[1].enabled = rightMelee;
     }
 
     public void FinishMeleeAttack()
     {
-        hurtbox.SetActive(false);
-        EnableAgent();
+        hurtbox[0].enabled = false;
+        hurtbox[1].enabled = false;
     }
 
     public void EnableAgent()
@@ -177,6 +207,11 @@ public class CoconapperBehavior : MonoBehaviour
 
         return false;
     }
+    
+    float GetPlayerDistanceSquared()
+    {
+        return (playerTrans.position - transform.position).sqrMagnitude;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -191,7 +226,9 @@ public class CoconapperBehavior : MonoBehaviour
 				{
                     DeAggro();
 				}
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -205,7 +242,9 @@ public class CoconapperBehavior : MonoBehaviour
                 {
                     DeAggro();
                 }
-                Destroy(gameObject);
+                isDead = true;
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }
