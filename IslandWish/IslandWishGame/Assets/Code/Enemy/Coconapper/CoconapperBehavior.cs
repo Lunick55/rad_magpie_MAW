@@ -47,9 +47,6 @@ public class CoconapperBehavior : EnemyBehavior
 
     public void Idle()
     {
-        print("Idle");
-        //agent should already be enabled
-
         //if the player is within sight of the enemy, enable agent, and give chase
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))
         {

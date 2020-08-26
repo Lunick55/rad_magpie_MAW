@@ -51,13 +51,16 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 
 	public void LoadCoconuts()
 	{
+		Reset();
+
 		CoconutSaveData data = SaveSystem.LoadCoconuts();
 
 		for (int i = 0; i < data.name.Length; i++)
 		{
-			coconuts[i].name = data.name[i];
-			coconuts[i].isSaved = data.isSaved[i];
-			coconuts[i].accessory = CoconutManager.Instance.cocoAttach.GetAccessoryFromID(data.accessoryID[i]);
+			CoconutData coconut = new CoconutData(data.name[i], CoconutManager.Instance.cocoAttach.GetAccessoryFromID(data.accessoryID[i]));
+			coconut.isSaved = data.isSaved[i];
+
+			coconuts.Add(coconut);
 		}
 	}
 }

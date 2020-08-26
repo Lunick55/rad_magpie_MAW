@@ -42,7 +42,6 @@ public class PelletBirdBehavior : EnemyBehavior
 
     public void Idle()
     {   
-        print("Idle");
         //agent should already be enabled
 
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))      //if the player is within sight of the enemy, enable agent, and give chase
@@ -60,8 +59,6 @@ public class PelletBirdBehavior : EnemyBehavior
 
     public void ChasePlayer()
     {
-        print("Chase Player");
-
         //if player is within attack range, stop and attack
         if (GetPlayerDistanceSquared() < (agent.stoppingDistance * agent.stoppingDistance))
         {

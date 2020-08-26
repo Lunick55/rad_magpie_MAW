@@ -8,8 +8,8 @@ public enum EventTag
     DAMAGE,
     HEAL,
     FAILSTATE,
-    CHECKPOINT
-
+    CHECKPOINT,
+    BEACH_LOG
 }
 
 /// <summary>
@@ -18,6 +18,11 @@ public enum EventTag
 public abstract class Event
 {
     public virtual EventTag tag { get { return EventTag.NONE; } }
+}
+
+public class BeachEvent : Event
+{
+    public override EventTag tag { get { return EventTag.BEACH_LOG; } }
 }
 
 public class ExampleEvent : Event

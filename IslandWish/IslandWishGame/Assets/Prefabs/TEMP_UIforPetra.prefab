@@ -751,7 +751,7 @@ MonoBehaviour:
   - {fileID: 6353347764285155643}
   spearImage: {fileID: 2147049679275396507}
   slingshotImage: {fileID: 2147049680102347811}
-  anim: {fileID: 0}
+  anim: {fileID: 1868548076753302490}
   uiCoconut: {fileID: 1078908111611288875}
   uiSlingerAmmo: {fileID: 1078908112913223415}
   uiShieldHealth: {fileID: 1078908113393059004}

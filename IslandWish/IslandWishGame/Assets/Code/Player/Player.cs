@@ -16,10 +16,13 @@ public class Player : MonoBehaviour
     [Header("Player Info")]
     public PlayerStats stats;
     [HideInInspector] public int currentHealth;
-    [SerializeField] Animator anim;
+    [SerializeField] public Animator anim;
     public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
+    public bool canAttack = true;
+    public bool armed = true;
+    public List<GameObject> weapons;
 
     [Header("Shield Stats")]
     [SerializeField] GameObject shield;
@@ -72,44 +75,59 @@ public class Player : MonoBehaviour
             Debug.Log("ur dead bruh");
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (canAttack)
         {
-            if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
+            anim.SetBool("CanAttack", true);
+            DrawWeapons();
+
+            if (Input.GetMouseButtonDown(0))
             {
-                GameManager.Instance.audioManager.Play("SwingSpear");
-                anim.SetTrigger("Attack");
+                if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
+                {
+                    GameManager.Instance.audioManager.Play("SwingSpear");
+                    anim.SetTrigger("Attack");
+                }
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                GameManager.Instance.audioManager.Play("SlingshotPull");
+                anim.SetTrigger("SlingDraw");
+                //maybe also add GetMouseButton() for the aim line
+                //draw the "aim" line
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                GameManager.Instance.audioManager.Play("SlingshotRelease");
+                anim.SetTrigger("SlingFire");
+                FireSlingshotAttack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
+            {
+                GameManager.Instance.audioManager.Play("ShieldReady");
+                Block(true);
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                Block(false);
             }
         }
-        if(Input.GetMouseButtonDown(1))
+        else
 		{
-            GameManager.Instance.audioManager.Play("SlingshotPull");
-            //maybe change this to GetMouseButton() 
-            //draw the "aim" line
+            anim.SetBool("CanAttack", false);
+            SheathWeapons();
         }
-        else if(Input.GetMouseButtonUp(1))
-		{
-            GameManager.Instance.audioManager.Play("SlingshotRelease");
-            FireSlingshotAttack();
-		}
 
-        if(Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
-		{
-            GameManager.Instance.audioManager.Play("ShieldReady");
-            Block(true);
-		}
-        if(Input.GetKeyUp(KeyCode.LeftControl))
-		{
-            Block(false);
-		}
-
-        if(GameManager.Instance.GetCurrentAggro() > 0)
+        if (GameManager.Instance.GetCurrentAggro() > 0)
 		{
             inCombat = true;
+ 
 		}
         else
 		{
             inCombat = false;
-		}
+        }
+
     }
 
     public void TakeDamage(Transform damageSource, int damage)
@@ -191,15 +209,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void EndAttack()
-	{
-        hurtBox.SetActive(false);
-    }
-
     public void ResetAttack()
 	{
         currentAttackLevel = AttackLevel.LEVEL0;
-	}
+        hurtBox.SetActive(false);
+    }
 
     public void Idle()
 	{
@@ -257,6 +271,32 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
+
+    private void DrawWeapons()
+	{
+        weapons[0].SetActive(false);
+        weapons[1].SetActive(false);
+        weapons[2].SetActive(true);
+        weapons[3].SetActive(true);
+    }
+
+    private void SheathWeapons()
+	{
+        if(armed)
+		{
+            weapons[0].SetActive(true);
+            weapons[1].SetActive(true);
+            weapons[2].SetActive(false);
+            weapons[3].SetActive(false);
+		}
+        else
+		{
+            weapons[0].SetActive(false);
+            weapons[1].SetActive(false);
+            weapons[2].SetActive(false);
+            weapons[3].SetActive(false);
+        }
+    }
 
     public void LoadPlayer()
 	{

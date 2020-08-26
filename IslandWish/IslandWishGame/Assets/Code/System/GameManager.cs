@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameManager : BaseSingleton<GameManager>
 {
     public Player player;
+    public Movement playerMove;
     [HideInInspector] public Transform playerTrans;
 
     public AudioManager audioManager;
@@ -29,6 +30,7 @@ public class GameManager : BaseSingleton<GameManager>
             Debug.LogError("Fill out the Player field");
         }
         playerTrans = player.GetComponent<Transform>();
+        playerMove = player.GetComponent<Movement>();
 
         if (SceneLoader.Instance.loadData)
         {
@@ -37,6 +39,7 @@ public class GameManager : BaseSingleton<GameManager>
             //load all the data calls needed here
             player.LoadPlayer();
             LoadEnemies();
+            SceneLoader.Instance.LoadCoconuts();
         }
         else
         {

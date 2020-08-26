@@ -9,7 +9,7 @@ public class CheckpointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetCheckpoint(GameObject.Find("CocoPlayer").transform.position);
+        SetCheckpoint(GameManager.Instance.playerTrans.position);
     }
 
     // Update is called once per frame

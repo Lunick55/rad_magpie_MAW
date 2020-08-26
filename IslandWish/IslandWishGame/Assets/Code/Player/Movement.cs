@@ -44,10 +44,10 @@ public class Movement : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		RotateToMouse();
-
 		if (player.canMove)
 		{
+			RotateToMouse();
+
 			//get the direction relative to the camera
 			Vector3 camForward = playerCamera.transform.forward;
 			Vector3 camRight = playerCamera.transform.right;
@@ -143,6 +143,13 @@ public class Movement : MonoBehaviour
 	{
 		vSpeed = playerJumpSpeed;
 		inputDir.y = (vSpeed -= Time.deltaTime);
+	}
+
+	public void Teleport(Vector3 position)
+	{
+		cc.enabled = false;
+		transform.position = position;
+		cc.enabled = true;
 	}
 
 	private void RotateToMouse()

@@ -42,9 +42,6 @@ public class RockElementalBehavior : EnemyBehavior
 
     public void Idle()
     {
-        print("Idle");
-        //agent should already be enabled
-
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))      //if the player is within sight of the enemy, enable agent, and give chase
         {
             EnableAgent();
