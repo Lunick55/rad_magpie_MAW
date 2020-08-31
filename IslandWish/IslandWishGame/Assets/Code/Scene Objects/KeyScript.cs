@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class KeyScript : MonoBehaviour
 {
-    public DoorScript door;
+    [HideInInspector] public DoorScript door;
+    public bool isCollected = false;
+
+    public void CollectKey()
+	{
+        door.UnlockLock();
+        isCollected = true;
+        gameObject.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            door.UnlockLock();
-            gameObject.SetActive(false);
+            CollectKey();
         }
     }
 }

@@ -15,6 +15,8 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
 
+    //[SerializeField] LevelManager
+
 	// Start is called before the first frame update
 	void Awake()
     {
@@ -39,6 +41,7 @@ public class GameManager : BaseSingleton<GameManager>
             //load all the data calls needed here
             player.LoadPlayer();
             LoadEnemies();
+            LevelManager.Instance.LoadLevel();
             SceneLoader.Instance.LoadCoconuts();
         }
         else

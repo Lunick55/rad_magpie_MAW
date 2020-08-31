@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
-    public bool canAttack = true;
+    private bool canAttack = true;
     public bool armed = true;
     public List<GameObject> weapons;
 
@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
 
         if (canAttack)
         {
-            anim.SetBool("CanAttack", true);
             DrawWeapons();
 
             if (Input.GetMouseButtonDown(0))
@@ -114,7 +113,6 @@ public class Player : MonoBehaviour
         }
         else
 		{
-            anim.SetBool("CanAttack", false);
             SheathWeapons();
         }
 
@@ -272,17 +270,21 @@ public class Player : MonoBehaviour
 		}
 	}
 
-    private void DrawWeapons()
+    public void DrawWeapons()
 	{
+        anim.SetBool("CanAttack", true);
+        canAttack = true;
         weapons[0].SetActive(false);
         weapons[1].SetActive(false);
         weapons[2].SetActive(true);
         weapons[3].SetActive(true);
     }
 
-    private void SheathWeapons()
+    public void SheathWeapons()
 	{
-        if(armed)
+        anim.SetBool("CanAttack", false);
+        canAttack = false;
+        if (armed)
 		{
             weapons[0].SetActive(true);
             weapons[1].SetActive(true);
