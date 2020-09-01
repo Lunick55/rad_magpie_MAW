@@ -20,7 +20,8 @@ public class DoorScript : MonoBehaviour
 	{
 		if(--locks <= 0)
 		{
-			gameObject.SetActive(false);
+			//gameObject.SetActive(false);
+			isLocked = false;
 		}
 	}
 
@@ -46,5 +47,16 @@ public class DoorScript : MonoBehaviour
 	public void SetLocked(bool locked)
 	{
 		isLocked = locked;
+	}
+
+	private void OnTriggerEnter(Collider collision)
+	{
+		if(collision.gameObject.tag == "Player")
+		{
+			if (!isLocked)
+			{
+				OpenPath();
+			}
+		}
 	}
 }

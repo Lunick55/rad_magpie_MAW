@@ -314,13 +314,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c566d37f8028c254f944cc0a95e17d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 3586206478905127263}
+  anim: {fileID: 0}
+  stats: {fileID: 11400000, guid: 64ae958d9c783b044a8ba9589c692c62, type: 2}
+  isDead: 0
   hurtbox:
   - {fileID: 8887035923279521783}
   - {fileID: 4466880777752168514}
-  sightRange: 5.76
+  sightRange: 10
   attackRange: 2
-  stats: {fileID: 11400000, guid: 64ae958d9c783b044a8ba9589c692c62, type: 2}
 --- !u!1 &3673007686961675174
 GameObject:
   m_ObjectHideFlags: 0
