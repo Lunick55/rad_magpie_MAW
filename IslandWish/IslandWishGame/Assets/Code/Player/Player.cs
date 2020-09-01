@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
         StartCoroutine(RegenShield());
 
         hud.InitLife();
+
+        weapons[4].SetActive(false);
     }
 
     // Update is called once per frame
@@ -199,6 +201,7 @@ public class Player : MonoBehaviour
     public void StartAttack()
     {
         hurtBox.SetActive(true);
+        weapons[4].SetActive(true);
 
         if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
         {
@@ -209,6 +212,8 @@ public class Player : MonoBehaviour
 
     public void ResetAttack()
 	{
+        weapons[4].SetActive(false);
+
         currentAttackLevel = AttackLevel.LEVEL0;
         hurtBox.SetActive(false);
     }
@@ -290,7 +295,7 @@ public class Player : MonoBehaviour
             weapons[1].SetActive(true);
             weapons[2].SetActive(false);
             weapons[3].SetActive(false);
-		}
+        }
         else
 		{
             weapons[0].SetActive(false);

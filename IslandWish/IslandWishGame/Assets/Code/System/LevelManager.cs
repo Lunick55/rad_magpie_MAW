@@ -5,4 +5,6 @@ using UnityEngine;
 public abstract class LevelManager : BaseSingleton<LevelManager>
 {
 	public abstract void LoadLevel();
+
+	public abstract void ExitLevel();
 }

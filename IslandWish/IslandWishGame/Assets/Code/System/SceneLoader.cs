@@ -8,6 +8,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	List<CoconutData> coconuts;
 	bool isInit = false;
 	public bool loadData = false;
+	private string nextLevel;
 
 	public void Init()
 	{
@@ -21,6 +22,15 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	public void LoadScene(string scene)
 	{
 		SceneManager.LoadScene(scene);
+	}
+
+	public void FinishLevel(string nextLevelName)
+	{
+		nextLevel = nextLevelName;
+	}
+	public void NextLevel()
+	{
+		LoadScene(nextLevel);
 	}
 
 	public void AddSavedCoconuts(List<CoconutPetBehavior> savedCoconuts)

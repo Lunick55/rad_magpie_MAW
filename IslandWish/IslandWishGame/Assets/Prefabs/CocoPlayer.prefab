@@ -1619,13 +1619,13 @@ MonoBehaviour:
   hud: {fileID: 0}
   currentAttackLevel: -1
   hurtBox: {fileID: 7285795950516085794}
-  canAttack: 1
   armed: 1
   weapons:
   - {fileID: 6920701714146533237}
   - {fileID: 6920701714165019731}
   - {fileID: 5406822868121609830}
   - {fileID: 6280754178212692682}
+  - {fileID: 1674191125065823738}
   shield: {fileID: 180864102255717382}
   shieldMaxHealth: 100
   shieldCurrentHealth: 100
@@ -2372,6 +2372,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: babe53533e2e72e489cc265b418ecc9c, type: 3}
+--- !u!1 &1674191125065823738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8956820514526884191, guid: babe53533e2e72e489cc265b418ecc9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7743639634229757093}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1674191125065823737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8956820514526884188, guid: babe53533e2e72e489cc265b418ecc9c,

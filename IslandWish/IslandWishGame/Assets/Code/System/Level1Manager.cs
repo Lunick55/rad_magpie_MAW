@@ -46,6 +46,7 @@ public class Level1Manager : LevelManager
 			cutsceneCam.enabled = false;
 
 			fire.SetActive(true);
+			beachDoor.OpenPath();
 		}
 	}
 
@@ -119,6 +120,18 @@ public class Level1Manager : LevelManager
 		talkUI.gameObject.SetActive(false);
 
 		beachDoor.OpenPath();
+	}
+
+	public override void ExitLevel()
+	{
+		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count)
+		{
+			//go to next level
+			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);
+			SceneLoader.Instance.FinishLevel("Level 2");
+			SceneLoader.Instance.LoadScene("Boat Scene");
+		}
+
 	}
 }
 

@@ -22,6 +22,11 @@ public class MenuManager : MonoBehaviour
         SceneLoader.Instance.LoadScene(scene);
 	}
 
+    public void NextLevel()
+	{
+        SceneLoader.Instance.NextLevel();
+    }
+
     public void LoadGame(string scene)
 	{
         SceneLoader.Instance.loadData = true;
