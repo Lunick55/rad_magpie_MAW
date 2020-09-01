@@ -22,11 +22,6 @@ public class PrologueManager : MonoBehaviour
         ChangeText();
     }
 
-    private void OnMouseDown()
-    {
-        prologueClick++;
-    }
-
     void UpdateClicks()
     {
         if(Input.GetKeyDown("space"))
