@@ -97,7 +97,7 @@ public class CoconutManager : BaseSingleton<CoconutManager>
     {
         if (Input.GetKeyDown(KeyCode.C))
 		{
-            SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
+            //SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
         }
     }
 

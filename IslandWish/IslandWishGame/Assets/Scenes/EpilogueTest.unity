@@ -589,39 +589,45 @@ MonoBehaviour:
   sounds:
   - name: 1
     clip: {fileID: 8300000, guid: 044667e6b9c36874faed84078534ce2c, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: 037a74d1038fc7446a4e31e886174b28, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 3
     clip: {fileID: 8300000, guid: af1c62651bc9a2a45bfd551b71e3cf43, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 4
     clip: {fileID: 8300000, guid: 591e8167963880146896293846089eaf, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 5
     clip: {fileID: 8300000, guid: e8781de50e74bc9478bbd66eb8c6481b, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 6
     clip: {fileID: 8300000, guid: 1cc426ae6b713b84aa3e2c03464fe719, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
+    source: {fileID: 0}
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: e270291851eca8e4b9a9a6a0ab4b48f9, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!4 &1632580892
 Transform:

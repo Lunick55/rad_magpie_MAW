@@ -12,6 +12,7 @@ public class KeyScript : MonoBehaviour
         door.UnlockLock();
         isCollected = true;
         gameObject.SetActive(false);
+        AudioManager.Instance.Play("Pickup");
     }
 
     private void OnTriggerEnter(Collider collision)

@@ -28,6 +28,7 @@ public class DoorScript : MonoBehaviour
 	public void OpenPath()
 	{
 		gameObject.SetActive(false);
+		AudioManager.Instance.Play("Door");
 	}
 
 	public bool IsLocked()

@@ -10,8 +10,6 @@ public class GameManager : BaseSingleton<GameManager>
     public Movement playerMove;
     [HideInInspector] public Transform playerTrans;
 
-    public AudioManager audioManager;
-
     [SerializeField] List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
 

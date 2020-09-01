@@ -63,6 +63,10 @@ public class EpilogueManager : MonoBehaviour
             narr.text = "We praise you, young hero, for not giving up the fight. We praise you, dear child, the new Cocoknight.".ToString();
             AudioManager.Instance.Play(narrationIndex++.ToString());
         }
+        else if (epilogueClick >= 6)
+        {
+            SceneLoader.Instance.LoadScene("Menu");
+        }
         epilogueClick++;
     }
 }

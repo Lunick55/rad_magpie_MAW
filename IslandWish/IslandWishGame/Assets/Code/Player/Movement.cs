@@ -76,7 +76,7 @@ public class Movement : MonoBehaviour
 
 				if (inputDir != Vector3.zero)
 				{
-					GameManager.Instance.audioManager.Play("PCWalking");
+					AudioManager.Instance.Play("PCWalking");
 					anim.SetBool("Moving", true);
 				}
 				else
@@ -90,7 +90,7 @@ public class Movement : MonoBehaviour
 				if (Input.GetKey(KeyCode.Space) && !dashing && inputDir != Vector3.zero)
 				{
 					print("DASH");
-					GameManager.Instance.audioManager.Play("PCDash");
+					AudioManager.Instance.Play("PCDash");
 
 					dashing = true;
 					acceptInput = false;

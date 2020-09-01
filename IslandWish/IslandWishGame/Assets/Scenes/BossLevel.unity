@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 494927686}
   - component: {fileID: 494927685}
   - component: {fileID: 494927684}
+  - component: {fileID: 494927687}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -170,7 +171,6 @@ MonoBehaviour:
   player: {fileID: 1628882077}
   playerMove: {fileID: 1628882076}
   playerTrans: {fileID: 0}
-  audioManager: {fileID: 1052894358}
   enemies:
   - {fileID: 1355157463}
 --- !u!4 &494927686
@@ -185,8 +185,23 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &494927687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494927683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f9a58a4761b5042a9bf4f5cdd48f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doors: []
+  playerUI: {fileID: 663831486}
+  talkUI: {fileID: 0}
 --- !u!43 &634382947
 Mesh:
   m_ObjectHideFlags: 0
@@ -544,6 +559,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 669a0d44c4f25124e82915d7bfb3bfc2, type: 3}
+--- !u!223 &663831486 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2147049680022640210, guid: 669a0d44c4f25124e82915d7bfb3bfc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 663831485}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &718399249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -727,158 +748,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f85a6a33727cd46b84ba2ee4a2ecef, type: 3}
---- !u!1 &1052894357
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1052894359}
-  - component: {fileID: 1052894358}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1052894358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052894357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5b7ad10c6ba9ba4c8a1b07d1814a3dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: PCDamage
-    clip: {fileID: 8300000, guid: 1c6f7f014964f23418a7f9178910f55e, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: PCDeath
-    clip: {fileID: 8300000, guid: 0477464aee3ba7c4b91351cde48486af, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: MenuMusic
-    clip: {fileID: 8300000, guid: e861f421335bd144599988b8dec402cf, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: PCDash
-    clip: {fileID: 8300000, guid: 65c9ba1dcc7dcec42a3af32409b99c63, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: PCCageHit
-    clip: {fileID: 8300000, guid: 7edd3a03b83001f48b2909205f81931e, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: ShieldHit
-    clip: {fileID: 8300000, guid: 2a2f1a2ddc320904d9ebeb906e0b91c4, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: ShieldBreak
-    clip: {fileID: 8300000, guid: 334876741cf3c4f4a9aaff4a4b4aedaf, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: ShieldReady
-    clip: {fileID: 8300000, guid: 1123575d2d1935043abe238fa62a2a3c, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SlingHit
-    clip: {fileID: 8300000, guid: ae38fce829892c84e8e53f556681100a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SlingshotRock
-    clip: {fileID: 8300000, guid: b8dcc981c4ca7bd4dbc0b13e4e46d227, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SlingshotTree
-    clip: {fileID: 8300000, guid: 3463be64d8ec11f4696681f432741f3b, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SlingshotRelease
-    clip: {fileID: 8300000, guid: ad51e9ac15fb7a34b86256fd678526d1, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SlingshotPull
-    clip: {fileID: 8300000, guid: 0d469c137322c7f4ca1222af3bd9fcc7, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SpearHit
-    clip: {fileID: 8300000, guid: a23afc5d61a8aa64b9d75a89eb9a528e, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SpearRock
-    clip: {fileID: 8300000, guid: d5d66f28caef250498abf9599e5be1f9, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SpearTree
-    clip: {fileID: 8300000, guid: 6dd26681612c9ec428fa645cc539ac55, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: SwingSpear
-    clip: {fileID: 8300000, guid: e4e5092cdd33dac44b047f9fc32d5eaf, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: PCWalking
-    clip: {fileID: 8300000, guid: 1dfd2cf51b5b2e84583bf7f70626ad76, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
---- !u!4 &1052894359
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052894357}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 227.2171, y: 13.10169, z: -366.82126}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1335771799
 GameObject:
   m_ObjectHideFlags: 0
@@ -28712,6 +28581,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1714501870
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5133247601491299990, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_Name
+      value: ExitBoat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.3884325
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5470419
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.759476
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.77230597
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.15191042
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.022200461
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6164202
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -109.022995
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 42.824997
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171689886317100165, guid: 48e7a5effac64a9449691ac067fa388e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -53.49701
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 48e7a5effac64a9449691ac067fa388e, type: 3}
 --- !u!1 &1854824491
 GameObject:
   m_ObjectHideFlags: 0
@@ -28960,5 +28898,259 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1968689467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968689469}
+  - component: {fileID: 1968689468}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1968689468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968689467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b7ad10c6ba9ba4c8a1b07d1814a3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: PCDamage
+    clip: {fileID: 8300000, guid: 1c6f7f014964f23418a7f9178910f55e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PCDeath
+    clip: {fileID: 8300000, guid: 0477464aee3ba7c4b91351cde48486af, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: 32866ca7aaf10ef4988ba10992313593, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: PCDash
+    clip: {fileID: 8300000, guid: 184d84a97dc1b3f448d0480174a9e809, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PCCageHit
+    clip: {fileID: 8300000, guid: fed24b7b5c832244891e5f260247f5b0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ShieldHit
+    clip: {fileID: 8300000, guid: 4dd01c2122c4ec14b80d95c9df347e40, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ShieldBreak
+    clip: {fileID: 8300000, guid: 951e197f1e0e8a140beb6d39e2abab90, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ShieldReady
+    clip: {fileID: 8300000, guid: f4a9cc93ea398354ba1e03043a9990b8, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlingHit
+    clip: {fileID: 8300000, guid: 0126dae60e7140844ba0e9aa785b6acf, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlingshotRock
+    clip: {fileID: 8300000, guid: 65691ba28e600004ea9c45dcdcd30a8a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlingshotTree
+    clip: {fileID: 8300000, guid: ae4d30229147e8a46b5039df8472c366, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlingshotRelease
+    clip: {fileID: 8300000, guid: 3c6aa8332ee58cd44a087ce346c19a5c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlingshotPull
+    clip: {fileID: 8300000, guid: 1a3e726d78f74ac43a4362c9b50c2cff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SpearHit
+    clip: {fileID: 8300000, guid: 1277452d1d8e86349b555db612fc8d96, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SpearRock
+    clip: {fileID: 8300000, guid: 0089e224d1553f04d8f8661f7fcf9457, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SpearTree
+    clip: {fileID: 8300000, guid: 617e2c26e0c153349b81eb6afb6c6d75, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SwingSpear
+    clip: {fileID: 8300000, guid: 035095d709c49e14cbaa481378b7297f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PCWalking
+    clip: {fileID: 8300000, guid: 79a64e3ca72330a4db4ee7d068b6122b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperAttack
+    clip: {fileID: 8300000, guid: 3f2b3dce351d6794289beb663eb4bcc8, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperDamaged
+    clip: {fileID: 8300000, guid: 93291dbcf6ef43c4f9611a24872d4bb6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperDeath
+    clip: {fileID: 8300000, guid: 9bef80cf66dd18f47a32151aaf0f4ce9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperDualAttack
+    clip: {fileID: 8300000, guid: 0a7b527ce04813b4498b2ec32baf38f0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PelletAttack
+    clip: {fileID: 8300000, guid: 7feba5cf31a27ac40822d0b42c2a7fd0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PelletDamaged
+    clip: {fileID: 8300000, guid: 168182a2f3fc531489d4b7ad87844482, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PelletDeath
+    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FireBuilt
+    clip: {fileID: 8300000, guid: c0b7d5ccc21cc654a91f61b1aeecb567, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: TiredLines
+    clip: {fileID: 8300000, guid: 625723e14478d5244ab7188aaf987767, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ghost1
+    clip: {fileID: 8300000, guid: f7ccb28f832ed0c4b983b4f12bd14b3f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ghost2
+    clip: {fileID: 8300000, guid: 911906418ed9c104daae3fa58960e8ff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ghost3
+    clip: {fileID: 8300000, guid: 3d590e052e989d74e8edb9cb4dffbfe0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ghost4
+    clip: {fileID: 8300000, guid: cf0e106d22ef3014bb3fa7bf249f33c6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ghost5
+    clip: {fileID: 8300000, guid: be32b0d0362a79b49b4ec94df415e31f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ghost6
+    clip: {fileID: 8300000, guid: 595d242c43929bd40b4a6218be81b5be, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GhostGone1
+    clip: {fileID: 8300000, guid: aaeb250379d84ed47b0fcc2b3f484497, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GhostGone2
+    clip: {fileID: 8300000, guid: e79b7681a497f74438bbb4ebc1934a46, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &1968689469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968689467}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 227.2171, y: 13.10169, z: -366.82126}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

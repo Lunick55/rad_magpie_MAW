@@ -21,6 +21,7 @@ public class Level1Manager : LevelManager
 	private bool runGhost;
 	[SerializeField] TextMeshProUGUI text;
 	[SerializeField] List<string> ghostTalk;
+	[SerializeField] List<string> ghostAudioNames;
 	private int ghostTalkIndex = 0;
 
 	void Awake()
@@ -85,6 +86,7 @@ public class Level1Manager : LevelManager
 		playerUI.gameObject.SetActive(false);
 		talkUI.gameObject.SetActive(true);
 		text.text = ghostTalk[ghostTalkIndex];
+		AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
 
 		newGame = false;
 	}
@@ -101,6 +103,7 @@ public class Level1Manager : LevelManager
 			}
 
 			text.text = ghostTalk[ghostTalkIndex];
+			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
 		}
 	}
 

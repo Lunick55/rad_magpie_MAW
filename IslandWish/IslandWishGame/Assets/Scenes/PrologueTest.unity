@@ -210,51 +210,57 @@ MonoBehaviour:
   sounds:
   - name: 1
     clip: {fileID: 8300000, guid: 55da83d4d41ab014da33f7b049db0f90, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: 3170e952d47b92b4ca35efa81d3120e4, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 3
     clip: {fileID: 8300000, guid: 3a273efea6746f3499d2883d2ec448ad, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 4
     clip: {fileID: 8300000, guid: 501dcec5a48933747af278552f57e7a3, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 5
     clip: {fileID: 8300000, guid: b5d07059aebf55c4abe1fa816256b4df, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 6
     clip: {fileID: 8300000, guid: 55cf10bc76a0d9249af94ff54367f48c, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 7
     clip: {fileID: 8300000, guid: 3a4ea9671d4fec94ebe443d96597f5bc, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: 8
     clip: {fileID: 8300000, guid: 792e67eeb7ec9ae4ebf44650fb69a9e8, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
+    source: {fileID: 0}
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: df321f004f1ce2c4892b86121a705f88, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!4 &1491957667
 Transform:

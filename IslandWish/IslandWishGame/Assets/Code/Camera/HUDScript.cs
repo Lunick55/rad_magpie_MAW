@@ -84,7 +84,7 @@ public class HUDScript : MonoBehaviour
         if(playerHealth <= 0)
         {
             GameManager.Instance.player.canMove = false;
-            GameManager.Instance.audioManager.Play("PCDeath");
+            AudioManager.Instance.Play("PCDeath");
             anim.Play();
             Invoke("FailState", 2);
 
