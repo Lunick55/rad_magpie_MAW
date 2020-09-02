@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4048702418118238258}
   m_Layer: 0
   m_Name: PelletBird
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -245,14 +245,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6af460d260cc514c86b1659bef7faf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 2058027804621333548}
+  anim: {fileID: 0}
+  stats: {fileID: 11400000, guid: 6b96c26dff3ce8f4d84a26a9c29c3f2e, type: 2}
+  isDead: 0
   rangedAttack: {fileID: 3928775837094120575, guid: 8fc41e45f6ed24f4b94c6d92929ccd0c,
     type: 3}
   outerRange: 6
   innerRange: 3
   sightRange: 10
   pelletSpawn: {fileID: 3039011640434799783}
-  stats: {fileID: 11400000, guid: 6b96c26dff3ce8f4d84a26a9c29c3f2e, type: 2}
 --- !u!1 &2938353060371287505
 GameObject:
   m_ObjectHideFlags: 0

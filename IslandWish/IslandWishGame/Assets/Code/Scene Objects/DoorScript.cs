@@ -5,30 +5,59 @@ using UnityEngine;
 public class DoorScript : MonoBehaviour
 {
     public int locks = 1;
-	public bool beachDoor = false; //temp thing, might restructure later
+	public List<KeyScript> keys;
+	private bool isLocked = true;
 
 	private void Start()
 	{
-		EventManager.instance.AddListener(OpenPath, EventTag.BEACH_LOG);
+		foreach(KeyScript key in keys)
+		{
+			key.door = this;
+		}
 	}
 
 	public void UnlockLock()
 	{
 		if(--locks <= 0)
 		{
-			if(beachDoor)
-			{
-				Level1Manager.Instance.ActivateGhostScene();
-			}
-			else
-			{
-				gameObject.SetActive(false);
-			}
+			//gameObject.SetActive(false);
+			isLocked = false;
 		}
 	}
 
-	public void OpenPath(Event evnt)
+	public void OpenPath()
 	{
 		gameObject.SetActive(false);
+		AudioManager.Instance.Play("Door");
+	}
+
+	public bool IsLocked()
+	{
+		if (locks <= 0)
+		{
+			isLocked = false;
+		}
+		else
+		{
+			isLocked = true;
+		}
+
+		return isLocked;
+	}
+
+	public void SetLocked(bool locked)
+	{
+		isLocked = locked;
+	}
+
+	private void OnTriggerEnter(Collider collision)
+	{
+		if(collision.gameObject.tag == "Player")
+		{
+			if (!isLocked)
+			{
+				OpenPath();
+			}
+		}
 	}
 }

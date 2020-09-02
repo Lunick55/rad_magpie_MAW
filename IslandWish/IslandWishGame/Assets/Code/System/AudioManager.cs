@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : BaseSingleton<AudioManager>
 {
 
    public Sound[] sounds;

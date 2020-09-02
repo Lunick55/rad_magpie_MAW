@@ -60,20 +60,23 @@ public class Movement : MonoBehaviour
 			{
 				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
 
-				Vector2 directionMoving = new Vector2(inputDir.x, inputDir.z);
-				lookDirection = camRight * lookDirection.x + camForward * lookDirection.z;
-				Vector2 directionLooking = new Vector2(lookDirection.x, lookDirection.z);
+				//all for them anims baybee
+				//prepare the corrected "forward vector"
+				Vector3 forwardVec = Vector3.forward;
+				forwardVec = camRight * forwardVec.x + camForward * forwardVec.z;
+				//get the angle between where the player is looking and the corrected vector
+				float angle = Vector3.SignedAngle(lookDirection, forwardVec, Vector3.down);
+				Vector3 directionMoving = inputDir;
+				//use the corrected angle the rotate the moving vector
+				directionMoving = Quaternion.AngleAxis(angle, Vector3.up) * directionMoving;
 
-				float angle = Vector2.Angle(Vector2.up, directionLooking);
-				//Debug.Log(angle);
-				directionMoving = Quaternion.AngleAxis(angle, Vector3.forward) * directionLooking;
-
-				anim.SetFloat("MovementForward", directionMoving.y);
+				anim.SetFloat("MovementForward", directionMoving.z);
 				anim.SetFloat("MovementSide", directionMoving.x);
+
 
 				if (inputDir != Vector3.zero)
 				{
-					GameManager.Instance.audioManager.Play("PCWalking");
+					AudioManager.Instance.Play("PCWalking");
 					anim.SetBool("Moving", true);
 				}
 				else
@@ -82,10 +85,12 @@ public class Movement : MonoBehaviour
 				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
+
+
 				if (Input.GetKey(KeyCode.Space) && !dashing && inputDir != Vector3.zero)
 				{
 					print("DASH");
-					GameManager.Instance.audioManager.Play("PCDash");
+					AudioManager.Instance.Play("PCDash");
 
 					dashing = true;
 					acceptInput = false;

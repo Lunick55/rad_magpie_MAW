@@ -114,18 +114,22 @@ public class CoconapperBehavior : EnemyBehavior
 			{
                 case 0:
                     anim.SetTrigger("AttackBoth");
+                    AudioManager.Instance.Play("CoconapperDualAttack");
                     break;
 
                 case 1:
                     anim.SetTrigger("AttackLeft");
+                    AudioManager.Instance.Play("CoconapperAttack");
                     break;
 
                 case 2:
                     anim.SetTrigger("AttackRight");
+                    AudioManager.Instance.Play("CoconapperAttack");
                     break;
 
                 default:
                     anim.SetTrigger("AttackBoth");
+                    AudioManager.Instance.Play("CoconapperDualAttack");
                     break;
 			}
 
@@ -214,12 +218,13 @@ public class CoconapperBehavior : EnemyBehavior
     {
         if (other.tag == "MeleeAttack")
         {
-            GameManager.Instance.audioManager.Play("SpearHit");
+            AudioManager.Instance.Play("SpearHit");
             currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
-                if(aggro)
+                AudioManager.Instance.Play("CoconapperDeath");
+                if (aggro)
 				{
                     DeAggro();
 				}
@@ -227,14 +232,19 @@ public class CoconapperBehavior : EnemyBehavior
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
             }
+            else
+			{
+                AudioManager.Instance.Play("CoconapperDamaged");
+            }
         }
         else if (other.tag == "SlingshotAttack")
         {
-            GameManager.Instance.audioManager.Play("SlingHit");
+            AudioManager.Instance.Play("SlingHit");
             currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("CoconapperDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -242,6 +252,10 @@ public class CoconapperBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+			{
+                AudioManager.Instance.Play("CoconapperDamaged");
             }
         }
     }

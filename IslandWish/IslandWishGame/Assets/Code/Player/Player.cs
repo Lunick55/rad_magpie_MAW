@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
-    public bool canAttack = true;
+    private bool canAttack = true;
     public bool armed = true;
     public List<GameObject> weapons;
 
@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
         StartCoroutine(RegenShield());
 
         hud.InitLife();
+
+        weapons[4].SetActive(false);
     }
 
     // Update is called once per frame
@@ -77,34 +79,33 @@ public class Player : MonoBehaviour
 
         if (canAttack)
         {
-            anim.SetBool("CanAttack", true);
             DrawWeapons();
 
             if (Input.GetMouseButtonDown(0))
             {
                 if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
                 {
-                    GameManager.Instance.audioManager.Play("SwingSpear");
+                    AudioManager.Instance.Play("SwingSpear");
                     anim.SetTrigger("Attack");
                 }
             }
             if (Input.GetMouseButtonDown(1))
             {
-                GameManager.Instance.audioManager.Play("SlingshotPull");
+                AudioManager.Instance.Play("SlingshotPull");
                 anim.SetTrigger("SlingDraw");
                 //maybe also add GetMouseButton() for the aim line
                 //draw the "aim" line
             }
             else if (Input.GetMouseButtonUp(1))
             {
-                GameManager.Instance.audioManager.Play("SlingshotRelease");
+                AudioManager.Instance.Play("SlingshotRelease");
                 anim.SetTrigger("SlingFire");
                 FireSlingshotAttack();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
             {
-                GameManager.Instance.audioManager.Play("ShieldReady");
+                AudioManager.Instance.Play("ShieldReady");
                 Block(true);
             }
             if (Input.GetKeyUp(KeyCode.LeftControl))
@@ -114,7 +115,6 @@ public class Player : MonoBehaviour
         }
         else
 		{
-            anim.SetBool("CanAttack", false);
             SheathWeapons();
         }
 
@@ -141,14 +141,14 @@ public class Player : MonoBehaviour
 			{
                 damage = 10;
                 Debug.Log("BLOCKED BITCH");
-                GameManager.Instance.audioManager.Play("ShieldHit");
+                AudioManager.Instance.Play("ShieldHit");
                 shieldCurrentHealth -= damage;
                 hud.UpdateShield(shieldCurrentHealth);
                 return;
 			}
 		}
         print("OOF OUCH");
-        GameManager.Instance.audioManager.Play("PCDamage");
+        AudioManager.Instance.Play("PCDamage");
         currentHealth -= damage;
         hud.LoseLife();
     }
@@ -201,6 +201,7 @@ public class Player : MonoBehaviour
     public void StartAttack()
     {
         hurtBox.SetActive(true);
+        weapons[4].SetActive(true);
 
         if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
         {
@@ -211,6 +212,8 @@ public class Player : MonoBehaviour
 
     public void ResetAttack()
 	{
+        weapons[4].SetActive(false);
+
         currentAttackLevel = AttackLevel.LEVEL0;
         hurtBox.SetActive(false);
     }
@@ -247,7 +250,7 @@ public class Player : MonoBehaviour
 		{
             if (shieldCurrentHealth <= 0)
             {
-                GameManager.Instance.audioManager.Play("ShieldBreak");
+                AudioManager.Instance.Play("ShieldBreak");
                 hud.BreakShield();
                 shieldBroken = true;
                 Block(false);
@@ -272,23 +275,27 @@ public class Player : MonoBehaviour
 		}
 	}
 
-    private void DrawWeapons()
+    public void DrawWeapons()
 	{
+        anim.SetBool("CanAttack", true);
+        canAttack = true;
         weapons[0].SetActive(false);
         weapons[1].SetActive(false);
         weapons[2].SetActive(true);
         weapons[3].SetActive(true);
     }
 
-    private void SheathWeapons()
+    public void SheathWeapons()
 	{
-        if(armed)
+        anim.SetBool("CanAttack", false);
+        canAttack = false;
+        if (armed)
 		{
             weapons[0].SetActive(true);
             weapons[1].SetActive(true);
             weapons[2].SetActive(false);
             weapons[3].SetActive(false);
-		}
+        }
         else
 		{
             weapons[0].SetActive(false);

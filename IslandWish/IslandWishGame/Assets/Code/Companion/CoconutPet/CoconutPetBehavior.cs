@@ -140,15 +140,16 @@ public class CoconutPetBehavior : MonoBehaviour
 
         if (!isWandering)
         {
-            //TODO: fix this, it doesn't work
+            //TODO: fixed, but the navmesh is bonkers. Maybe implement safety timer?
             //Pick a point somwhere inside of a x-sized unit sphere
-            Vector3 randomDestination = Random.insideUnitSphere * wanderRange;
+            Vector3 randomDestination = Random.insideUnitSphere;
 
+            float randDestHeight = randomDestination.y * wanderHeight;
+            randomDestination *= wanderRange;
+            randomDestination.y = randDestHeight;
             //put that point in context of a position
             randomDestination += playerTrans.position;
-            float randDestHeight = randomDestination.y * wanderHeight * maxRangeReciprical;
             debugDest = randomDestination;
-            randomDestination.y = randDestHeight;
 
             NavMeshHit navHit;
 
@@ -261,8 +262,11 @@ public class CoconutPetBehavior : MonoBehaviour
 #if UNITY_EDITOR
         if (Application.isPlaying && !displayMode)
         {
+            //wander range
             UnityEditor.Handles.DrawWireDisc(playerTrans.position, Vector3.up, wanderRange);
+            //find range
             UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, findRange);
+            //upper wander range, to create cylinder
             Vector3 seekRange = playerTrans.position;
             seekRange.y += wanderHeight;
             UnityEditor.Handles.DrawWireDisc(seekRange, Vector3.up, wanderRange);

@@ -230,7 +230,7 @@ public class BunnyBirdBehavior : EnemyBehavior
     {
         if (other.tag == "MeleeAttack")
         {
-            GameManager.Instance.audioManager.Play("SpearHit");
+            AudioManager.Instance.Play("SpearHit");
             currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
@@ -246,7 +246,7 @@ public class BunnyBirdBehavior : EnemyBehavior
         }
         else if (other.tag == "SlingshotAttack")
         {
-            GameManager.Instance.audioManager.Play("SlingHit");
+            AudioManager.Instance.Play("SlingHit");
             currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {

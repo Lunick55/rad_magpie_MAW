@@ -97,7 +97,7 @@ public class CoconutManager : BaseSingleton<CoconutManager>
     {
         if (Input.GetKeyDown(KeyCode.C))
 		{
-            SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
+            //SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
         }
     }
 
@@ -133,13 +133,6 @@ public class CoconutManager : BaseSingleton<CoconutManager>
             coconutsFreed.Add(newRecruit);
             GameManager.Instance.player.hud.GainCoconut();
             GameManager.Instance.player.hud.UpdateCoconut(coconutsFreed.Count);
-
-            if(coconutsFreed.Count >= coconuts.Count)
-			{
-                //go to next level
-                SceneLoader.Instance.AddSavedCoconuts(coconutsFreed);
-                SceneLoader.Instance.LoadScene("Boat Scene");
-			}
         }
 	}
 

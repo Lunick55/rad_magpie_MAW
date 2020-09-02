@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 4476581374694740896}
   m_Layer: 0
   m_Name: RockElemental
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -340,7 +340,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349269bbd1553014c9e1cdefba632b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 1535466718499123286}
+  anim: {fileID: 0}
+  stats: {fileID: 11400000, guid: 6dde6df326c066f4ba957f05d7d4af02, type: 2}
+  isDead: 0
   lobbedAttack: {fileID: 3928775837094120575, guid: 8fc41e45f6ed24f4b94c6d92929ccd0c,
     type: 3}
   smashAttack:
@@ -350,9 +352,6 @@ MonoBehaviour:
   outerRange: 10.19
   innerRange: 2
   lobbedAngle: 71.71
-  stats: {fileID: 11400000, guid: 6dde6df326c066f4ba957f05d7d4af02, type: 2}
-  timeBetweenAttacks: 2
-  timer: 0
 --- !u!1 &1999051993976157724
 GameObject:
   m_ObjectHideFlags: 0

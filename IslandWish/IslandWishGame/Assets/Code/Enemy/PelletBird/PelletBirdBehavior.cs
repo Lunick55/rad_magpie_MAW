@@ -140,6 +140,7 @@ public class PelletBirdBehavior : EnemyBehavior
     public void RangedAttack()
     {
         print("ATTACK");
+        AudioManager.Instance.Play("PelletAttack");
         //instantiate attack, send it out
 
         timer = 0;
@@ -195,11 +196,12 @@ public class PelletBirdBehavior : EnemyBehavior
     {
         if (other.tag == "MeleeAttack")
         {
-            GameManager.Instance.audioManager.Play("SpearHit");
+            AudioManager.Instance.Play("SpearHit");
             currentHealth -= player.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("PelletDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -208,14 +210,19 @@ public class PelletBirdBehavior : EnemyBehavior
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
             }
+            else
+			{
+                AudioManager.Instance.Play("PelletDamaged");
+            }
         }
         else if (other.tag == "SlingshotAttack")
         {
-            GameManager.Instance.audioManager.Play("SlingHit");
+            AudioManager.Instance.Play("SlingHit");
             currentHealth -= player.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("PelletDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -223,6 +230,10 @@ public class PelletBirdBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+			{
+                AudioManager.Instance.Play("PelletDamaged");
             }
         }
     }

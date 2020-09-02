@@ -4,17 +4,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Level1Manager : BaseSingleton<Level1Manager>
+public class Level1Manager : LevelManager
 {
-	[SerializeField] GameObject ghost, playerDoll;
+	[Header("World Stuff")]
 	[SerializeField] Camera playerCam, cutsceneCam;
 	[SerializeField] Transform cutscenePos;
 	[SerializeField] GameObject fire;
-	public bool ghostSceneComplete = false;
-	private bool runGhost;
+	public bool newGame = false;
+	[SerializeField] List<DoorScript> doors;
+	[SerializeField] DoorScript beachDoor;
 	[SerializeField] Canvas playerUI, talkUI;
+
+	[Header("The Ghost Stuff")]
+	[SerializeField] GameObject ghost;
+	[SerializeField] GameObject playerDoll;
+	private bool runGhost;
 	[SerializeField] TextMeshProUGUI text;
 	[SerializeField] List<string> ghostTalk;
+	[SerializeField] List<string> ghostAudioNames;
 	private int ghostTalkIndex = 0;
 
 	void Awake()
@@ -24,22 +31,31 @@ public class Level1Manager : BaseSingleton<Level1Manager>
 
 	private void Init()
 	{
-		if(!ghostSceneComplete)
+		if(newGame)
 		{
-			GameManager.Instance.player.canAttack = false;
 			GameManager.Instance.player.armed = false;
+			GameManager.Instance.player.SheathWeapons();
+
 			fire.SetActive(false);
 		}
 		else
 		{
-			GameManager.Instance.player.canAttack = true;
 			GameManager.Instance.player.armed = true;
+			GameManager.Instance.player.DrawWeapons();
 
 			playerCam.enabled = true;
 			cutsceneCam.enabled = false;
 
 			fire.SetActive(true);
+			beachDoor.OpenPath();
 		}
+	}
+
+	public override void LoadLevel()
+	{
+		//TODO: load the level
+
+		throw new NotImplementedException();
 	}
 
 	private void Update()
@@ -47,6 +63,10 @@ public class Level1Manager : BaseSingleton<Level1Manager>
 		if(runGhost)
 		{
 			RunGhostScene();
+		}
+		if(!beachDoor.IsLocked() && newGame)
+		{
+			ActivateGhostScene();
 		}
 	}
 
@@ -66,6 +86,9 @@ public class Level1Manager : BaseSingleton<Level1Manager>
 		playerUI.gameObject.SetActive(false);
 		talkUI.gameObject.SetActive(true);
 		text.text = ghostTalk[ghostTalkIndex];
+		AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+
+		newGame = false;
 	}
 
 	public void RunGhostScene()
@@ -80,25 +103,38 @@ public class Level1Manager : BaseSingleton<Level1Manager>
 			}
 
 			text.text = ghostTalk[ghostTalkIndex];
+			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
 		}
 	}
 
 	public void EndGhostScene()
 	{
 		ghost.SetActive(false);
-		GameManager.Instance.player.canAttack = true;
+
+		GameManager.Instance.player.canMove = true;
+		GameManager.Instance.player.DrawWeapons();
 		GameManager.Instance.player.armed = true;
 
 		playerCam.enabled = true;
 		cutsceneCam.enabled = false;
 
 		//teleport player and maybe deactivate my cutscene clone
-		GameManager.Instance.player.canMove = true;
 		playerUI.gameObject.SetActive(true);
 		talkUI.gameObject.SetActive(false);
 
-		BeachEvent beach = new BeachEvent();
-		EventManager.instance.FireEvent(beach);
+		beachDoor.OpenPath();
+	}
+
+	public override void ExitLevel()
+	{
+		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count)
+		{
+			//go to next level
+			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);
+			SceneLoader.Instance.FinishLevel("Level 2");
+			SceneLoader.Instance.LoadScene("Boat Scene");
+		}
+
 	}
 }
 
@@ -106,13 +142,13 @@ public class Level1Manager : BaseSingleton<Level1Manager>
 [Serializable]
 public class Level1Data
 {
-	public Level1Data()
+	public Level1Data(Level1Manager level)
 	{
+		newGame = level.newGame;
 
+		
 	}
 
-	public bool ghostComplete;
+	public bool newGame;
 	public bool[] openDoors;
-
-
 }

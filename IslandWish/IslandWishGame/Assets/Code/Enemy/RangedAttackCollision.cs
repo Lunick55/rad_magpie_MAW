@@ -31,6 +31,11 @@ public class RangedAttackCollision : MonoBehaviour
 		if(other.tag == "Player")
 		{
 			GameManager.Instance.player.TakeDamage(transform, 1);
+			Destroy(gameObject);
+		}
+		else if (other.tag != "Enemy")
+		{
+			Destroy(gameObject);
 		}
 	}
 }
