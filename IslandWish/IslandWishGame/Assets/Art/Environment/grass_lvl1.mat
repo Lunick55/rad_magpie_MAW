@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: grass_lvl1
   m_Shader: {fileID: 4800000, guid: 2c01637ff9f844449825db862100b930, type: 3}
-  m_ShaderKeywords: _ENABLEBASEPLANE_ON _ENABLEGRADIENT_ON _ENABLEMASK_ON _ENABLENOISE_ON
-    _ENABLEPRESSURE_ON _ENABLERANDOMLENGTH_ON _ENABLEWIND_ON
+  m_ShaderKeywords: _ENABLEBASEPLANE_ON _ENABLEGRADIENT_ON _ENABLENOISE_ON _ENABLEPRESSURE_ON
+    _ENABLERANDOMLENGTH_ON _ENABLEWIND_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -81,7 +81,7 @@ Material:
     - _DstBlend: 0
     - _EnableBasePlane: 1
     - _EnableGradient: 1
-    - _EnableMask: 1
+    - _EnableMask: 0
     - _EnableNoise: 1
     - _EnablePressure: 1
     - _EnableRandomLength: 1
@@ -94,12 +94,12 @@ Material:
     - _LODDistance: 536
     - _LeafCuts: 3
     - _LeafMultiplier: 1
-    - _LengthIntensity: 2.78
-    - _LengthMaxDiference: 0.71
+    - _LengthIntensity: 3.62
+    - _LengthMaxDiference: 0.43
     - _LowerWidth: 0.05
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseStrength: 0.5
+    - _NoiseStrength: 0.06
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PressureStrength: 1
@@ -111,7 +111,7 @@ Material:
     - _UpperWidth: 0.05
     - _VisibleRange: 345
     - _WindSpeed: 0.005
-    - _WindStrength: 0.54
+    - _WindStrength: 0.58
     - _WindTexCol: 0
     - _ZWrite: 1
     m_Colors:

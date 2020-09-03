@@ -123,8 +123,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accessory: {fileID: 0}
   cage: {fileID: 0}
+  hide: 0
   wanderRange: 4
   wanderHeight: 1
+  findRange: 1
   isWandering: 0
   displayMode: 0
 --- !u!1 &1194352675093985600

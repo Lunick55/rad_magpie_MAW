@@ -58,11 +58,11 @@ AvatarMask:
   - m_Path: backpack
     m_Weight: 0
   - m_Path: bod
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: hair
     m_Weight: 0
   - m_Path: legs
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: sleeves
     m_Weight: 0
   - m_Path: slingshot

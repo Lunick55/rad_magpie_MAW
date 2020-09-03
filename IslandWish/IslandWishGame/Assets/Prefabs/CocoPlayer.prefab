@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 180864102255717381}
   - component: {fileID: 180864102255717380}
   - component: {fileID: 180864102255717383}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: TEMPShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1998,6 +1998,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: spear (1)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 4e0761f3b99c16a4b819264dc4411aea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0761f3b99c16a4b819264dc4411aea, type: 3}
 --- !u!1 &6920701714146533237 stripped
@@ -2093,6 +2098,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: slingshot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: d2b32d28b8834d54889c9ad73b4042c5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2b32d28b8834d54889c9ad73b4042c5, type: 3}
@@ -2190,6 +2200,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playerhair
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 94a86b2043d711544a8ea7e45596e3cc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94a86b2043d711544a8ea7e45596e3cc, type: 3}
 --- !u!4 &7510116702760184556 stripped
@@ -2280,6 +2295,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: mask
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c250c7ea933de764482b3ad4a32b9bd8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c250c7ea933de764482b3ad4a32b9bd8, type: 3}
 --- !u!4 &1408487973177375282 stripped
@@ -2369,6 +2389,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: swipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 8956820514526884191, guid: babe53533e2e72e489cc265b418ecc9c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: babe53533e2e72e489cc265b418ecc9c, type: 3}
@@ -2465,6 +2490,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playerbackpackflap
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a7bdb79b92a6d594cb8353341e4d99c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7bdb79b92a6d594cb8353341e4d99c2, type: 3}
