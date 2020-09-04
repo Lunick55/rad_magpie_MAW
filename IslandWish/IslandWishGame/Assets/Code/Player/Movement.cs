@@ -65,7 +65,7 @@ public class Movement : MonoBehaviour
 				Vector3 forwardVec = Vector3.forward;
 				forwardVec = camRight * forwardVec.x + camForward * forwardVec.z;
 				//get the angle between where the player is looking and the corrected vector
-				float angle = Vector3.SignedAngle(lookDirection, forwardVec, Vector3.down);
+				float angle = Vector3.SignedAngle(forwardVec, lookDirection, Vector3.down);
 				Vector3 directionMoving = inputDir;
 				//use the corrected angle the rotate the moving vector
 				directionMoving = Quaternion.AngleAxis(angle, Vector3.up) * directionMoving;
