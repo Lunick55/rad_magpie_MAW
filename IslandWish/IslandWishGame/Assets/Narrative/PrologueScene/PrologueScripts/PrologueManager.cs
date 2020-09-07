@@ -33,6 +33,10 @@ public class PrologueManager : MonoBehaviour
 
     void ChangeText()
     {
+        if (narrationIndex > 0)
+        {
+            AudioManager.Instance.Stop((narrationIndex - 1).ToString());
+        }
         if (prologueClick == 0)
         {
             narr.text = "Coconut Island. A beautiful place named for the curious creatures that inhabit the land.".ToString();

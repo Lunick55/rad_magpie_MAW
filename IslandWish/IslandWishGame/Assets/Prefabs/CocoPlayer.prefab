@@ -1634,6 +1634,7 @@ MonoBehaviour:
   slingshotBullet: {fileID: 5044857425206683539, guid: b09bd56c5456659408c6be64261e4314,
     type: 3}
   slingCurrentAmmo: 1
+  slingTrans: {fileID: 7379109796912360235}
   canMove: 1
 --- !u!114 &180864101691658529
 MonoBehaviour:

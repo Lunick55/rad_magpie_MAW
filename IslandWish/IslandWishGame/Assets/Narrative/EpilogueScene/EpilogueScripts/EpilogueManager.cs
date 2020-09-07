@@ -33,6 +33,10 @@ public class EpilogueManager : MonoBehaviour
 
     void ChangeText()
     {
+        if (narrationIndex > 0)
+        {
+            AudioManager.Instance.Stop((narrationIndex - 1).ToString());
+        }
         if (epilogueClick == 0)
         {
             narr.text = "The gates swing open and your friends rejoice. The old Cocoknight had made the right choice.".ToString();

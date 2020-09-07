@@ -15,15 +15,17 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 		if(!isInit)
 		{
 			coconuts = new List<CoconutData>();
+			//anim.runtimeAnimatorController = ;
+
 			isInit = true;
 		}
 	}
 
 	public void LoadScene(string scene)
 	{
-		SceneManager.LoadScene(scene);
+		//TODO: turn off player movement n'stuff
+		TransitionManager.Instance.Transition(scene);
 	}
-
 	public void FinishLevel(string nextLevelName)
 	{
 		nextLevel = nextLevelName;

@@ -13,7 +13,8 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
 
-    //[SerializeField] LevelManager
+    //do i even like this?
+    [SerializeField] MenuManager menuManager;
 
 	// Start is called before the first frame update
 	void Awake()
@@ -32,6 +33,11 @@ public class GameManager : BaseSingleton<GameManager>
         playerTrans = player.GetComponent<Transform>();
         playerMove = player.GetComponent<Movement>();
 
+        LoadGame();
+    }
+
+    public void LoadGame()
+	{
         if (SceneLoader.Instance.loadData)
         {
             SceneLoader.Instance.loadData = false;
@@ -46,6 +52,13 @@ public class GameManager : BaseSingleton<GameManager>
         {
             player.currentHealth = player.stats.health;
         }
+    }
+
+    public void SaveGame()
+	{
+        SaveSystem.SavePlayer(player);
+        SaveSystem.SaveCoconuts(SceneLoader.Instance.GetSavedCoconuts());
+        SaveSystem.SaveEnemies(enemies, SceneLoader.Instance.GetCurrentLevelName());
     }
 
     public void IncreaseAggro()
@@ -86,10 +99,9 @@ public class GameManager : BaseSingleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SaveSystem.SavePlayer(player);
-            SaveSystem.SaveCoconuts(SceneLoader.Instance.GetSavedCoconuts());
-            SaveSystem.SaveEnemies(enemies, SceneLoader.Instance.GetCurrentLevelName());
-        }        
+            //SaveGame();
+            menuManager?.Pause();
+        }
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             LoadEnemies();

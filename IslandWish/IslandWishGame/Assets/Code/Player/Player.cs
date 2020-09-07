@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
-    private bool canAttack = true;
+    public bool canAttack = true;
     public bool armed = true;
     public List<GameObject> weapons;
 
@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     [Header("Slingshot")]
     [SerializeField] GameObject slingshotBullet;
     [SerializeField] public int slingCurrentAmmo = 1;
+    [SerializeField] private Transform slingTrans;
 
     public bool canMove = true;
 
@@ -89,18 +90,22 @@ public class Player : MonoBehaviour
                     anim.SetTrigger("Attack");
                 }
             }
-            if (Input.GetMouseButtonDown(1))
+            if (slingCurrentAmmo > 0)
             {
-                AudioManager.Instance.Play("SlingshotPull");
-                anim.SetTrigger("SlingDraw");
-                //maybe also add GetMouseButton() for the aim line
-                //draw the "aim" line
-            }
-            else if (Input.GetMouseButtonUp(1))
-            {
-                AudioManager.Instance.Play("SlingshotRelease");
-                anim.SetTrigger("SlingFire");
-                FireSlingshotAttack();
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    AudioManager.Instance.Play("SlingshotPull");
+                    anim.SetBool("Sling", true);
+                    //maybe also add GetMouseButton() for the aim line
+                    //draw the "aim" line
+                }
+                else if (Input.GetMouseButtonUp(1))
+                {
+                    AudioManager.Instance.Play("SlingshotRelease");
+                    anim.SetBool("Sling", false);
+                    //FireSlingshotAttack();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
@@ -170,7 +175,7 @@ public class Player : MonoBehaviour
 	{
         if (slingCurrentAmmo > 0)
         {
-            GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
+            GameObject newSlingshotBullet = Instantiate(slingshotBullet, slingTrans.position, slingTrans.rotation);
             newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
 
             newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
