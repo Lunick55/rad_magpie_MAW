@@ -46,6 +46,33 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!1102 &-8605581164073886548
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dance
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 1612858678025900376, guid: c34c872118fc80141bdf861083cf0eed,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &-8529301118259909208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,7 +93,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpearAttack2
-  m_Speed: 1
+  m_Speed: 0.9
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1509975820834484667}
@@ -162,7 +189,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpearAttack3
-  m_Speed: 1
+  m_Speed: 0.9
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2560474992674009328}
@@ -179,7 +206,7 @@ AnimatorState:
   m_Motion: {fileID: -261831753654725299, guid: c34c872118fc80141bdf861083cf0eed,
     type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Blend
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -843,6 +870,10 @@ AnimatorController:
       m_State: {fileID: -8013079497719125966}
       m_Motion: {fileID: -1913653683780983391, guid: c34c872118fc80141bdf861083cf0eed,
         type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: 8800445739892799506}
+      m_Motion: {fileID: 1612858678025900376, guid: c34c872118fc80141bdf861083cf0eed,
+        type: 3}
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: 2
@@ -955,7 +986,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpearAttack1
-  m_Speed: 1
+  m_Speed: 0.9
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1547294400156247945}
@@ -1057,6 +1088,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -4819138084058684937}
     m_Position: {x: 560, y: 60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8800445739892799506}
+    m_Position: {x: 290, y: 400, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1177,6 +1211,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 4403801253822182088}
     m_Position: {x: 560, y: 60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8605581164073886548}
+    m_Position: {x: 333.2168, y: -165.85168, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1251,6 +1288,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce10b32b99cce054489a0984b7f0b589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1102 &8800445739892799506
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dance
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 1612858678025900376, guid: c34c872118fc80141bdf861083cf0eed,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &8864904834062948453
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
