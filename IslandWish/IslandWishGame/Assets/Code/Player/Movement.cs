@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
 	[Header("Important Basics")]
 	[SerializeField] GameObject playerObj;
 	[SerializeField] Transform playerTrans;
+	[SerializeField] Transform playerHead; //for look stuff
 	[SerializeField] Camera playerCamera;
 	[SerializeField] CharacterController cc;
 	private Animator anim;
@@ -59,7 +60,6 @@ public class Movement : MonoBehaviour
 			if (acceptInput)
 			{
 				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-
 				//all for them anims baybee
 				//prepare the corrected "forward vector"
 				Vector3 forwardVec = Vector3.forward;
@@ -76,8 +76,9 @@ public class Movement : MonoBehaviour
 
 				if (inputDir != Vector3.zero)
 				{
-					AudioManager.Instance.Play("PCWalking");
+					AudioManager.Instance.SafePlay("PCWalking");
 					anim.SetBool("Moving", true);
+					inputDir.Normalize();
 				}
 				else
 				{
@@ -163,7 +164,7 @@ public class Movement : MonoBehaviour
 	private void RotateToMouse()
 	{
 		//Create vector from the object to the mouse in screen coords
-		Vector3 lineToMouse = Input.mousePosition - playerCamera.WorldToScreenPoint(transform.position);
+		Vector3 lineToMouse = Input.mousePosition - playerCamera.WorldToScreenPoint(playerHead.position);
 		//transform the line from the xy plane to the xz plane (rotate around x axis) also accounting for the -45 degree rotation of the camera (iso view)
 		lineToMouse = Quaternion.Euler(90, 0, 45) * lineToMouse;
 		//Debug.DrawLine(Vector3.zero, lineToMouse.normalized);

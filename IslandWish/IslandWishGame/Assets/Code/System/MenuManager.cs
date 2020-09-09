@@ -35,7 +35,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
         uiHud.SetActive(false);
-        GameManager.Instance.player.canAttack = false;
+        GameManager.Instance.player.SheathWeapons();
         GameManager.Instance.player.canMove = false;
 	}
 
@@ -44,7 +44,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         uiHud.SetActive(true);
-        GameManager.Instance.player.canAttack = true;
+        GameManager.Instance.player.DrawWeapons();
         GameManager.Instance.player.canMove = true;
     }
 

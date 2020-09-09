@@ -16,6 +16,7 @@ public class Level1Manager : LevelManager
 	[SerializeField] Canvas playerUI, talkUI;
 
 	[Header("The Ghost Stuff")]
+	[SerializeField] Firepit firepit;
 	[SerializeField] GameObject ghost;
 	[SerializeField] GameObject playerDoll;
 	private bool runGhost;
@@ -49,6 +50,7 @@ public class Level1Manager : LevelManager
 			fire.SetActive(true);
 			beachDoor.OpenPath();
 		}
+		firepit.particles.SetActive(false);
 	}
 
 	public override void LoadLevel()
@@ -64,31 +66,36 @@ public class Level1Manager : LevelManager
 		{
 			RunGhostScene();
 		}
-		if(!beachDoor.IsLocked() && newGame)
+		if (!beachDoor.IsLocked() && newGame)
 		{
-			ActivateGhostScene();
+			firepit.particles.SetActive(true);
 		}
 	}
 
 	public void ActivateGhostScene()
 	{
-		ghost.SetActive(true);
-		runGhost = true;
+		if (!beachDoor.IsLocked() && newGame)
+		{
+			firepit.particles.SetActive(true);
 
-		playerCam.enabled = false;
-		cutsceneCam.enabled = true;
+			ghost.SetActive(true);
+			runGhost = true;
 
-		//teleport player and maybe activate my cutscene clone
-		GameManager.Instance.playerMove.Teleport(cutscenePos.position);
-		GameManager.Instance.player.canMove = false;
-		GameManager.Instance.playerTrans.rotation = playerDoll.transform.rotation;
-		fire.SetActive(true);
-		playerUI.gameObject.SetActive(false);
-		talkUI.gameObject.SetActive(true);
-		text.text = ghostTalk[ghostTalkIndex];
-		AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+			playerCam.enabled = false;
+			cutsceneCam.enabled = true;
 
-		newGame = false;
+			//teleport player and maybe activate my cutscene clone
+			GameManager.Instance.playerMove.Teleport(cutscenePos.position);
+			GameManager.Instance.player.canMove = false;
+			GameManager.Instance.playerTrans.rotation = playerDoll.transform.rotation;
+			fire.SetActive(true);
+			playerUI.gameObject.SetActive(false);
+			talkUI.gameObject.SetActive(true);
+			text.text = ghostTalk[ghostTalkIndex];
+			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+
+			newGame = false;
+		}
 	}
 
 	public void RunGhostScene()

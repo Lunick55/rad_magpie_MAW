@@ -63,9 +63,19 @@ public class Player : MonoBehaviour
   //          currentHealth = stats.health;
   //      }
 
+        if(canAttack)
+		{
+            DrawWeapons();
+		}
+        else
+		{
+            SheathWeapons();
+		}
+
         StartCoroutine(RegenShield());
 
         hud.InitLife();
+        hud.UpdateSlingAmmo(slingCurrentAmmo);
 
         weapons[4].SetActive(false);
     }
@@ -80,7 +90,7 @@ public class Player : MonoBehaviour
 
         if (canAttack)
         {
-            DrawWeapons();
+            //DrawWeapons();
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -91,7 +101,6 @@ public class Player : MonoBehaviour
             }
             if (slingCurrentAmmo > 0)
             {
-
                 if (Input.GetMouseButtonDown(1))
                 {
                     AudioManager.Instance.Play("SlingshotPull");
@@ -99,11 +108,14 @@ public class Player : MonoBehaviour
                     //maybe also add GetMouseButton() for the aim line
                     //draw the "aim" line
                 }
-                else if (Input.GetMouseButtonUp(1))
+                if (Input.GetMouseButtonUp(1))
                 {
                     anim.SetBool("Sling", false);
-                    //FireSlingshotAttack();
                 }
+            }
+            else
+			{
+                anim.SetBool("Sling", false);
             }
 
             if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
@@ -118,7 +130,7 @@ public class Player : MonoBehaviour
         }
         else
 		{
-            SheathWeapons();
+            //SheathWeapons();
         }
 
         if (GameManager.Instance.GetCurrentAggro() > 0)
@@ -169,6 +181,10 @@ public class Player : MonoBehaviour
 		}
 	}
 
+    public void StartSlingshotAttack()
+	{
+        weapons[2].SetActive(false);
+    }
     public void FireSlingshotAttack()
 	{
         if (slingCurrentAmmo > 0)
@@ -182,6 +198,10 @@ public class Player : MonoBehaviour
             hud.LoseSlingAmmo(); //just in case. remove UpdateSling if used
             hud.UpdateSlingAmmo(slingCurrentAmmo);
         }
+    }
+    public void FinishSlingshotAttack()
+	{
+        weapons[2].SetActive(true);
     }
 
     public bool PickupSlingAmmo(int ammo)

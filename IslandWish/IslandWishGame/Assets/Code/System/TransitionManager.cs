@@ -18,10 +18,23 @@ public class TransitionManager : BaseSingleton<TransitionManager>
         SceneManager.LoadScene(sceneName);
     }  
     
-    public IEnumerator Transition()
+    //these 2 should be used in tandem
+    public IEnumerator TransitionStart(Event evnt)
     {
         anim.SetTrigger("Start");
+
         yield return new WaitForSeconds(transitionTime);
+
+        //i dunno, fire CutSceneEvent?
+        StartCoroutine(TransitionEnd(evnt));
+    }
+    public IEnumerator TransitionEnd(Event evnt)
+    {
+        anim.SetTrigger("End");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        //i dunno, fire event?
     }
 
 }
