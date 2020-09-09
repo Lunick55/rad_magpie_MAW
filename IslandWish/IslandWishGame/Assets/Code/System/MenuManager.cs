@@ -5,18 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject uiHud;
+
+    [SerializeField] GameObject playerSelection;
+
     // Start is called before the first frame update
     void Start()
     {
         SceneLoader.Instance.Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void OpenPlayerSelect()
+	{
+        playerSelection.SetActive(true);
+	}
+    public void ClosePlayerSelect()
+	{
+        playerSelection.SetActive(false);
     }
-
     public void StartGame(string scene)
 	{
         SceneLoader.Instance.LoadScene(scene);
@@ -31,6 +39,30 @@ public class MenuManager : MonoBehaviour
 	{
         SceneLoader.Instance.loadData = true;
         SceneLoader.Instance.LoadScene(scene);
+    }
+
+    public void Pause()
+	{
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        uiHud.SetActive(false);
+        GameManager.Instance.player.SheathWeapons();
+        GameManager.Instance.player.canMove = false;
+	}
+
+    public void Resume()
+	{
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        uiHud.SetActive(true);
+        GameManager.Instance.player.DrawWeapons();
+        GameManager.Instance.player.canMove = true;
+    }
+
+    public void SaveAndQuit()
+	{
+        //save
+        SceneLoader.Instance.LoadScene("Menu");
     }
 
     public void QuitGame()

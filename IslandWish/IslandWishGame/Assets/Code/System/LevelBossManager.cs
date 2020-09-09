@@ -39,7 +39,7 @@ public class LevelBossManager : LevelManager
 		{
 			//go to next level
 			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);
-			SceneLoader.Instance.FinishLevel("EpilogueTest");
+			SceneLoader.Instance.FinishLevel("EpilogueTest", postProcess);
 			SceneLoader.Instance.LoadScene("Boat Scene");
 		}
 

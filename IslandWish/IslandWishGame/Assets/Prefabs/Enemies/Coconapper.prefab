@@ -63,9 +63,10 @@ Transform:
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
   m_Children:
   - {fileID: 4806710219799682431}
+  - {fileID: 1074851399835552949}
   m_Father: {fileID: 5281831894300457709}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 23.012695, y: 143.72981, z: -103.07333}
+  m_LocalEulerAnglesHint: {x: 23.01271, y: 143.72977, z: -103.07334}
 --- !u!1 &1447626204420505034
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,8 +319,8 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 64ae958d9c783b044a8ba9589c692c62, type: 2}
   isDead: 0
   hurtbox:
-  - {fileID: 8887035923279521783}
-  - {fileID: 4466880777752168514}
+  - {fileID: 927058349883951060}
+  - {fileID: 3224285281029578099}
   sightRange: 10
   attackRange: 2
 --- !u!1 &3673007686961675174
@@ -351,7 +352,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5281831894300457709}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -9.523069e-16, y: -125.11335, z: -3.009946e-15}
+  m_LocalEulerAnglesHint: {x: -1.2769311e-15, y: -125.11335, z: -4.0359824e-15}
 --- !u!1 &3987054848244389645
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +382,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6918163783938509494}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 28.531096, y: 0.43914133, z: 3.4687476}
+  m_LocalEulerAnglesHint: {x: 28.53093, y: 0.43915638, z: 3.4687467}
+--- !u!1 &5391067293835331810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1074851399835552949}
+  - component: {fileID: 883768111756333080}
+  - component: {fileID: 1594755329856266704}
+  m_Layer: 0
+  m_Name: ClawHitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1074851399835552949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391067293835331810}
+  m_LocalRotation: {x: 0.10855258, y: -0.21797344, z: 0.0053248405, w: 0.96988434}
+  m_LocalPosition: {x: -0.00102, y: 0.00181, z: -0.00004}
+  m_LocalScale: {x: -0.00087849726, y: 0.0015109224, z: 0.0076879715}
+  m_Children: []
+  m_Father: {fileID: 8374506421580458811}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 12.292001, y: -25.566002, z: -2.17}
+--- !u!114 &883768111756333080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391067293835331810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d5c0ad22c193045aa7c5d5ce0fb3dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+--- !u!135 &1594755329856266704
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391067293835331810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5521369777380004413
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,9 +748,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0000001, z: 1}
   m_Children:
   - {fileID: 6883259051269415991}
+  - {fileID: 4711912268651842083}
   m_Father: {fileID: 5281831894300457709}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 14.07362, y: -141.05527, z: 102.13954}
+  m_LocalEulerAnglesHint: {x: 14.073615, y: -141.05533, z: 102.13947}
 --- !u!1 &7010392230957779346
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,8 +761,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4806710219799682431}
-  - component: {fileID: 8887035923279521783}
   - component: {fileID: 6128681825576899037}
+  - component: {fileID: 927058349883951060}
   m_Layer: 0
   m_Name: SwordHitBox
   m_TagString: Untagged
@@ -724,19 +784,6 @@ Transform:
   m_Father: {fileID: 8374506421580458811}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 12.292001, y: -25.566002, z: -2.17}
---- !u!65 &8887035923279521783
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7010392230957779346}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6128681825576899037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +797,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+--- !u!135 &927058349883951060
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010392230957779346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7035020913374978147
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,8 +819,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6883259051269415991}
-  - component: {fileID: 4466880777752168514}
   - component: {fileID: 8495204761598657391}
+  - component: {fileID: 3224285281029578099}
   m_Layer: 0
   m_Name: SwordHitbox
   m_TagString: Untagged
@@ -782,19 +842,6 @@ Transform:
   m_Father: {fileID: 7938309107711536934}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 4.768, y: 26.634, z: 1.5410001}
---- !u!65 &4466880777752168514
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7035020913374978147}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8495204761598657391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,6 +855,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+--- !u!135 &3224285281029578099
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7035020913374978147}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7209397123899492757
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,7 +994,7 @@ Transform:
   - {fileID: 1788497414812081888}
   m_Father: {fileID: 77190335561785283}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -9.311129, y: 89.999954, z: -0.000013139464}
+  m_LocalEulerAnglesHint: {x: -9.311099, y: 89.999985, z: 0}
 --- !u!1 &7590782024526771047
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,7 +1025,7 @@ Transform:
   - {fileID: 8419117972355359050}
   m_Father: {fileID: 5590816755792892060}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 12.805892, y: -12.94894, z: -140.69756}
+  m_LocalEulerAnglesHint: {x: 12.805853, y: -12.948986, z: -140.69754}
 --- !u!1 &7930950066190266399
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +1056,7 @@ Transform:
   - {fileID: 5590816755792892060}
   m_Father: {fileID: 5281831894300457709}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -0.014293827, y: -90.17868, z: -94.55388}
+  m_LocalEulerAnglesHint: {x: -0.00003073585, y: -90, z: -94.55389}
 --- !u!1 &7970023409770212187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1086,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1788497414812081888}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 11.03776, y: 0.24680099, z: -3.450187}
+  m_LocalEulerAnglesHint: {x: 11.037691, y: 0.24678206, z: -3.4501753}
 --- !u!1 &8538553056164542240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1210,7 @@ Transform:
   - {fileID: 1281986875506468578}
   m_Father: {fileID: 5590816755792892060}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 19.104996, y: 5.6744018, z: 137.56215}
+  m_LocalEulerAnglesHint: {x: 19.104912, y: 5.6745386, z: 137.56227}
 --- !u!1 &8723180524054503150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,4 +1240,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5590816755792892060}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 24.440533, y: 0.000044730525, z: 0.000010132239}
+  m_LocalEulerAnglesHint: {x: 24.440538, y: 0.00000028718352, z: -0.0000039122933}
+--- !u!1 &8781063092763236456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4711912268651842083}
+  - component: {fileID: 4962699621158939816}
+  - component: {fileID: 8050452276870787383}
+  m_Layer: 0
+  m_Name: ClawHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4711912268651842083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8781063092763236456}
+  m_LocalRotation: {x: 0.04356661, y: 0.22957698, z: 0.003494441, w: 0.97230864}
+  m_LocalPosition: {x: 0.00004, y: 0.0014, z: -0.00051}
+  m_LocalScale: {x: 0.00082825206, y: 0.0018777297, z: 0.008229443}
+  m_Children: []
+  m_Father: {fileID: 7938309107711536934}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 4.768, y: 26.634, z: 1.5410001}
+--- !u!114 &4962699621158939816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8781063092763236456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d5c0ad22c193045aa7c5d5ce0fb3dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+--- !u!135 &8050452276870787383
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8781063092763236456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}

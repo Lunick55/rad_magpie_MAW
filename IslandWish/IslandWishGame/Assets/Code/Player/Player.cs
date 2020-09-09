@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
-    private bool canAttack = true;
+    public bool canAttack = true;
     public bool armed = true;
     public List<GameObject> weapons;
 
@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     [Header("Slingshot")]
     [SerializeField] GameObject slingshotBullet;
     [SerializeField] public int slingCurrentAmmo = 1;
+    [SerializeField] private Transform slingTrans;
 
     public bool canMove = true;
 
@@ -62,9 +63,19 @@ public class Player : MonoBehaviour
   //          currentHealth = stats.health;
   //      }
 
+        if(canAttack)
+		{
+            DrawWeapons();
+		}
+        else
+		{
+            SheathWeapons();
+		}
+
         StartCoroutine(RegenShield());
 
         hud.InitLife();
+        hud.UpdateSlingAmmo(slingCurrentAmmo);
 
         weapons[4].SetActive(false);
     }
@@ -79,28 +90,32 @@ public class Player : MonoBehaviour
 
         if (canAttack)
         {
-            DrawWeapons();
+            //DrawWeapons();
 
             if (Input.GetMouseButtonDown(0))
             {
                 if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
                 {
-                    AudioManager.Instance.Play("SwingSpear");
                     anim.SetTrigger("Attack");
                 }
             }
-            if (Input.GetMouseButtonDown(1))
+            if (slingCurrentAmmo > 0)
             {
-                AudioManager.Instance.Play("SlingshotPull");
-                anim.SetTrigger("SlingDraw");
-                //maybe also add GetMouseButton() for the aim line
-                //draw the "aim" line
+                if (Input.GetMouseButtonDown(1))
+                {
+                    AudioManager.Instance.Play("SlingshotPull");
+                    anim.SetBool("Sling", true);
+                    //maybe also add GetMouseButton() for the aim line
+                    //draw the "aim" line
+                }
+                if (Input.GetMouseButtonUp(1))
+                {
+                    anim.SetBool("Sling", false);
+                }
             }
-            else if (Input.GetMouseButtonUp(1))
-            {
-                AudioManager.Instance.Play("SlingshotRelease");
-                anim.SetTrigger("SlingFire");
-                FireSlingshotAttack();
+            else
+			{
+                anim.SetBool("Sling", false);
             }
 
             if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
@@ -115,7 +130,7 @@ public class Player : MonoBehaviour
         }
         else
 		{
-            SheathWeapons();
+            //SheathWeapons();
         }
 
         if (GameManager.Instance.GetCurrentAggro() > 0)
@@ -166,18 +181,27 @@ public class Player : MonoBehaviour
 		}
 	}
 
+    public void StartSlingshotAttack()
+	{
+        weapons[2].SetActive(false);
+    }
     public void FireSlingshotAttack()
 	{
         if (slingCurrentAmmo > 0)
         {
-            GameObject newSlingshotBullet = Instantiate(slingshotBullet, transform.position, transform.rotation);
+            GameObject newSlingshotBullet = Instantiate(slingshotBullet, slingTrans.position, slingTrans.rotation);
             newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
 
+            AudioManager.Instance.Play("SlingshotRelease");
             newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
             slingCurrentAmmo--;
             hud.LoseSlingAmmo(); //just in case. remove UpdateSling if used
             hud.UpdateSlingAmmo(slingCurrentAmmo);
         }
+    }
+    public void FinishSlingshotAttack()
+	{
+        weapons[2].SetActive(true);
     }
 
     public bool PickupSlingAmmo(int ammo)
@@ -200,6 +224,7 @@ public class Player : MonoBehaviour
 
     public void StartAttack()
     {
+        AudioManager.Instance.Play("SwingSpear");
         hurtBox.SetActive(true);
         weapons[4].SetActive(true);
 
