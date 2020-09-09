@@ -15,6 +15,15 @@ ModelImporter:
   - first:
       74: -4917721445252819994
     second: Fear
+  - first:
+      74: -2233173917902759744
+    second: Idle
+  - first:
+      74: -2095073902049306759
+    second: Walk
+  - first:
+      74: 2624346096354977170
+    second: Jump
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -60,7 +69,7 @@ ModelImporter:
     clipAnimations:
     - serializedVersion: 16
       name: Idle
-      takeName: Armature_coconutpet|Armature_coconutpetAction
+      takeName: Armature_coconutpet_base|Armature_coconutpetAction
       internalID: 0
       firstFrame: 1
       lastFrame: 20
@@ -89,10 +98,10 @@ ModelImporter:
       additiveReferencePoseFrame: 2
     - serializedVersion: 16
       name: Walk
-      takeName: Armature_coconutpet|Armature_coconutpetAction
+      takeName: Armature_coconutpet_base|Armature_coconutpetAction
       internalID: 0
       firstFrame: 25
-      lastFrame: 37
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -117,8 +126,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 2
     - serializedVersion: 16
-      name: Hop
-      takeName: Armature_coconutpet|Armature_coconutpetAction
+      name: Jump
+      takeName: Armature_coconutpet_base|Armature_coconutpetAction
       internalID: 0
       firstFrame: 40
       lastFrame: 53

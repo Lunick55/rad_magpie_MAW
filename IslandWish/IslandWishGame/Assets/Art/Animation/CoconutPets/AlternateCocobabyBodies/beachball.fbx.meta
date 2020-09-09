@@ -27,7 +27,17 @@ ModelImporter:
   - first:
       74: -8003884167699439144
     second: Armature_coconutpet_beachball|Armature_coconutpetAction.007
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Master
+    second: {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cpface
+    second: {fileID: 2100000, guid: 186b573bbd25d534c8de3f2b9465650b, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
