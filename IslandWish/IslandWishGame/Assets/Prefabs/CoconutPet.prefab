@@ -429,7 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6924122982779427658}
   m_Layer: 0
-  m_Name: Armature_coconutpet_base
+  m_Name: Armature_coconutpet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
