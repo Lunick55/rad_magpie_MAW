@@ -139,7 +139,7 @@ public class Level1Manager : LevelManager
 		{
 			//go to next level
 			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);
-			SceneLoader.Instance.FinishLevel("Level 2");
+			SceneLoader.Instance.FinishLevel("Level 2", postProcess);
 			SceneLoader.Instance.LoadScene("Boat Scene");
 		}
 

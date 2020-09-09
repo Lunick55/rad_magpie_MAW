@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SceneLoader : BasePersistentSingleton<SceneLoader>
 {
@@ -9,6 +10,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	bool isInit = false;
 	public bool loadData = false;
 	private string nextLevel;
+	private PostProcessVolume postProcess;
 
 	public void Init()
 	{
@@ -24,16 +26,22 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	public void LoadScene(string scene)
 	{
 		//TODO: turn off player movement n'stuff
-		TransitionManager.Instance.TransitionToScene(scene);
+		StartCoroutine(TransitionManager.Instance.TransitionToScene(scene));
 	}
-	public void FinishLevel(string nextLevelName)
+	public void FinishLevel(string nextLevelName, PostProcessVolume newPost)
 	{
 		nextLevel = nextLevelName;
+		postProcess = newPost;
 	}
 	public void NextLevel()
 	{
 		LoadScene(nextLevel);
 	}
+	public PostProcessVolume GetPost()
+	{
+		return postProcess;
+	}
+
 
 	public void AddSavedCoconuts(List<CoconutPetBehavior> savedCoconuts)
 	{

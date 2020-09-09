@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject uiHud;
+
+    [SerializeField] GameObject playerSelection;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +17,14 @@ public class MenuManager : MonoBehaviour
         SceneLoader.Instance.Init();
     }
 
+    public void OpenPlayerSelect()
+	{
+        playerSelection.SetActive(true);
+	}
+    public void ClosePlayerSelect()
+	{
+        playerSelection.SetActive(false);
+    }
     public void StartGame(string scene)
 	{
         SceneLoader.Instance.LoadScene(scene);

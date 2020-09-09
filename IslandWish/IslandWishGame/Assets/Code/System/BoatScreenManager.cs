@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BoatScreenManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class BoatScreenManager : MonoBehaviour
     [SerializeField] List<Transform> spawnPoints;
     private List<Transform> usedSpawnPoints;
     [SerializeField] GameObject coconutReference;
+    [SerializeField] private PostProcessVolume post;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,7 @@ public class BoatScreenManager : MonoBehaviour
 
         LoadCoconuts();
 
+        post = SceneLoader.Instance.GetPost();
     }
 
     // Update is called once per frame
