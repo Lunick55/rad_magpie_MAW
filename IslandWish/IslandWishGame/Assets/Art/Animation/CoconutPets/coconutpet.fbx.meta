@@ -39,7 +39,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleCurves: 0
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
@@ -147,10 +147,10 @@ ModelImporter:
       additiveReferencePoseFrame: 2
     - serializedVersion: 16
       name: Fear
-      takeName: Armature_coconutpet|Armature_coconutpetAction
+      takeName: Armature_coconutpet_base|Armature_coconutpetAction
       internalID: 0
       firstFrame: 60
-      lastFrame: 74
+      lastFrame: 73
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
