@@ -24,7 +24,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	public void LoadScene(string scene)
 	{
 		//TODO: turn off player movement n'stuff
-		TransitionManager.Instance.Transition(scene);
+		TransitionManager.Instance.TransitionToScene(scene);
 	}
 	public void FinishLevel(string nextLevelName)
 	{

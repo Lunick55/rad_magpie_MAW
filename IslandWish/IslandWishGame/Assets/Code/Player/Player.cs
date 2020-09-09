@@ -86,7 +86,6 @@ public class Player : MonoBehaviour
             {
                 if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
                 {
-                    AudioManager.Instance.Play("SwingSpear");
                     anim.SetTrigger("Attack");
                 }
             }
@@ -102,7 +101,6 @@ public class Player : MonoBehaviour
                 }
                 else if (Input.GetMouseButtonUp(1))
                 {
-                    AudioManager.Instance.Play("SlingshotRelease");
                     anim.SetBool("Sling", false);
                     //FireSlingshotAttack();
                 }
@@ -178,6 +176,7 @@ public class Player : MonoBehaviour
             GameObject newSlingshotBullet = Instantiate(slingshotBullet, slingTrans.position, slingTrans.rotation);
             newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
 
+            AudioManager.Instance.Play("SlingshotRelease");
             newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
             slingCurrentAmmo--;
             hud.LoseSlingAmmo(); //just in case. remove UpdateSling if used
@@ -205,6 +204,7 @@ public class Player : MonoBehaviour
 
     public void StartAttack()
     {
+        AudioManager.Instance.Play("SwingSpear");
         hurtBox.SetActive(true);
         weapons[4].SetActive(true);
 

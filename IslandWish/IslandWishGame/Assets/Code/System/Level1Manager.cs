@@ -94,8 +94,9 @@ public class Level1Manager : LevelManager
 	public void RunGhostScene()
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
-		{			
-			if(++ghostTalkIndex >= ghostTalk.Count)
+		{
+			AudioManager.Instance.Stop(ghostAudioNames[ghostTalkIndex]);
+			if (++ghostTalkIndex >= ghostTalk.Count)
 			{
 				runGhost = false;
 				EndGhostScene();

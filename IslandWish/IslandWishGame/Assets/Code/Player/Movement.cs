@@ -85,8 +85,6 @@ public class Movement : MonoBehaviour
 				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
-
-
 				if (Input.GetKey(KeyCode.Space) && !dashing && inputDir != Vector3.zero)
 				{
 					print("DASH");
@@ -126,6 +124,11 @@ public class Movement : MonoBehaviour
 			inputDir.y = (vSpeed -= (gravity * Time.deltaTime));// Time.deltaTime));
 
 			cc.Move(inputDir * Time.deltaTime);
+		}
+		else
+		{
+			inputDir = Vector3.zero;
+			anim.SetBool("Moving", false);
 		}
 
 		if (!dashing)

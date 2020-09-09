@@ -9,19 +9,19 @@ public class TransitionManager : BaseSingleton<TransitionManager>
     [SerializeField] Animator anim;
     [SerializeField] float transitionTime = 1f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public IEnumerator Transition(string sceneName)
+    public IEnumerator TransitionToScene(string sceneName)
     {
         anim.SetTrigger("Start");
 
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(sceneName);
+    }  
+    
+    public IEnumerator Transition()
+    {
+        anim.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
     }
 
 }
