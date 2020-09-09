@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4271715167140003575}
   - component: {fileID: 7321095534253841514}
   m_Layer: 0
-  m_Name: face.001
+  m_Name: face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 2812976410068581418}
   - component: {fileID: 986786219386094704}
   m_Layer: 0
-  m_Name: coconutpet.001
+  m_Name: coconutpet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
