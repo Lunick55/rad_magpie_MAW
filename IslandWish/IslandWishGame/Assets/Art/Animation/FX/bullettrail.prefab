@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8956820514526884178}
   - component: {fileID: 8956820514526884189}
   m_Layer: 0
-  m_Name: swipe
+  m_Name: bullettrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8956820514526884191}
-  m_LocalRotation: {x: -0.59861577, y: -0.34561074, z: -0.40326348, w: 0.59965914}
+  m_LocalRotation: {x: -0.59861416, y: -0.34561694, z: -0.40326262, w: 0.59965765}
   m_LocalPosition: {x: -0.003148282, y: 0.132, z: 0.578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.011000001, y: 90.247, z: -0.014}
+  m_LocalEulerAnglesHint: {x: -85.327, y: 56.959003, z: -120.967}
 --- !u!198 &8956820514526884178
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -982,13 +982,13 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: -0.5089097
-          outSlope: -0.5089097
+          value: 0.9489797
+          inSlope: -0.31981993
+          outSlope: -0.31981993
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.29047614
+          outWeight: 0.26190472
         - serializedVersion: 3
           time: 1
           value: 0
