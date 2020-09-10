@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 0}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: e7d29a79bc7fae248887c8a08a160303, type: 3}
+  sprite: {fileID: 21300000, guid: 94b87caac70753a49878fbe13346bbd1, type: 3}
 --- !u!4 &64756433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 234fdc9678c007d4d8347d6e102be603,
@@ -9752,7 +9752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 1142880628}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: ae496f5dad56ea645b72d374a0376368, type: 3}
+  sprite: {fileID: 21300000, guid: 496d2b9adb05f7849be512b8b26406fe, type: 3}
 --- !u!1001 &577000948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44570,7 +44570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 0}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: e7d29a79bc7fae248887c8a08a160303, type: 3}
+  sprite: {fileID: 21300000, guid: 0d55c000a3ebd074fa97c8752c12b051, type: 3}
 --- !u!1 &1333612063
 GameObject:
   m_ObjectHideFlags: 0
@@ -48495,7 +48495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 1142880628}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: ae496f5dad56ea645b72d374a0376368, type: 3}
+  sprite: {fileID: 21300000, guid: 496d2b9adb05f7849be512b8b26406fe, type: 3}
 --- !u!1 &1520840784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: ac1b63d83fc620e4e9160e5a8d9a7ce5,
@@ -48529,7 +48529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 1142880628}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: ae496f5dad56ea645b72d374a0376368, type: 3}
+  sprite: {fileID: 21300000, guid: 496d2b9adb05f7849be512b8b26406fe, type: 3}
 --- !u!1 &1521383959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 6cfe26431aa62944c97fdd86268b69fd,
@@ -54194,7 +54194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 0}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: e7d29a79bc7fae248887c8a08a160303, type: 3}
+  sprite: {fileID: 21300000, guid: e86b872d200fab746a8dd90ea0bde0aa, type: 3}
 --- !u!65 &1836999872
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56825,7 +56825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 0}
   isCollected: 0
-  sprite: {fileID: 21300000, guid: e7d29a79bc7fae248887c8a08a160303, type: 3}
+  sprite: {fileID: 21300000, guid: 8e0a779b58184ed469f6db52a7466a14, type: 3}
 --- !u!65 &1930290049
 BoxCollider:
   m_ObjectHideFlags: 0
