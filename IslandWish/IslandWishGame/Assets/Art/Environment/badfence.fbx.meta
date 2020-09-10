@@ -1,40 +1,9 @@
 fileFormatVersion: 2
-guid: 54d507e8403316b48bf356c98103d24d
+guid: e78e757b6ed0a814894d8056064bf320
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable:
-  - first:
-      74: 6832513297528824443
-    second: Armature_coconutpet_base.001|Armature_coconutpet.001|Armature_coconutpet|Armature_coconutpet
-  - first:
-      74: 9153781186948839130
-    second: Armature_coconutpet_base.001|Armature_coconutpetAction
-  - first:
-      74: 5630318844816600516
-    second: Armature_coconutpet_base.001|Armature_coconutpetAction.001
-  - first:
-      74: 2374873855186783792
-    second: Armature_coconutpet_base.001|Armature_coconutpetAction.003
-  - first:
-      74: -739192915422392599
-    second: Armature_coconutpet_base.001|Armature_coconutpetAction.005
-  - first:
-      74: -6981968257630367980
-    second: Armature_coconutpet_base.001|Armature_coconutpetAction.006
-  - first:
-      74: 6841060610652798760
-    second: Armature_coconutpet_base.001|Armature_coconutpetAction.007
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Master
-    second: {fileID: 2100000, guid: 94c707b597015174686f6ad82002c574, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: cpface
-    second: {fileID: 2100000, guid: 186b573bbd25d534c8de3f2b9465650b, type: 2}
+  internalIDToNameTable: []
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -99,7 +68,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -116,12 +85,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: c9d68b02248da5344b6edbf98ddc7e3a,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 2
+  avatarSetup: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
