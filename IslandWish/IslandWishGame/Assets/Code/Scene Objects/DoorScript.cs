@@ -28,6 +28,10 @@ public class DoorScript : MonoBehaviour
 	public void OpenPath()
 	{
 		gameObject.SetActive(false);
+		for (int i = 0; i < keys.Count; i++)
+		{
+			GameManager.Instance.player.hud.ConsumeKey(keys[i]);
+		}
 		AudioManager.Instance.Play("Door");
 	}
 

@@ -10,4 +10,11 @@ public class SlingAttackState : SceneLinkedSMB<Player>
 
 		m_MonoBehaviour.FireSlingshotAttack();
 	}
+
+	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		base.OnSLStateExit(animator, stateInfo, layerIndex);
+
+		m_MonoBehaviour.FinishSlingshotAttack();
+	}
 }

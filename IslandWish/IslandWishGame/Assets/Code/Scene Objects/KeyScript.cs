@@ -6,12 +6,14 @@ public class KeyScript : MonoBehaviour
 {
     [HideInInspector] public DoorScript door;
     public bool isCollected = false;
+    public Sprite sprite;
 
     public void CollectKey()
 	{
         door.UnlockLock();
         isCollected = true;
         gameObject.SetActive(false);
+        GameManager.Instance.player.hud.AddKey(this);
         AudioManager.Instance.Play("Pickup");
     }
 

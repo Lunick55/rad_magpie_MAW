@@ -32,11 +32,11 @@ AvatarMask:
   - m_Path: Armature_player/spine2
     m_Weight: 1
   - m_Path: Armature_player/spine2/neck
-    m_Weight: 0
-  - m_Path: Armature_player/spine2/neck/head
-    m_Weight: 0
-  - m_Path: Armature_player/spine2/robe
     m_Weight: 1
+  - m_Path: Armature_player/spine2/neck/head
+    m_Weight: 1
+  - m_Path: Armature_player/spine2/robe
+    m_Weight: 0
   - m_Path: Armature_player/spine2/thigh.l
     m_Weight: 1
   - m_Path: Armature_player/spine2/thigh.l/shin.l

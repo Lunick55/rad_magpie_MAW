@@ -33,7 +33,7 @@ public class PrologueManager : MonoBehaviour
 
     void ChangeText()
     {
-        if (narrationIndex > 0)
+        if (narrationIndex > 1)
         {
             AudioManager.Instance.Stop((narrationIndex - 1).ToString());
         }

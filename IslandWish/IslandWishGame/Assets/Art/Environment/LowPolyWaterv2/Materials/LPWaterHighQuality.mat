@@ -42,7 +42,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Absorption: 8.16
+    - _Absorption: 1.1
     - _BumpScale: 35
     - _BumpScale_: 19.775
     - _BumpSpeed: 0.2

@@ -42,7 +42,26 @@ public class AudioManager : BaseSingleton<AudioManager>
         s.source.Play();
    }
 
-   public void Stop(string name)
+    //only play if it isn't currently playing
+    public void SafePlay(string name)
+    {
+        //looks for the name of the song
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        //won't play sound if spelt wrong or not existing
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " does not exist");
+            return;
+        }
+        if (!s.source.isPlaying)
+        {
+            s.source.Play();
+        }
+    }
+
+
+    public void Stop(string name)
    {
         //looks for the name of the song
         Sound s = Array.Find(sounds, sound => sound.name == name);

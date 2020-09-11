@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class HUDScript : MonoBehaviour
@@ -24,6 +25,10 @@ public class HUDScript : MonoBehaviour
     private int coconutsRescued = 0;
     private int slingerAmmo = 0;
     private int shieldHealth = 0;
+
+    [Header("Collectible Stuff")]
+    public List<Image> keyImages;
+    public List<KeyScript> keys;
 
     // Start is called before the first frame update
     void Start()
@@ -154,6 +159,37 @@ public class HUDScript : MonoBehaviour
     {
         spearImage.SetActive(!spearImage.activeSelf);
         slingshotImage.SetActive(!slingshotImage.activeSelf);
+    }
+
+    public void AddKey(KeyScript key)
+	{
+        if(!keys.Contains(key))
+		{
+            keys.Add(key);
+            int index = keys.IndexOf(key);
+            keyImages[index].sprite = key.sprite;
+            keyImages[index].enabled = true;
+        }
+
+    }
+
+    //CONSUME PRYLOSEC
+    public void ConsumeKey(KeyScript key)
+	{
+        if (keys.Contains(key))
+        {
+            int index = keys.IndexOf(key);
+            keyImages[index].sprite = null;
+            keyImages[index].enabled = false;
+            keys.Remove(key);
+
+            for(int i = index + 1; i < keyImages.Count; i++)
+			{
+                keyImages[i-1].sprite = keyImages[i].sprite;
+                keyImages[i].sprite = null;
+                keyImages[i].enabled = false;
+            }
+        }
     }
 
     void FailState()
