@@ -6,6 +6,9 @@ ModelImporter:
   - first:
       74: 1529736838751069725
     second: Armature_player.001|Armature_playerAction.001
+  - first:
+      74: 201635600261520828
+    second: Armature_player.001|Armature_playerAction.002
   externalObjects:
   - first:
       type: UnityEngine:Material
