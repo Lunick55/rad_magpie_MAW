@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager>
 {
-    public Player player;
-    public Movement playerMove;
-    [HideInInspector] public Transform playerTrans;
+    [SerializeField] List<Player> players;
+    [HideInInspector] List<Movement> playersMove;
+    [HideInInspector] List<Transform> playersTrans;
 
     [SerializeField] List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
@@ -26,12 +26,17 @@ public class GameManager : BaseSingleton<GameManager>
 	{
         SceneLoader.Instance.Init();
 
-        if (!player)
+        if (players.Count <= 0)
         {
             Debug.LogError("Fill out the Player field");
         }
-        playerTrans = player.GetComponent<Transform>();
-        playerMove = player.GetComponent<Movement>();
+        playersTrans = new List<Transform>(players.Count);
+        playersMove = new List<Movement>(players.Count);
+        for(int i = 0; i < players.Count; i++)
+		{
+            playersTrans[i] = players[i].GetComponent<Transform>();
+            playersMove[i] = players[i].GetComponent<Movement>();
+        }
 
         LoadGame();
     }
@@ -42,24 +47,52 @@ public class GameManager : BaseSingleton<GameManager>
         {
             SceneLoader.Instance.loadData = false;
 
-            //load all the data calls needed here
-            player.LoadPlayer();
+            //TODO: load all the data calls needed here
+            players[0].LoadPlayer();
             LoadEnemies();
             LevelManager.Instance.LoadLevel();
             SceneLoader.Instance.LoadCoconuts();
         }
         else
         {
-            player.currentHealth = player.stats.health;
+            players[0].currentHealth = players[0].stats.health;
         }
     }
 
     public void SaveGame()
 	{
-        SaveSystem.SavePlayer(player);
+        SaveSystem.SavePlayer(players[0]);
         SaveSystem.SaveCoconuts(SceneLoader.Instance.GetSavedCoconuts());
         SaveSystem.SaveEnemies(enemies, SceneLoader.Instance.GetCurrentLevelName());
     }
+
+    public Player GetPlayer(int index)
+	{
+        return players[index];
+	}    
+    public Movement GetMovement(int index)
+	{
+        return playersMove[index];
+	}    
+    public Transform GetPlayerTrans(int index)
+	{
+        return playersTrans[index];
+	}
+
+    public int GetClosestPlayer(Vector3 point)
+	{
+        int closestIndex = 0;
+        float closestDistance = (point - playersTrans[0].position).sqrMagnitude;
+        for (int i = 0; i < playersTrans.Count; i++)
+		{
+            if ((point - playersTrans[0].position).sqrMagnitude < closestDistance)
+			{
+                closestIndex = i;
+			}
+        }
+
+        return closestIndex;
+	}
 
     public void IncreaseAggro()
 	{

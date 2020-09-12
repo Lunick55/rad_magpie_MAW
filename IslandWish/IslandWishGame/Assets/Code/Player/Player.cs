@@ -90,9 +90,7 @@ public class Player : MonoBehaviour
 
         if (canAttack)
         {
-            //DrawWeapons();
-
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Attack_P" + stats.playerNumber))
             {
                 if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
                 {
@@ -101,14 +99,14 @@ public class Player : MonoBehaviour
             }
             if (slingCurrentAmmo > 0)
             {
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Sling_P" + stats.playerNumber))
                 {
                     AudioManager.Instance.Play("SlingshotPull");
                     anim.SetBool("Sling", true);
                     //maybe also add GetMouseButton() for the aim line
                     //draw the "aim" line
                 }
-                if (Input.GetMouseButtonUp(1))
+                if (Input.GetMouseButtonUp(1) || Input.GetButtonUp("Sling_P" + stats.playerNumber))
                 {
                     anim.SetBool("Sling", false);
                 }
@@ -118,19 +116,15 @@ public class Player : MonoBehaviour
                 anim.SetBool("Sling", false);
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
+            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("Block_P" + stats.playerNumber)) && !shieldBroken)
             {
                 AudioManager.Instance.Play("ShieldReady");
                 Block(true);
             }
-            if (Input.GetKeyUp(KeyCode.LeftControl))
+            if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetButtonUp("Block_P" + stats.playerNumber))
             {
                 Block(false);
             }
-        }
-        else
-		{
-            //SheathWeapons();
         }
 
         if (GameManager.Instance.GetCurrentAggro() > 0)

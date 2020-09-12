@@ -8,8 +8,9 @@ public class EnemyBehavior : MonoBehaviour
     protected NavMeshAgent agent;
     protected NavMeshObstacle obstacle;
 
-    protected Player player;
-    protected Transform playerTrans;
+    protected Player playerClosest;
+    protected Transform playerTransClosest;
+    protected int playerIndex = 0;
 
     [SerializeField] protected Animator anim;
 

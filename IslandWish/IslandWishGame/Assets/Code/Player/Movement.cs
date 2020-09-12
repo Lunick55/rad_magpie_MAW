@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
 	[SerializeField] Player player;
 	float vSpeed = 0;
 	Vector3 inputDir = Vector3.zero; //the vector determining player direction
+	Vector3 inputLookDir = Vector3.zero;
 	Vector3 dashStartPosition = Vector3.zero;
 	Vector3 dashDestination = Vector3.zero;
 	[SerializeField] float dashSafetyTimer = 1;
@@ -28,11 +29,14 @@ public class Movement : MonoBehaviour
 	bool grounded = false;
 	bool dashing = false;
 	bool acceptInput = true;
+	bool currInputType = false; //false = mouse || true = controller
+	Vector3 prevMousePos = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
     {
 		anim = player.GetComponent<Animator>();
+		prevMousePos = Input.mousePosition;
     }
 
     // Update is called once per frame
@@ -59,7 +63,7 @@ public class Movement : MonoBehaviour
 			//apply speed
 			if (acceptInput)
 			{
-				inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+				inputDir = new Vector3(Input.GetAxisRaw("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxisRaw("Vertical_P" + player.stats.playerNumber));
 				//all for them anims baybee
 				//prepare the corrected "forward vector"
 				Vector3 forwardVec = Vector3.forward;
@@ -86,7 +90,7 @@ public class Movement : MonoBehaviour
 				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
-				if (Input.GetKey(KeyCode.Space) && !dashing && inputDir != Vector3.zero)
+				if ((Input.GetKey(KeyCode.Space) || Input.GetButton("Dash_P" + player.stats.playerNumber)) && !dashing && inputDir != Vector3.zero)
 				{
 					print("DASH");
 					AudioManager.Instance.Play("PCDash");
@@ -140,7 +144,11 @@ public class Movement : MonoBehaviour
 		{
 			timer += Time.deltaTime;
 			if (((playerTrans.position - dashStartPosition).magnitude >= dashDistance) || timer > dashSafetyTimer)
-			{
+			{ 
+				if(timer > dashSafetyTimer)
+				{
+					Debug.Log("SAFETY TIMER KICKED IN");
+				}
 				timer = 0;
 				dashing = false;
 				acceptInput = true;
@@ -163,18 +171,52 @@ public class Movement : MonoBehaviour
 
 	private void RotateToMouse()
 	{
-		//Create vector from the object to the mouse in screen coords
-		Vector3 lineToMouse = Input.mousePosition - playerCamera.WorldToScreenPoint(playerHead.position);
-		//transform the line from the xy plane to the xz plane (rotate around x axis) also accounting for the -45 degree rotation of the camera (iso view)
-		lineToMouse = Quaternion.Euler(90, 0, 45) * lineToMouse;
-		//Debug.DrawLine(Vector3.zero, lineToMouse.normalized);
+		inputLookDir = new Vector3(Input.GetAxis("HorizontalLook_P" + player.stats.playerNumber), 0, Input.GetAxis("VerticalLook_P" + player.stats.playerNumber));
+		Vector3 mousePosDiff = prevMousePos - Input.mousePosition;
 
-		//nullify any rotations along the y axis. don't need it
-		lineToMouse = new Vector3(lineToMouse.x, 0, lineToMouse.z);
+		//if I lose controller input I don't want it to SNAP to mouse, cause it looks bad
+		if (inputLookDir != Vector3.zero && !currInputType)
+		{
+			currInputType = true;
+			print("Controller");
+		}
+		else if (mousePosDiff.sqrMagnitude > 0 && currInputType)
+		{
+			currInputType = false;
+			print("Mouse");
+		}
 
-		lookDirection = lineToMouse;
-		//apply!
-		transform.rotation = Quaternion.LookRotation(lineToMouse, Vector3.up);
+		if (!currInputType) //use mouse
+		{
+			//Create vector from the object to the mouse in screen coords
+			Vector3 lineToMouse = Input.mousePosition - playerCamera.WorldToScreenPoint(playerHead.position);
+			//transform the line from the xy plane to the xz plane (rotate around x axis) also accounting for the -45 degree rotation of the camera (iso view)
+			lineToMouse = Quaternion.Euler(90, 0, 45) * lineToMouse;
+			//Debug.DrawLine(Vector3.zero, lineToMouse.normalized);
+
+			//nullify any rotations along the y axis. don't need it
+			lineToMouse = new Vector3(lineToMouse.x, 0, lineToMouse.z);
+
+			lookDirection = lineToMouse;
+			//apply!
+			transform.rotation = Quaternion.LookRotation(lineToMouse, Vector3.up);
+		}
+		else //use controller
+		{
+			if (inputLookDir != Vector3.zero)
+			{
+				//haha camera fixing go brrrrr
+				Vector3 camForward = playerCamera.transform.forward;
+				Vector3 camRight = playerCamera.transform.right;
+				camForward.y = camRight.y = 0;
+				camForward.Normalize();
+				camRight.Normalize();
+				inputLookDir = camRight * inputLookDir.x + camForward * inputLookDir.z;
+				transform.rotation = Quaternion.LookRotation(inputLookDir, Vector3.up);
+			}
+		}
+
+		prevMousePos = Input.mousePosition;
 	}
 
 	private void OnDrawGizmosSelected()
