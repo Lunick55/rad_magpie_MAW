@@ -20,7 +20,7 @@ public class MeleeAttackCollision : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			GameManager.Instance.player.TakeDamage(transform, 1);
+			other.gameObject.GetComponent<Player>().TakeDamage(transform, 1);
 		}
 	}
 }

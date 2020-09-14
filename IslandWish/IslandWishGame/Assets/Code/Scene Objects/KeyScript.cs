@@ -8,12 +8,12 @@ public class KeyScript : MonoBehaviour
     public bool isCollected = false;
     public Sprite sprite;
 
-    public void CollectKey()
+    public void CollectKey(Player player)
 	{
-        door.UnlockLock();
+        //door.UnlockLock();
         isCollected = true;
         gameObject.SetActive(false);
-        GameManager.Instance.player.hud.AddKey(this);
+        player.hud.AddKey(this);
         AudioManager.Instance.Play("Pickup");
     }
 
@@ -21,7 +21,7 @@ public class KeyScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            CollectKey();
+            CollectKey(collision.GetComponent<Player>());
         }
     }
 }

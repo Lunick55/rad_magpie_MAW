@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 //this clas only exists because I can't assign an animation controller at runtime without Resources.Load
 public class TransitionManager : BaseSingleton<TransitionManager>
@@ -18,8 +19,9 @@ public class TransitionManager : BaseSingleton<TransitionManager>
         SceneManager.LoadScene(sceneName);
     }  
     
+    //might not be used
     //these 2 should be used in tandem
-    public IEnumerator TransitionStart(Event evnt)
+    public IEnumerator TransitionStart(UnityAction evnt)
     {
         anim.SetTrigger("Start");
 
@@ -28,7 +30,7 @@ public class TransitionManager : BaseSingleton<TransitionManager>
         //i dunno, fire CutSceneEvent?
         StartCoroutine(TransitionEnd(evnt));
     }
-    public IEnumerator TransitionEnd(Event evnt)
+    public IEnumerator TransitionEnd(UnityAction evnt)
     {
         anim.SetTrigger("End");
 

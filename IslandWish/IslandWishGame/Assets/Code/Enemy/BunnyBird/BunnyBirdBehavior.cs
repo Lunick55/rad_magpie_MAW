@@ -15,14 +15,22 @@ public class BunnyBirdBehavior : EnemyBehavior
 
     private bool canRotate = false;
     private Vector3 preHuntPos = Vector3.zero;
-
+    [SerializeField] int recoilTimer;
     void Start()
     {
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
-        agent = GetComponent<NavMeshAgent>();
-        obstacle = GetComponent<NavMeshObstacle>();
+        if (GetComponent<NavMeshAgent>())
+        {
+            agent = GetComponent<NavMeshAgent>();
+            obstacle = GetComponent<NavMeshObstacle>();
+        }
+        else
+		{
+            agent = transform.parent.GetComponent<NavMeshAgent>();
+            obstacle = transform.parent.GetComponent<NavMeshObstacle>();
+        }
 
         SceneLinkedSMB<BunnyBirdBehavior>.Initialise(anim, this);
 
@@ -49,7 +57,7 @@ public class BunnyBirdBehavior : EnemyBehavior
 
     public void Idle()
     {
-        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position);
+        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
 
         //if the player is within sight of the enemy, enable agent, and give chase
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))
@@ -129,7 +137,6 @@ public class BunnyBirdBehavior : EnemyBehavior
 
     public void MeleeAttack()
     {
-        timer = 0;
         preHuntPos = modelHolder.position;
 
         //get the vector in the direction of the player
@@ -155,6 +162,16 @@ public class BunnyBirdBehavior : EnemyBehavior
 
         StartCoroutine(LerpToPos(targetVector, 0.15f));
         hurtbox.SetActive(true);
+    }
+
+    public void RecoilMeleeAttack()
+	{
+        timer = 0;
+        timer += Time.deltaTime;
+        if(timer >= recoilTimer)
+		{
+            anim.SetTrigger("EndRecoil");
+		}
     }
 
     public void FinishMeleeAttack()

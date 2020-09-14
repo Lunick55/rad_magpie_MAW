@@ -46,17 +46,24 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
         uiHud.SetActive(false);
-        GameManager.Instance.player.SheathWeapons();
-        GameManager.Instance.player.canMove = false;
-	}
+
+        for(int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+		{
+            GameManager.Instance.GetPlayer(0).SheathWeapons();
+            GameManager.Instance.GetPlayer(0).canMove = false;
+        }
+    }
 
     public void Resume()
 	{
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         uiHud.SetActive(true);
-        GameManager.Instance.player.DrawWeapons();
-        GameManager.Instance.player.canMove = true;
+        for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+        {
+            GameManager.Instance.GetPlayer(0).DrawWeapons();
+            GameManager.Instance.GetPlayer(0).canMove = true;
+        }
     }
 
     public void SaveAndQuit()

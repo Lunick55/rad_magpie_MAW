@@ -811,6 +811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ca1b84cb1299e42889e2f1ffa86229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 0
   uiLives:
   - {fileID: 1997399441056377248}
   - {fileID: 1997399440097843673}

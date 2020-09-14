@@ -10,7 +10,7 @@ public class AmmoItem : MonoBehaviour
 	{
 		if(other.tag == "Player")
 		{
-			GameManager.Instance.player.PickupSlingAmmo(ammo);
+			other.gameObject.GetComponent<Player>().PickupSlingAmmo(ammo);
 			//maybe put on a hidden timer?
 			Destroy(gameObject);
 		}

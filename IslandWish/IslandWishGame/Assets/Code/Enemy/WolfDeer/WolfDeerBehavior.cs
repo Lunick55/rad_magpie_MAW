@@ -44,7 +44,7 @@ public class WolfDeerBehavior : EnemyBehavior
 
     public void Idle()
     {
-        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position);
+        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
         //agent should already be enabled
 
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))                   //if the player is within sight of the enemy, enable agent, and give chase

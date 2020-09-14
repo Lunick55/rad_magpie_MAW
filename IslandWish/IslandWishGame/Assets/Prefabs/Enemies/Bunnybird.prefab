@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 1785568165067482512}
   - component: {fileID: 6458273834747042092}
   - component: {fileID: 2001871965250970056}
+  - component: {fileID: 7326514457571963066}
   m_Layer: 0
   m_Name: BunnyModel
   m_TagString: Untagged
@@ -160,6 +161,29 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.25
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &7326514457571963066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536744673248403499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cbce0253ed312e49815af37932ce1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 6458273834747042092}
+  stats: {fileID: 11400000, guid: 70cec723476a6024f96239636e5349be, type: 2}
+  isDead: 0
+  hitbox: {fileID: 536744673248403499}
+  hurtbox: {fileID: 8416285436099380687}
+  modelHolder: {fileID: 1785568165067482512}
+  sightRange: 8
+  attackRange: 3
+  attackHeight: 1.5
+  attackBuffer: 1
+  recoilTimer: 0
 --- !u!1 &1337900450724573943
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +195,6 @@ GameObject:
   - component: {fileID: 2651059458021720292}
   - component: {fileID: 6766166389108475155}
   - component: {fileID: 7378834298001946406}
-  - component: {fileID: 641878415}
   m_Layer: 0
   m_Name: Bunnybird
   m_TagString: Enemy
@@ -232,28 +255,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &641878415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1337900450724573943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cbce0253ed312e49815af37932ce1e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 6458273834747042092}
-  stats: {fileID: 11400000, guid: 70cec723476a6024f96239636e5349be, type: 2}
-  isDead: 0
-  hitbox: {fileID: 536744673248403499}
-  hurtbox: {fileID: 8416285436099380687}
-  modelHolder: {fileID: 1785568165067482512}
-  sightRange: 8
-  attackRange: 3
-  attackHeight: 1.5
-  attackBuffer: 1
 --- !u!1 &1580199798839355454
 GameObject:
   m_ObjectHideFlags: 0

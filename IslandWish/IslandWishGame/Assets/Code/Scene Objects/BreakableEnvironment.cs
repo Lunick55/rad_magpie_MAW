@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class BreakableEnvironment : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] GameObject breakable;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "MeleeAttack" || other.tag == "Slingshot")
+		{
+			if (breakable != null)
+			{
+				Destroy(breakable);
+			}
+		}
+	}
 }

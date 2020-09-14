@@ -5,7 +5,10 @@ using UnityEngine.AI;
 
 public class CoconutPetBehavior : MonoBehaviour
 {
+    private Transform cocoHolder;
+    public GameObject body;
     public GameObject accessory;
+    //TODO: maybe also make an ID var to save, that correlates to the position of the child. this way I can just get rid of the cocoData object
 
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
@@ -40,10 +43,22 @@ public class CoconutPetBehavior : MonoBehaviour
             return;
 		}
 
-        player = GameManager.Instance.player;
-        playerTrans = GameManager.Instance.playerTrans;
+        //create a LOOK kiddo
+        cocoHolder = transform.GetChild(0);
+        int bodyOptions = cocoHolder.childCount;
+        for(int i = 0; i < bodyOptions; i++)
+		{
 
-        anim = GetComponent<Animator>();
+		}
+        int randBody = Random.Range(0, bodyOptions);
+        cocoHolder.GetChild(0).gameObject.SetActive(false);
+        body = cocoHolder.GetChild(randBody).gameObject;
+        body.SetActive(true);
+        anim = body.GetComponent<Animator>();
+
+        player = GameManager.Instance.GetPlayer(0);
+        playerTrans = GameManager.Instance.GetPlayerTrans(0);
+
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 

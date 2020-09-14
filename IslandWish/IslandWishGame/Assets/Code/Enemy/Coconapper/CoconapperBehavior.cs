@@ -47,7 +47,7 @@ public class CoconapperBehavior : EnemyBehavior
 
     public void Idle()
     {
-        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position);
+        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
 
         //if the player is within sight of the enemy, enable agent, and give chase
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))

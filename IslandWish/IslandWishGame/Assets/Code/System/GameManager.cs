@@ -34,8 +34,8 @@ public class GameManager : BaseSingleton<GameManager>
         playersMove = new List<Movement>(players.Count);
         for(int i = 0; i < players.Count; i++)
 		{
-            playersTrans[i] = players[i].GetComponent<Transform>();
-            playersMove[i] = players[i].GetComponent<Movement>();
+            playersTrans.Add(players[i].GetComponent<Transform>());
+            playersMove.Add(players[i].GetComponent<Movement>());
         }
 
         LoadGame();
@@ -78,19 +78,23 @@ public class GameManager : BaseSingleton<GameManager>
 	{
         return playersTrans[index];
 	}
+    public int GetPlayerCount()
+	{
+        return players.Count;
+	}
 
-    public int GetClosestPlayer(Vector3 point)
+    public int GetClosestPlayer(Vector3 point, out Transform closestTrans)
 	{
         int closestIndex = 0;
         float closestDistance = (point - playersTrans[0].position).sqrMagnitude;
         for (int i = 0; i < playersTrans.Count; i++)
 		{
-            if ((point - playersTrans[0].position).sqrMagnitude < closestDistance)
+            if ((point - playersTrans[i].position).sqrMagnitude < closestDistance)
 			{
                 closestIndex = i;
 			}
         }
-
+        closestTrans = playersTrans[closestIndex];
         return closestIndex;
 	}
 
