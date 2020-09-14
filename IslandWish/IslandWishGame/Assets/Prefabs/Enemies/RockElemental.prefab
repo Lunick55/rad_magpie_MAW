@@ -343,7 +343,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   stats: {fileID: 11400000, guid: 6dde6df326c066f4ba957f05d7d4af02, type: 2}
   isDead: 0
-  lobbedAttack: {fileID: 3928775837094120575, guid: 8fc41e45f6ed24f4b94c6d92929ccd0c,
+  lobbedAttack: {fileID: 3928775837094120575, guid: 41e6975378ce11940b61bb4008207baf,
     type: 3}
   smashAttack:
   - {fileID: 3987295828154732420}
