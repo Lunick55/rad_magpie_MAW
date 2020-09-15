@@ -5,7 +5,12 @@ using UnityEngine.AI;
 
 public class CoconutPetBehavior : MonoBehaviour
 {
+    public Transform cocoHolder;
+    public GameObject body;
+    [HideInInspector] public int bodyIndex;
     public GameObject accessory;
+    [HideInInspector] public int accessoryIndex;
+    //TODO: maybe also make an ID var to save, that correlates to the position of the child. this way I can just get rid of the cocoData object
 
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
@@ -33,17 +38,29 @@ public class CoconutPetBehavior : MonoBehaviour
     {
         if(displayMode)
 		{
-            GetComponent<Animator>().enabled = false;
+            //GetComponent<Animator>().enabled = false;
+            cocoHolder.GetChild(0).gameObject.SetActive(false);
+            body.SetActive(true);
+            anim = body.GetComponent<Animator>();
+            anim.enabled = false;
             GetComponent<NavMeshAgent>().enabled = false;
             GetComponent<NavMeshObstacle>().enabled = false;
             enabled = false;
             return;
 		}
 
-        player = GameManager.Instance.player;
-        playerTrans = GameManager.Instance.playerTrans;
+        //create a LOOK kiddo
+        int bodyOptions = cocoHolder.childCount;
+        bodyIndex = Random.Range(0, bodyOptions);
+        cocoHolder.GetChild(0).gameObject.SetActive(false);
+        body = cocoHolder.GetChild(bodyIndex).gameObject;
+        body.SetActive(true);
+        anim = body.GetComponent<Animator>();
+        
 
-        anim = GetComponent<Animator>();
+        player = GameManager.Instance.GetPlayer(0);
+        playerTrans = GameManager.Instance.GetPlayerTrans(0);
+
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 

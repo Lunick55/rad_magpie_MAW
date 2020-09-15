@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System;
 
 public class Level1Manager : LevelManager
 {
+	public bool levelSkip = false;
+
 	[Header("World Stuff")]
-	[SerializeField] Camera playerCam, cutsceneCam;
-	[SerializeField] Transform cutscenePos;
 	[SerializeField] GameObject fire;
+	[SerializeField] GameObject fireParticles;
 	public bool newGame = false;
 	[SerializeField] List<DoorScript> doors;
-	[SerializeField] DoorScript beachDoor;
-	[SerializeField] Canvas playerUI, talkUI;
 
 	[Header("The Ghost Stuff")]
-	[SerializeField] Firepit firepit;
 	[SerializeField] GameObject ghost;
-	[SerializeField] GameObject playerDoll;
 	private bool runGhost;
-	[SerializeField] TextMeshProUGUI text;
 	[SerializeField] List<string> ghostTalk;
-	[SerializeField] List<string> ghostAudioNames;
+	[SerializeField] List<AudioClip> ghostAudio;
+	[SerializeField] AudioClip ghostMusic;
+	[SerializeField] AudioClip normalMusic;
 	private int ghostTalkIndex = 0;
 
 	void Awake()
@@ -34,28 +32,37 @@ public class Level1Manager : LevelManager
 	{
 		if(newGame)
 		{
-			GameManager.Instance.player.armed = false;
-			GameManager.Instance.player.SheathWeapons();
+			for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+			{
+				GameManager.Instance.GetPlayer(i).armed = false;
+				GameManager.Instance.GetPlayer(i).SheathWeapons();
+			}
 
 			fire.SetActive(false);
 		}
 		else
 		{
-			GameManager.Instance.player.armed = true;
-			GameManager.Instance.player.DrawWeapons();
-
-			playerCam.enabled = true;
-			cutsceneCam.enabled = false;
+			for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+			{
+				GameManager.Instance.GetPlayer(i).armed = true;
+				GameManager.Instance.GetPlayer(i).DrawWeapons();
+			}
 
 			fire.SetActive(true);
-			beachDoor.OpenPath();
 		}
-		firepit.particles.SetActive(false);
+		fireParticles.SetActive(false);
 	}
 
 	public override void LoadLevel()
 	{
 		//TODO: load the level
+
+		throw new NotImplementedException();
+	}
+
+	public override void SaveLevel()
+	{
+
 
 		throw new NotImplementedException();
 	}
@@ -66,33 +73,44 @@ public class Level1Manager : LevelManager
 		{
 			RunGhostScene();
 		}
-		if (!beachDoor.IsLocked() && newGame)
+		if (newGame)
 		{
-			firepit.particles.SetActive(true);
+			fireParticles.SetActive(true);
 		}
+	}
+
+	public void StartMovie()
+	{
+		fireParticles.SetActive(true);
+
+		for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+		{
+			GameManager.Instance.GetPlayer(i).canMove = false;
+		}
+
+		playerUI.gameObject.SetActive(false);
+
+		StartCoroutine(MovieTransitionStart(ActivateGhostScene));
 	}
 
 	public void ActivateGhostScene()
 	{
-		if (!beachDoor.IsLocked() && newGame)
+		if (newGame)
 		{
-			firepit.particles.SetActive(true);
-
 			ghost.SetActive(true);
+			ghost.transform.position = GameManager.Instance.GetPlayerTrans(0).position;
+			ghost.transform.position += GameManager.Instance.GetPlayerTrans(0).forward.normalized * 2;
 			runGhost = true;
 
-			playerCam.enabled = false;
-			cutsceneCam.enabled = true;
-
-			//teleport player and maybe activate my cutscene clone
-			GameManager.Instance.playerMove.Teleport(cutscenePos.position);
-			GameManager.Instance.player.canMove = false;
-			GameManager.Instance.playerTrans.rotation = playerDoll.transform.rotation;
 			fire.SetActive(true);
-			playerUI.gameObject.SetActive(false);
-			talkUI.gameObject.SetActive(true);
+
+			narrationUI.gameObject.SetActive(true);
 			text.text = ghostTalk[ghostTalkIndex];
-			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+			AudioManager.Instance.Stop("MenuMusic");
+			AudioManager.Instance.SetClip("MenuMusic", ghostMusic);
+			AudioManager.Instance.Play("MenuMusic");
+			AudioManager.Instance.SetClip("Narration", ghostAudio[ghostTalkIndex]);
+			AudioManager.Instance.Play("Narration");
 
 			newGame = false;
 		}
@@ -102,16 +120,27 @@ public class Level1Manager : LevelManager
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			AudioManager.Instance.Stop(ghostAudioNames[ghostTalkIndex]);
+			AudioManager.Instance.Stop("Narration");
 			if (++ghostTalkIndex >= ghostTalk.Count)
 			{
 				runGhost = false;
-				EndGhostScene();
+				narrationUI.gameObject.SetActive(false);
+
+				for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+				{
+					GameManager.Instance.GetPlayer(i).canMove = true;
+					GameManager.Instance.GetPlayer(i).DrawWeapons();
+					GameManager.Instance.GetPlayer(i).armed = true;
+				}
+
+				StartCoroutine(MovieTransitionEnd(EndGhostScene));
+				//EndGhostScene();
 				return;
 			}
 
 			text.text = ghostTalk[ghostTalkIndex];
-			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+			AudioManager.Instance.SetClip("Narration", ghostAudio[ghostTalkIndex]);
+			AudioManager.Instance.Play("Narration");
 		}
 	}
 
@@ -119,23 +148,16 @@ public class Level1Manager : LevelManager
 	{
 		ghost.SetActive(false);
 
-		GameManager.Instance.player.canMove = true;
-		GameManager.Instance.player.DrawWeapons();
-		GameManager.Instance.player.armed = true;
-
-		playerCam.enabled = true;
-		cutsceneCam.enabled = false;
-
-		//teleport player and maybe deactivate my cutscene clone
 		playerUI.gameObject.SetActive(true);
-		talkUI.gameObject.SetActive(false);
 
-		beachDoor.OpenPath();
+		AudioManager.Instance.Stop("MenuMusic");
+		AudioManager.Instance.SetClip("MenuMusic", normalMusic);
+		AudioManager.Instance.Play("MenuMusic");
 	}
 
 	public override void ExitLevel()
 	{
-		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count)
+		if ((CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count) || levelSkip)
 		{
 			//go to next level
 			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);
@@ -144,19 +166,25 @@ public class Level1Manager : LevelManager
 		}
 
 	}
-}
 
-//for later
-[Serializable]
-public class Level1Data
-{
-	public Level1Data(Level1Manager level)
+	//for later
+	[Serializable]
+	public class Level1Data : LevelData
 	{
-		newGame = level.newGame;
+		public Level1Data(Level1Manager level)
+		{
+			newGame = level.newGame;
 
-		
+			openDoors = new bool[level.doors.Count];
+			for (int i = 0; i < openDoors.Length; i++)
+			{
+				openDoors[i] = level.doors[i].IsLocked();
+			}
+
+		}
+
+		public bool newGame;
 	}
-
-	public bool newGame;
-	public bool[] openDoors;
 }
+
+

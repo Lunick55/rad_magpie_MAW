@@ -17,13 +17,23 @@ public class LevelBossManager : LevelManager
 
 	private void Init()
 	{
-		GameManager.Instance.player.armed = true;
-		GameManager.Instance.player.DrawWeapons();
+		for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
+		{
+			GameManager.Instance.GetPlayer(i).armed = true;
+			GameManager.Instance.GetPlayer(i).DrawWeapons();
+		}
 	}
 
 	public override void LoadLevel()
 	{
 		//TODO: load the level
+
+		throw new NotImplementedException();
+	}
+
+	public override void SaveLevel()
+	{
+
 
 		throw new NotImplementedException();
 	}

@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     [Header("Shield Stats")]
     [SerializeField] GameObject shield;
+    private Animator shieldAnim;
     bool blocking = false;
     bool shieldBroken = false;
     public int shieldMaxHealth = 100;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform slingTrans;
 
     public bool canMove = true;
+    private bool invincible = false;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +74,8 @@ public class Player : MonoBehaviour
             SheathWeapons();
 		}
 
+        shieldAnim = shield.GetComponent<Animator>();
+
         StartCoroutine(RegenShield());
 
         hud.InitLife();
@@ -90,9 +94,7 @@ public class Player : MonoBehaviour
 
         if (canAttack)
         {
-            //DrawWeapons();
-
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Attack_P" + stats.playerNumber))
             {
                 if (currentAttackLevel < AttackLevel.MAX_LEVEL - 1)
                 {
@@ -101,14 +103,14 @@ public class Player : MonoBehaviour
             }
             if (slingCurrentAmmo > 0)
             {
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Sling_P" + stats.playerNumber))
                 {
                     AudioManager.Instance.Play("SlingshotPull");
                     anim.SetBool("Sling", true);
                     //maybe also add GetMouseButton() for the aim line
                     //draw the "aim" line
                 }
-                if (Input.GetMouseButtonUp(1))
+                if (Input.GetMouseButtonUp(1) || Input.GetButtonUp("Sling_P" + stats.playerNumber))
                 {
                     anim.SetBool("Sling", false);
                 }
@@ -118,19 +120,15 @@ public class Player : MonoBehaviour
                 anim.SetBool("Sling", false);
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !shieldBroken)
+            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("Block_P" + stats.playerNumber)) && !shieldBroken)
             {
                 AudioManager.Instance.Play("ShieldReady");
                 Block(true);
             }
-            if (Input.GetKeyUp(KeyCode.LeftControl))
+            if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetButtonUp("Block_P" + stats.playerNumber))
             {
                 Block(false);
             }
-        }
-        else
-		{
-            //SheathWeapons();
         }
 
         if (GameManager.Instance.GetCurrentAggro() > 0)
@@ -147,25 +145,29 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(Transform damageSource, int damage)
 	{
-        if(blocking)
-		{
-            Vector3 damageDirection = damageSource.position - transform.position;
+        if (!invincible)
+        {
+            if (blocking)
+            {
+                Vector3 damageDirection = damageSource.position - transform.position;
 
-            float damageAngle = Vector3.Angle(transform.forward, damageDirection);
-            if(damageAngle < 90)
-			{
-                damage = 10;
-                Debug.Log("BLOCKED BITCH");
-                AudioManager.Instance.Play("ShieldHit");
-                shieldCurrentHealth -= damage;
-                hud.UpdateShield(shieldCurrentHealth);
-                return;
-			}
-		}
-        print("OOF OUCH");
-        AudioManager.Instance.Play("PCDamage");
-        currentHealth -= damage;
-        hud.LoseLife();
+                float damageAngle = Vector3.Angle(transform.forward, damageDirection);
+                if (damageAngle < 90)
+                {
+                    damage = 10;
+                    Debug.Log("BLOCKED BITCH");
+                    AudioManager.Instance.Play("ShieldHit");
+                    shieldCurrentHealth -= damage;
+                    hud.UpdateShield(shieldCurrentHealth);
+                    return;
+                }
+            }
+            print("OOF OUCH");
+            AudioManager.Instance.Play("PCDamage");
+            currentHealth -= damage;
+            hud.LoseLife();
+            StartCoroutine(IFrames());
+        }
     }
 
     public void HealDamage(int heal)
@@ -258,6 +260,7 @@ public class Player : MonoBehaviour
         if (isBlock)
         {
             shield.SetActive(true);
+            shieldAnim.SetTrigger("Start");
             blocking = true;
             //other stuff i dunno
         }
@@ -277,6 +280,7 @@ public class Player : MonoBehaviour
             {
                 AudioManager.Instance.Play("ShieldBreak");
                 hud.BreakShield();
+                shieldAnim.SetTrigger("Break");
                 shieldBroken = true;
                 Block(false);
             }
@@ -298,6 +302,15 @@ public class Player : MonoBehaviour
                 yield return null;
 			}
 		}
+	}
+
+    IEnumerator IFrames()
+	{
+        invincible = true;
+
+        yield return new WaitForSeconds(stats.iFrameTimer);
+
+        invincible = false;
 	}
 
     public void DrawWeapons()

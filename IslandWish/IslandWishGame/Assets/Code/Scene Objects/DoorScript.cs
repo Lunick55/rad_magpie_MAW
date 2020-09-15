@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorScript : MonoBehaviour
 {
@@ -8,11 +9,18 @@ public class DoorScript : MonoBehaviour
 	public List<KeyScript> keys;
 	private bool isLocked = true;
 
+	public UnityEvent evnt;
+
 	private void Start()
 	{
 		foreach(KeyScript key in keys)
 		{
 			key.door = this;
+		}
+
+		if(evnt.GetPersistentEventCount() <= 0)
+		{
+			evnt.AddListener(OpenPath);
 		}
 	}
 
@@ -20,7 +28,6 @@ public class DoorScript : MonoBehaviour
 	{
 		if(--locks <= 0)
 		{
-			//gameObject.SetActive(false);
 			isLocked = false;
 		}
 	}
@@ -28,11 +35,27 @@ public class DoorScript : MonoBehaviour
 	public void OpenPath()
 	{
 		gameObject.SetActive(false);
+		AudioManager.Instance.Play("Door");
+
+	}
+
+	public void ConsumeKeys()
+	{
 		for (int i = 0; i < keys.Count; i++)
 		{
-			GameManager.Instance.player.hud.ConsumeKey(keys[i]);
+			for (int j = 0; j < GameManager.Instance.GetPlayerCount(); j++)
+			{
+				if(GameManager.Instance.GetPlayer(j).hud.ConsumeKey(keys[i]))
+				{
+					UnlockLock();
+					if (!isLocked)
+					{
+						//OpenPath();
+						evnt.Invoke();
+					}
+				}
+			}
 		}
-		AudioManager.Instance.Play("Door");
 	}
 
 	public bool IsLocked()
@@ -58,10 +81,7 @@ public class DoorScript : MonoBehaviour
 	{
 		if(collision.gameObject.tag == "Player")
 		{
-			if (!isLocked)
-			{
-				OpenPath();
-			}
+			ConsumeKeys();
 		}
 	}
 }

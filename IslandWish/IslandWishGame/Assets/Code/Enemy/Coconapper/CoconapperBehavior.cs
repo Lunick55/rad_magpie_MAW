@@ -14,8 +14,8 @@ public class CoconapperBehavior : EnemyBehavior
 
     void Start()
     {
-        player = GameManager.Instance.player;
-        playerTrans = GameManager.Instance.playerTrans;
+        playerClosest = GameManager.Instance.GetPlayer(playerIndex);
+        playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -47,9 +47,13 @@ public class CoconapperBehavior : EnemyBehavior
 
     public void Idle()
     {
+        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
+
         //if the player is within sight of the enemy, enable agent, and give chase
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))
         {
+            playerClosest = GameManager.Instance.GetPlayer(playerIndex);
+            playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
             anim.SetBool(playerInSight, true);
             EnableAgent();
         }
@@ -88,7 +92,7 @@ public class CoconapperBehavior : EnemyBehavior
             EnableAgent();
 
             canRotate = false;
-            agent.destination = playerTrans.position;
+            agent.destination = playerTransClosest.position;
         }
 
     }
@@ -178,7 +182,7 @@ public class CoconapperBehavior : EnemyBehavior
         // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
 
         // Determine which direction to rotate towards
-        Vector3 targetDirection = playerTrans.position - transform.position;
+        Vector3 targetDirection = playerTransClosest.position - transform.position;
         targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
@@ -196,7 +200,7 @@ public class CoconapperBehavior : EnemyBehavior
     {
         float minAngle = 15;
 
-        Vector3 dirToPlayer = playerTrans.position - transform.position;
+        Vector3 dirToPlayer = playerTransClosest.position - transform.position;
 
         dirToPlayer.y = 0;
 
@@ -211,7 +215,7 @@ public class CoconapperBehavior : EnemyBehavior
     
     float GetPlayerDistanceSquared()
     {
-        return (playerTrans.position - transform.position).sqrMagnitude;
+        return (playerTransClosest.position - transform.position).sqrMagnitude;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -219,7 +223,7 @@ public class CoconapperBehavior : EnemyBehavior
         if (other.tag == "MeleeAttack")
         {
             AudioManager.Instance.Play("SpearHit");
-            currentHealth -= player.stats.spearDamage;
+            currentHealth -= playerClosest.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
@@ -240,7 +244,7 @@ public class CoconapperBehavior : EnemyBehavior
         else if (other.tag == "SlingshotAttack")
         {
             AudioManager.Instance.Play("SlingHit");
-            currentHealth -= player.stats.slingDamage;
+            currentHealth -= playerClosest.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");

@@ -10,32 +10,20 @@ public class CoconutData
         name = newName; 
     }
 
-    public CoconutData(string newName, GameObject newAccessory)
+    public CoconutData(string newName, int newAccessory, int newBody)
 	{
         name = newName;
-        accessory = newAccessory;
+        accessoryIndex = newAccessory;
+        bodyIndex = newBody;
 	}
 
     public string name;
     public bool isSaved = false;
-    public GameObject accessory;
+    public int accessoryIndex;
+    public int bodyIndex;
 }
 
 [System.Serializable]
-//public class CoconutSaveData
-//{
-//    public CoconutSaveData(List<CoconutData> coconuts)
-//    {
-//        coconutsSaved = new bool[coconuts.Count];
-
-//        for (int i = 0; i < coconuts.Count; i++)
-//        {
-//            coconutsSaved[i] = coconuts[i].isSaved;
-//        }
-//    }
-
-//    public bool[] coconutsSaved;
-//}
 public class CoconutSaveData
 {
 	public CoconutSaveData(List<CoconutData> coconuts)
@@ -48,12 +36,14 @@ public class CoconutSaveData
 		{
 			name[i] = coconuts[i].name;
 			isSaved[i] = coconuts[i].isSaved;
-            accessoryID[i] = CoconutManager.Instance.cocoAttach.GetIDFromAccessory(coconuts[i].accessory);
+            bodyID[i] = coconuts[i].bodyIndex;
+            accessoryID[i] = coconuts[i].accessoryIndex;
 		}
 	}
 
     public string[] name;
     public bool[] isSaved;
+    public int[] bodyID;
     public int[] accessoryID;
 }
 
@@ -69,7 +59,7 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 
     void Init()
     {
-        EventManager.instance.AddListener(ScatterCoconuts, EventTag.FAILSTATE);
+        //EventManager.instance.AddListener(ScatterCoconuts, EventTag.FAILSTATE);
 
         coconuts = new List<CoconutPetBehavior>();
         if (hidingSpots == null)
@@ -131,8 +121,8 @@ public class CoconutManager : BaseSingleton<CoconutManager>
         if (!coconutsFreed.Contains(newRecruit))
         {
             coconutsFreed.Add(newRecruit);
-            GameManager.Instance.player.hud.GainCoconut();
-            GameManager.Instance.player.hud.UpdateCoconut(coconutsFreed.Count);
+            GameManager.Instance.GetPlayer(0).hud.GainCoconut();
+            GameManager.Instance.GetPlayer(0).hud.UpdateCoconut(coconutsFreed.Count);
         }
 	}
 
@@ -143,12 +133,12 @@ public class CoconutManager : BaseSingleton<CoconutManager>
             coconut.hide = true;
             int randNum = Random.Range(0, hidingSpots.Count);
             coconut.transform.position = hidingSpots[randNum].position;
-            GameManager.Instance.player.hud.LoseCoconut();
+            GameManager.Instance.GetPlayer(0).hud.LoseCoconut();
         }
 
         coconutsFreed.Clear();
         coconutsFreed.Capacity = 0;
-        GameManager.Instance.player.hud.UpdateCoconut(coconutsFreed.Count);
+        GameManager.Instance.GetPlayer(0).hud.UpdateCoconut(coconutsFreed.Count);
     }
 
 }

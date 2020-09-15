@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class HUDScript : MonoBehaviour
 {
+    [SerializeField] int playerIndex = 0;
     public GameObject[] uiLives;
     public GameObject[] uiLifeBackgrounds;
     public GameObject spearImage;
@@ -18,7 +19,9 @@ public class HUDScript : MonoBehaviour
     [Header("Replace These Petra")]
     //you can change the type to be whatever you want (text object, game object, image?), however you see fit to display the info. 
     //I can set the logic up to better match your vision once you've decided on how the final thing should look.act
-    public TextMeshProUGUI uiCoconut;
+    public List<Image> uiCoconutSad;
+    public List<Image> uiCoconutHappy;
+    public List<Image> uiCoconutAll;
     public TextMeshProUGUI uiSlingerAmmo;
     public TextMeshProUGUI uiShieldHealth;
 
@@ -62,8 +65,8 @@ public class HUDScript : MonoBehaviour
     //can become a full InitUI function as things get added and need to be saved
     public void InitLife()
 	{
-        int playerHealth = GameManager.Instance.player.currentHealth;
-        int playerMaxHealth = GameManager.Instance.player.stats.health;
+        int playerHealth = GameManager.Instance.GetPlayer(playerIndex).currentHealth;
+        int playerMaxHealth = GameManager.Instance.GetPlayer(playerIndex).stats.health;
 
         if (playerHealth < playerMaxHealth)
 		{
@@ -78,7 +81,7 @@ public class HUDScript : MonoBehaviour
     //health functions
     public void LoseLife()
     {
-        int playerHealth = GameManager.Instance.player.currentHealth;
+        int playerHealth = GameManager.Instance.GetPlayer(playerIndex).currentHealth;
 
         if (playerHealth > 0)
         {
@@ -88,7 +91,7 @@ public class HUDScript : MonoBehaviour
 
         if(playerHealth <= 0)
         {
-            GameManager.Instance.player.canMove = false;
+            GameManager.Instance.GetPlayer(playerIndex).canMove = false;
             AudioManager.Instance.Play("PCDeath");
             anim.Play();
             Invoke("FailState", 2);
@@ -98,9 +101,9 @@ public class HUDScript : MonoBehaviour
 
     public void GainLife()
     {
-        int playerHealth = GameManager.Instance.player.currentHealth;
+        int playerHealth = GameManager.Instance.GetPlayer(playerIndex).currentHealth;
 
-        if (playerHealth < GameManager.Instance.player.stats.health)
+        if (playerHealth < GameManager.Instance.GetPlayer(playerIndex).stats.health)
         {
             uiLives[playerHealth].SetActive(true);
             uiLifeBackgrounds[playerHealth].SetActive(false);
@@ -120,8 +123,33 @@ public class HUDScript : MonoBehaviour
 
     public void UpdateCoconut(int updatedCoconutsRescued)
 	{
-        uiCoconut.text = "Coconuts Saved: " + updatedCoconutsRescued;
-	}
+        if (updatedCoconutsRescued < uiCoconutAll.Count)
+        {
+
+            int i = 0;
+            for (; i < updatedCoconutsRescued; i++)
+            {
+                uiCoconutHappy[i].enabled = true;
+                uiCoconutSad[i].enabled = false;
+                uiCoconutAll[i].enabled = false;
+            }
+            for (; i < uiCoconutSad.Count; i++)
+            {
+                uiCoconutHappy[i].enabled = false;
+                uiCoconutSad[i].enabled = true;
+                uiCoconutAll[i].enabled = false;
+            }
+        }
+        else
+		{
+            for (int i = 0; i < updatedCoconutsRescued; i++)
+            {
+                uiCoconutHappy[i].enabled = false;
+                uiCoconutSad[i].enabled = false;
+                uiCoconutAll[i].enabled = true;
+            }
+        }
+    }
 
     //Slinger functions
     public void GainSlingAmmo()
@@ -174,7 +202,7 @@ public class HUDScript : MonoBehaviour
     }
 
     //CONSUME PRYLOSEC
-    public void ConsumeKey(KeyScript key)
+    public bool ConsumeKey(KeyScript key)
 	{
         if (keys.Contains(key))
         {
@@ -189,7 +217,11 @@ public class HUDScript : MonoBehaviour
                 keyImages[i].sprite = null;
                 keyImages[i].enabled = false;
             }
+
+            return true;
         }
+
+        return false;
     }
 
     void FailState()
@@ -207,7 +239,7 @@ public class HUDScript : MonoBehaviour
 
         }
 
-        GameManager.Instance.player.currentHealth = GameManager.Instance.player.stats.health;
+        GameManager.Instance.GetPlayer(playerIndex).currentHealth = GameManager.Instance.GetPlayer(playerIndex).stats.health;
     }
 
     void SetbackPlayer(Event newFailstateEvent)

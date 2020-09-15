@@ -11,15 +11,15 @@ AvatarMask:
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Armature_coconutpet
+  - m_Path: Armature_coconutpet_base
     m_Weight: 0
-  - m_Path: Armature_coconutpet/body
+  - m_Path: Armature_coconutpet_base/body
     m_Weight: 1
-  - m_Path: Armature_coconutpet/leg.l
+  - m_Path: Armature_coconutpet_base/leg.l
     m_Weight: 1
-  - m_Path: Armature_coconutpet/leg.r
+  - m_Path: Armature_coconutpet_base/leg.r
     m_Weight: 1
-  - m_Path: coconutpet
+  - m_Path: coconutpet.001
     m_Weight: 0
-  - m_Path: face
+  - m_Path: face.001
     m_Weight: 0

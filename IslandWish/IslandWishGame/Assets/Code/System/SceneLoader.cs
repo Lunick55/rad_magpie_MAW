@@ -8,21 +8,26 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 {
 	List<CoconutData> coconuts;
 	bool isInit = false;
-	public bool loadData = false;
+	public bool loadSingleData = false;
+	public bool loadMultiData = false;
 	private string nextLevel;
 	private PostProcessVolume postProcess;
-
+	public int playerCount;
 	public void Init()
 	{
 		if(!isInit)
 		{
 			coconuts = new List<CoconutData>();
-			//anim.runtimeAnimatorController = ;
 
 			isInit = true;
 		}
 	}
 
+	public void StartGame(string scene, int newPlayerCount)
+	{
+		playerCount = newPlayerCount;
+		LoadScene(scene);
+	}
 	public void LoadScene(string scene)
 	{
 		//TODO: turn off player movement n'stuff
@@ -47,7 +52,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	{
 		foreach (CoconutPetBehavior coconut in savedCoconuts)
 		{
-			CoconutData cocoData = new CoconutData(coconut.name, coconut.accessory);
+			CoconutData cocoData = new CoconutData(coconut.name, coconut.accessoryIndex, coconut.bodyIndex);
 			coconuts.Add(cocoData);
 		}
 	}
@@ -77,7 +82,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 
 		for (int i = 0; i < data.name.Length; i++)
 		{
-			CoconutData coconut = new CoconutData(data.name[i], CoconutManager.Instance.cocoAttach.GetAccessoryFromID(data.accessoryID[i]));
+			CoconutData coconut = new CoconutData(data.name[i], data.accessoryID[i], data.bodyID[i]);
 			coconut.isSaved = data.isSaved[i];
 
 			coconuts.Add(coconut);

@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager>
 {
-    public Player player;
-    public Movement playerMove;
-    [HideInInspector] public Transform playerTrans;
+    [SerializeField] List<Player> players;
+    [HideInInspector] List<Movement> playersMove;
+    [HideInInspector] List<Transform> playersTrans;
 
     [SerializeField] List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
@@ -26,40 +26,85 @@ public class GameManager : BaseSingleton<GameManager>
 	{
         SceneLoader.Instance.Init();
 
-        if (!player)
+        if (players.Count <= 0)
         {
-            Debug.LogError("Fill out the Player field");
+            Debug.Log("Fill out the Player field");
         }
-        playerTrans = player.GetComponent<Transform>();
-        playerMove = player.GetComponent<Movement>();
+        else
+		{
+            playersTrans = new List<Transform>(players.Count);
+            playersMove = new List<Movement>(players.Count);
+            for (int i = 0; i < players.Count; i++)
+            {
+                playersTrans.Add(players[i].GetComponent<Transform>());
+                playersMove.Add(players[i].GetComponent<Movement>());
+            }
+        }
 
         LoadGame();
     }
 
     public void LoadGame()
 	{
-        if (SceneLoader.Instance.loadData)
+        if (SceneLoader.Instance.loadSingleData)
         {
-            SceneLoader.Instance.loadData = false;
+            SceneLoader.Instance.loadSingleData = false;
 
-            //load all the data calls needed here
-            player.LoadPlayer();
-            LoadEnemies();
+            //TODO: load all the data calls needed here
+            foreach (Player player in players)
+            {
+                player.LoadPlayer();
+            }
             LevelManager.Instance.LoadLevel();
             SceneLoader.Instance.LoadCoconuts();
         }
         else
         {
-            player.currentHealth = player.stats.health;
+            players[0].currentHealth = players[0].stats.health;
         }
     }
 
     public void SaveGame()
 	{
-        SaveSystem.SavePlayer(player);
+        foreach (Player player in players)
+        {
+            SaveSystem.SavePlayer(player);
+        }
+        LevelManager.Instance.SaveLevel();
         SaveSystem.SaveCoconuts(SceneLoader.Instance.GetSavedCoconuts());
-        SaveSystem.SaveEnemies(enemies, SceneLoader.Instance.GetCurrentLevelName());
     }
+
+    public Player GetPlayer(int index)
+	{
+        return players[index];
+	}    
+    public Movement GetMovement(int index)
+	{
+        return playersMove[index];
+	}    
+    public Transform GetPlayerTrans(int index)
+	{
+        return playersTrans[index];
+	}
+    public int GetPlayerCount()
+	{
+        return players.Count;
+	}
+
+    public int GetClosestPlayer(Vector3 point, out Transform closestTrans)
+	{
+        int closestIndex = 0;
+        float closestDistance = (point - playersTrans[0].position).sqrMagnitude;
+        for (int i = 0; i < playersTrans.Count; i++)
+		{
+            if ((point - playersTrans[i].position).sqrMagnitude < closestDistance)
+			{
+                closestIndex = i;
+			}
+        }
+        closestTrans = playersTrans[closestIndex];
+        return closestIndex;
+	}
 
     public void IncreaseAggro()
 	{
@@ -83,16 +128,7 @@ public class GameManager : BaseSingleton<GameManager>
 	{
         enemies.Add(enemy);
 	}
-
-    private void LoadEnemies()
-	{
-        EnemyData data = SaveSystem.LoadEnemies(SceneLoader.Instance.GetCurrentLevelName());
-
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemies[i].isDead = data.enemiesDead[i];
-        }
-    }   
+   
 
     // Update is called once per frame
     private void Update()
@@ -104,24 +140,7 @@ public class GameManager : BaseSingleton<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            LoadEnemies();
-            SceneLoader.Instance.LoadCoconuts();
+            SaveGame();
         }
     }
-}
-
-[Serializable]
-public class EnemyData
-{
-    public EnemyData(List<EnemyBehavior> enemies)
-	{
-        enemiesDead = new bool[enemies.Count];
-
-        for(int i = 0; i < enemies.Count; i++)
-		{
-            enemiesDead[i] = enemies[i].isDead;
-		}
-	}
-
-   public bool[] enemiesDead;
 }

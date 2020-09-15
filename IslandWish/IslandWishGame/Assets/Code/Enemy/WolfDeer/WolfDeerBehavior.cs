@@ -17,8 +17,8 @@ public class WolfDeerBehavior : EnemyBehavior
 
     void Start()
     {
-        player = GameManager.Instance.player;
-        playerTrans = GameManager.Instance.playerTrans;
+        playerClosest = GameManager.Instance.GetPlayer(playerIndex);
+        playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -44,25 +44,14 @@ public class WolfDeerBehavior : EnemyBehavior
 
     public void Idle()
     {
-        print("Idle");
+        playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
         //agent should already be enabled
 
-        //if ((playerTrans.position - transform.position).magnitude < innerRange)              //if too close, back dat ass up
-        //{
-        //    EnableAgent();
-        //    anim.SetTrigger(playerTooClose);
-
-        //    canRotate = false;
-        //}
-        //else if ((playerTrans.position - transform.position).magnitude < agent.stoppingDistance)  //if in range, beat 'em up
-        //{
-        //    EnableObstacle();
-        //    anim.SetTrigger(playerInRange);
-
-        //    canRotate = true;
-        //}
         if (GetPlayerDistanceSquared() < (sightRange * sightRange))                   //if the player is within sight of the enemy, enable agent, and give chase
         {
+            playerClosest = GameManager.Instance.GetPlayer(playerIndex);
+            playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
+
             EnableAgent();
             anim.SetTrigger(playerInSight);
 
@@ -97,7 +86,7 @@ public class WolfDeerBehavior : EnemyBehavior
         {
             //EnableAgent();
 
-            agent.destination = playerTrans.position;
+            agent.destination = playerTransClosest.position;
         }
     }
 
@@ -114,7 +103,7 @@ public class WolfDeerBehavior : EnemyBehavior
         }
 
         agent.stoppingDistance = 0;
-        Vector3 dirToPlayer = transform.position - playerTrans.position;
+        Vector3 dirToPlayer = transform.position - playerTransClosest.position;
         Vector3 fleePos = transform.position + dirToPlayer;
         agent.destination = fleePos;
 
@@ -153,7 +142,7 @@ public class WolfDeerBehavior : EnemyBehavior
 
         //TODO: maybe don't fly off the edge. try to math it out with spherecasts or something
         destination = transform.position + transform.forward * attackDistance;
-
+        AudioManager.Instance.Play("WolfDeerAttack");
     }
 
     public void ChargeAttack()
@@ -202,7 +191,7 @@ public class WolfDeerBehavior : EnemyBehavior
     {
         float minAngle = 15;
 
-        Vector3 dirToPlayer = playerTrans.position - transform.position;
+        Vector3 dirToPlayer = playerTransClosest.position - transform.position;
         dirToPlayer.y = 0;
 
         if (Vector3.Angle(transform.forward, dirToPlayer) < minAngle)
@@ -219,7 +208,7 @@ public class WolfDeerBehavior : EnemyBehavior
         // from https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
 
         // Determine which direction to rotate towards
-        Vector3 targetDirection = playerTrans.position - transform.position;
+        Vector3 targetDirection = playerTransClosest.position - transform.position;
         targetDirection.y = 0;
         // The step size is equal to speed times frame time.
         float singleStep = 5 * Time.deltaTime;
@@ -236,7 +225,7 @@ public class WolfDeerBehavior : EnemyBehavior
 
     float GetPlayerDistanceSquared()
     {
-        return (playerTrans.position - transform.position).sqrMagnitude;
+        return (playerTransClosest.position - transform.position).sqrMagnitude;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -244,10 +233,11 @@ public class WolfDeerBehavior : EnemyBehavior
         if (other.tag == "MeleeAttack")
         {
             AudioManager.Instance.Play("SpearHit");
-            currentHealth -= player.stats.spearDamage;
+            currentHealth -= playerClosest.stats.spearDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("WolfDeerDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -256,14 +246,19 @@ public class WolfDeerBehavior : EnemyBehavior
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
             }
+            else
+            {
+                AudioManager.Instance.Play("WolfDeerDamaged");
+            }
         }
         else if (other.tag == "SlingshotAttack")
         {
             AudioManager.Instance.Play("SlingHit");
-            currentHealth -= player.stats.slingDamage;
+            currentHealth -= playerClosest.stats.slingDamage;
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("WolfDeerDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -271,6 +266,10 @@ public class WolfDeerBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("WolfDeerDamaged");
             }
         }
     }

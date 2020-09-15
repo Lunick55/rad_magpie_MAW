@@ -28,7 +28,22 @@ public class AudioManager : BaseSingleton<AudioManager>
       Play("MenuMusic");
    }
 
-   public void Play(string name)
+    public void SetClip(string name, AudioClip clip)
+	{
+        //looks for the name of the song
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        //won't play sound if spelt wrong or not existing
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " does not exist");
+            return;
+        }
+
+        s.source.clip = clip;
+    }
+
+    public void Play(string name)
    {
         //looks for the name of the song
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -59,7 +74,6 @@ public class AudioManager : BaseSingleton<AudioManager>
             s.source.Play();
         }
     }
-
 
     public void Stop(string name)
    {
