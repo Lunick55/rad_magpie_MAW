@@ -162,6 +162,7 @@ public class BunnyBirdBehavior : EnemyBehavior
 
         StartCoroutine(LerpToPos(targetVector, 0.15f));
         hurtbox.SetActive(true);
+        AudioManager.Instance.Play("BunnyBirdAttack");
     }
 
     public void RecoilMeleeAttack()
@@ -257,6 +258,7 @@ public class BunnyBirdBehavior : EnemyBehavior
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("BunnyBirdDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -264,6 +266,10 @@ public class BunnyBirdBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("BunnyBirdDamaged");
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -273,6 +279,7 @@ public class BunnyBirdBehavior : EnemyBehavior
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("BunnyBirdDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -280,6 +287,10 @@ public class BunnyBirdBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("BunnyBirdDamaged");
             }
         }
     }

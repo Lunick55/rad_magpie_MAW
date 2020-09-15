@@ -142,7 +142,7 @@ public class WolfDeerBehavior : EnemyBehavior
 
         //TODO: maybe don't fly off the edge. try to math it out with spherecasts or something
         destination = transform.position + transform.forward * attackDistance;
-
+        AudioManager.Instance.Play("WolfDeerAttack");
     }
 
     public void ChargeAttack()
@@ -237,6 +237,7 @@ public class WolfDeerBehavior : EnemyBehavior
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("WolfDeerDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -244,6 +245,10 @@ public class WolfDeerBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("WolfDeerDamaged");
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -253,6 +258,7 @@ public class WolfDeerBehavior : EnemyBehavior
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("WolfDeerDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -260,6 +266,10 @@ public class WolfDeerBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("WolfDeerDamaged");
             }
         }
     }

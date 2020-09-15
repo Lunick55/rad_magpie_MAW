@@ -238,6 +238,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   narr: {fileID: 680381696}
   stills: {fileID: 2093968618}
+  narrClips:
+  - {fileID: 8300000, guid: 55da83d4d41ab014da33f7b049db0f90, type: 3}
+  - {fileID: 8300000, guid: 3170e952d47b92b4ca35efa81d3120e4, type: 3}
+  - {fileID: 8300000, guid: 3a273efea6746f3499d2883d2ec448ad, type: 3}
+  - {fileID: 8300000, guid: 501dcec5a48933747af278552f57e7a3, type: 3}
+  - {fileID: 8300000, guid: b5d07059aebf55c4abe1fa816256b4df, type: 3}
+  - {fileID: 8300000, guid: 55cf10bc76a0d9249af94ff54367f48c, type: 3}
+  - {fileID: 8300000, guid: 3a4ea9671d4fec94ebe443d96597f5bc, type: 3}
+  - {fileID: 8300000, guid: 792e67eeb7ec9ae4ebf44650fb69a9e8, type: 3}
 --- !u!4 &1076389601
 Transform:
   m_ObjectHideFlags: 0
@@ -282,59 +291,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 1
-    clip: {fileID: 8300000, guid: 55da83d4d41ab014da33f7b049db0f90, type: 3}
-    volume: 1
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: 6a4eb34b209f5f5418ba930b951a0047, type: 3}
+    volume: 0.23
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
-  - name: 2
+  - name: Narration
     clip: {fileID: 8300000, guid: 3170e952d47b92b4ca35efa81d3120e4, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    source: {fileID: 0}
-  - name: 3
-    clip: {fileID: 8300000, guid: 3a273efea6746f3499d2883d2ec448ad, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: 4
-    clip: {fileID: 8300000, guid: 501dcec5a48933747af278552f57e7a3, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: 5
-    clip: {fileID: 8300000, guid: b5d07059aebf55c4abe1fa816256b4df, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: 6
-    clip: {fileID: 8300000, guid: 55cf10bc76a0d9249af94ff54367f48c, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: 7
-    clip: {fileID: 8300000, guid: 3a4ea9671d4fec94ebe443d96597f5bc, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: 8
-    clip: {fileID: 8300000, guid: 792e67eeb7ec9ae4ebf44650fb69a9e8, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: MenuMusic
-    clip: {fileID: 8300000, guid: 6a4eb34b209f5f5418ba930b951a0047, type: 3}
-    volume: 0.2
-    pitch: 1
-    loop: 1
     source: {fileID: 0}
 --- !u!4 &1491957667
 Transform:
@@ -643,7 +610,7 @@ PrefabInstance:
     - target: {fileID: 4300232775831728060, guid: a78d15f2ca55f164da1169e8f5900c60,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4300232777294185714, guid: a78d15f2ca55f164da1169e8f5900c60,
         type: 3}

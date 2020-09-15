@@ -168,6 +168,7 @@ public class RockElementalBehavior : EnemyBehavior
     {
         //instantiate attack, send it out
         timer = 0;
+        AudioManager.Instance.Play("RockElementalAttack");
 
         GameObject newLobbedAttack = Instantiate(lobbedAttack, transform.position, transform.rotation);
         newLobbedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
@@ -191,6 +192,7 @@ public class RockElementalBehavior : EnemyBehavior
     public void StartSmash(bool leftSmash, bool rightSmash)
     {
         Debug.Log("FIST OF HAVOK");
+        AudioManager.Instance.Play("RockElementalAttack");
         smashAttack[0].enabled = leftSmash;
         smashAttack[1].enabled = rightSmash;
     }
@@ -247,6 +249,7 @@ public class RockElementalBehavior : EnemyBehavior
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("RockElementalDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -254,6 +257,10 @@ public class RockElementalBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("RockElementalDamaged");
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -263,6 +270,7 @@ public class RockElementalBehavior : EnemyBehavior
             if (currentHealth <= 0)
             {
                 print("Enemy is Dead and You Killed Them You Monster");
+                AudioManager.Instance.Play("RockElementalDeath");
                 if (aggro)
                 {
                     DeAggro();
@@ -270,6 +278,10 @@ public class RockElementalBehavior : EnemyBehavior
                 isDead = true;
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("RockElementalDamaged");
             }
         }
     }

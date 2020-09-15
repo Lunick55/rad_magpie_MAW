@@ -248,3 +248,21 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: RockElementalAttack
+    clip: {fileID: 8300000, guid: 3e59b934a9913e84eb2a1f6066048e55, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: RockElementalDamaged
+    clip: {fileID: 8300000, guid: 84c171587625996409761d8ea8cb2038, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: RockElementalDeath
+    clip: {fileID: 8300000, guid: 66854be44c46c1c468a3156078b80e74, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

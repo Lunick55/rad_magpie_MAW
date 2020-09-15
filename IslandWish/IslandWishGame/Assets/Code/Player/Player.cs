@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform slingTrans;
 
     public bool canMove = true;
+    private bool invincible = false;
 
     // Start is called before the first frame update
     void Start()
@@ -144,25 +145,29 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(Transform damageSource, int damage)
 	{
-        if(blocking)
-		{
-            Vector3 damageDirection = damageSource.position - transform.position;
+        if (!invincible)
+        {
+            if (blocking)
+            {
+                Vector3 damageDirection = damageSource.position - transform.position;
 
-            float damageAngle = Vector3.Angle(transform.forward, damageDirection);
-            if(damageAngle < 90)
-			{
-                damage = 10;
-                Debug.Log("BLOCKED BITCH");
-                AudioManager.Instance.Play("ShieldHit");
-                shieldCurrentHealth -= damage;
-                hud.UpdateShield(shieldCurrentHealth);
-                return;
-			}
-		}
-        print("OOF OUCH");
-        AudioManager.Instance.Play("PCDamage");
-        currentHealth -= damage;
-        hud.LoseLife();
+                float damageAngle = Vector3.Angle(transform.forward, damageDirection);
+                if (damageAngle < 90)
+                {
+                    damage = 10;
+                    Debug.Log("BLOCKED BITCH");
+                    AudioManager.Instance.Play("ShieldHit");
+                    shieldCurrentHealth -= damage;
+                    hud.UpdateShield(shieldCurrentHealth);
+                    return;
+                }
+            }
+            print("OOF OUCH");
+            AudioManager.Instance.Play("PCDamage");
+            currentHealth -= damage;
+            hud.LoseLife();
+            StartCoroutine(IFrames());
+        }
     }
 
     public void HealDamage(int heal)
@@ -297,6 +302,15 @@ public class Player : MonoBehaviour
                 yield return null;
 			}
 		}
+	}
+
+    IEnumerator IFrames()
+	{
+        invincible = true;
+
+        yield return new WaitForSeconds(stats.iFrameTimer);
+
+        invincible = false;
 	}
 
     public void DrawWeapons()

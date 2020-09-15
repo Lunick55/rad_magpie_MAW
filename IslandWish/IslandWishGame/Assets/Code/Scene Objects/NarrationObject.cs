@@ -26,6 +26,7 @@ public class NarrationObject : MonoBehaviour
 				for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 				{
 					GameManager.Instance.GetPlayer(i).canMove = true;
+					GameManager.Instance.GetPlayer(i).canAttack = true;
 				}
 
 				StartCoroutine(Level1Manager.Instance.MovieTransitionEnd(EndNarration));
@@ -45,6 +46,7 @@ public class NarrationObject : MonoBehaviour
 		for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 		{
 			GameManager.Instance.GetPlayer(i).canMove = false;
+			GameManager.Instance.GetPlayer(i).canAttack = false;
 		}
 
 		LevelManager.Instance.playerUI.gameObject.SetActive(false);
