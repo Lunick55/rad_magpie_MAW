@@ -281,8 +281,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e7cb9407859937a42ba32986cb94bb66,
+      objectReference: {fileID: 21300000, guid: 99ff99fb3180d4442b60534e28c0a276,
         type: 3}
+    - target: {fileID: 4300232775831728060, guid: a78d15f2ca55f164da1169e8f5900c60,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 4300232777102757463, guid: a78d15f2ca55f164da1169e8f5900c60,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -449,10 +454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9029ade92267dd846b0bf8b7b577bf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  still1: {fileID: 21300000, guid: e7cb9407859937a42ba32986cb94bb66, type: 3}
-  still2: {fileID: 21300000, guid: c102b7f288a002a408655e5edd92bfa0, type: 3}
-  still3: {fileID: 21300000, guid: d81469f7f0738e84eac4747bea9738e3, type: 3}
-  still4: {fileID: 21300000, guid: a69363b2924c57e4ba990a5b451de4c2, type: 3}
+  still1: {fileID: 21300000, guid: 99ff99fb3180d4442b60534e28c0a276, type: 3}
+  still2: {fileID: 21300000, guid: fcb28f860a4784d4d9b0ebe95c9ea194, type: 3}
+  still3: {fileID: 21300000, guid: 9d4d948ead7e55b4e97418f1c84daa41, type: 3}
+  still4: {fileID: 21300000, guid: 9efe02bce6d07cf4c94f3907e59437d0, type: 3}
 --- !u!1 &1463138261
 GameObject:
   m_ObjectHideFlags: 0

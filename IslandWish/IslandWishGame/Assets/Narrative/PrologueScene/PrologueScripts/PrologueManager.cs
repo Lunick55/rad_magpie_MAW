@@ -42,7 +42,7 @@ public class PrologueManager : MonoBehaviour
         }
         else if (prologueClick == 2)
         {
-            narr.text = "However, a gentle heart is easily seized, and the less-kind island dwellers eventually grew displeased.".ToString();
+            narr.text = "However, a gentle heart is easily seized, and the less-kind island dwellers eventually grew less than pleased.".ToString();
         }
         else if (prologueClick == 3)
         {

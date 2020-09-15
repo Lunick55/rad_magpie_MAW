@@ -21,15 +21,15 @@ public class StillManagerEpi : MonoBehaviour
         {
             gameObject.GetComponent<Image>().sprite = still1;
         }
-        else if (clicks == 2)
+        else if (clicks == 3)
         {
             gameObject.GetComponent<Image>().sprite = still2;
         }
-        else if (clicks == 4)
+        else if (clicks == 6)
         {
             gameObject.GetComponent<Image>().sprite = still3;
         }
-        else if (clicks == 5)
+        else if (clicks == 8)
         {
             gameObject.GetComponent<Image>().sprite = still4;
         }
