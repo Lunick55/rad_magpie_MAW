@@ -935,7 +935,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh439552
+  m_Name: pb_Mesh382872
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1205,7 +1205,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6818991, y: 3.651767, z: 2.19}
+  m_Size: {x: 2.64, y: 4.19, z: 4.02}
   m_Center: {x: -0.089793876, y: -0.36805722, z: 0.02794076}
 --- !u!1 &65220497 stripped
 GameObject:
@@ -1289,6 +1289,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.3354967, y: 3.3519433, z: 1.0696796}
   m_Center: {x: -1.4318229, y: 1.676793, z: -0.34618735}
+--- !u!114 &65220505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65220497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371c75c99ad744349a4aade0b00d9d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  narrationText:
+  - The path is blocked, but have no fear. The key to proceeding must be near.
+  narrationAudio:
+  - {fileID: 8300000, guid: a5405109280038743a72319655cc7839, type: 3}
+  complete: 0
+  door: {fileID: 65220502}
 --- !u!1 &73463951 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: addcf5cbb10ac6447b81b7859beca28b,
@@ -3291,6 +3309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   postProcess: {fileID: 1440557044}
+  narrationObjects: []
   anim: {fileID: 268436220}
   transitionTime: 1
   playerUI: {fileID: 838219444}
@@ -7781,7 +7800,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh440364
+  m_Name: pb_Mesh383720
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -27801,36 +27820,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f85a6a33727cd46b84ba2ee4a2ecef, type: 3}
---- !u!1 &906862407
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 906862408}
-  m_Layer: 0
-  m_Name: Keyless
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &906862408
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906862407}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1715215813}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &911120279
 GameObject:
   m_ObjectHideFlags: 0
@@ -28295,7 +28284,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 234fdc9678c007d4d8347d6e102be603,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.16
+      value: 5.041
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 234fdc9678c007d4d8347d6e102be603,
         type: 3}
@@ -39979,7 +39968,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh439872
+  m_Name: pb_Mesh383204
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -41505,6 +41494,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1121416604}
+  - component: {fileID: 1121416605}
+  - component: {fileID: 1121416606}
   m_Layer: 0
   m_Name: LevelComplete
   m_TagString: Untagged
@@ -41520,12 +41511,43 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121416603}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.2, y: 4.993, z: -7.582}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1715215813}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1121416605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121416603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c92b2c60787a6fb42a0f365d343577eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  narrationText:
+  - "The beach is safe, you\u2019ve done all you could. Now, head north, into the
+    wood."
+  narrationAudio:
+  - {fileID: 8300000, guid: 916c144fa38ae6547a5cc3234b4a3c2f, type: 3}
+  complete: 0
+--- !u!135 &1121416606
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121416603}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1126376789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 549327082431103820, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
@@ -41709,7 +41731,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh440462
+  m_Name: pb_Mesh383818
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44318,7 +44340,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6818987, y: 3.651767, z: 0.9341248}
+  m_Size: {x: 1.99, y: 4.17, z: 3.7}
   m_Center: {x: -0.089732856, y: -0.3681792, z: -0.0064892517}
 --- !u!114 &1333527071
 MonoBehaviour:
@@ -44500,7 +44522,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh439312
+  m_Name: pb_Mesh382636
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -46148,7 +46170,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: MenuMusic
-    clip: {fileID: 8300000, guid: 0480109ed9fcaa643a770332e621f0e4, type: 3}
+    clip: {fileID: 8300000, guid: e270291851eca8e4b9a9a6a0ab4b48f9, type: 3}
     volume: 0.2
     pitch: 1
     loop: 1
@@ -48586,7 +48608,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh440164
+  m_Name: pb_Mesh383512
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -49948,7 +49970,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh439478
+  m_Name: pb_Mesh382794
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -50152,7 +50174,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh439162
+  m_Name: pb_Mesh382486
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -52442,6 +52464,11 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 633045371}
+    - target: {fileID: 180864101691658531, guid: 4baf830d56370ac429468825d264f29f,
+        type: 3}
+      propertyPath: m_SlopeLimit
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 180864101691658535, guid: 4baf830d56370ac429468825d264f29f,
         type: 3}
       propertyPath: m_Enabled
@@ -52808,7 +52835,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1817277823}
-  - {fileID: 906862408}
   - {fileID: 1121416604}
   m_Father: {fileID: 1896927817}
   m_RootOrder: 1
@@ -53531,7 +53557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817277822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.71, z: -4.64}
+  m_LocalPosition: {x: -4.77, y: 5.71, z: -4.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1715215813}
@@ -53546,7 +53572,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1817277822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc7bef7817bf6b44a6a904decfe2ed0, type: 3}
+  m_Script: {fileID: 11500000, guid: db32d164d3a22c14187ca285df7e63b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   narrationText:
@@ -53554,8 +53580,9 @@ MonoBehaviour:
     fire.
   narrationAudio:
   - {fileID: 8300000, guid: 11c0b56f1113cbf4191f0f76711e2005, type: 3}
---- !u!65 &1817277825
-BoxCollider:
+  complete: 0
+--- !u!135 &1817277825
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -53565,7 +53592,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1817627759 stripped
 GameObject:
@@ -54200,7 +54227,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6818986, y: 3.6517653, z: 0.35999992}
+  m_Size: {x: 2.7, y: 4.48, z: 5.19}
   m_Center: {x: -0.089732885, y: -0.36817914, z: 0.02794073}
 --- !u!4 &1836999875 stripped
 Transform:
@@ -56828,7 +56855,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6818987, y: 3.6517675, z: 2.315233}
+  m_Size: {x: 2.78, y: 4.21, z: 4.38}
   m_Center: {x: -0.08973277, y: -0.3681794, z: 0.07436961}
 --- !u!1001 &1939385564
 PrefabInstance:
@@ -57790,7 +57817,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh440380
+  m_Name: pb_Mesh383736
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

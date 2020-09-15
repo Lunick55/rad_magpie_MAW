@@ -7,14 +7,14 @@ public class NarrationObject : MonoBehaviour
 {
 	private int narrationIndex = 0;
 
-    [SerializeField] List<string> narrationText;
-    [SerializeField] List<AudioClip> narrationAudio;
+    [SerializeField] protected List<string> narrationText;
+    [SerializeField] protected List<AudioClip> narrationAudio;
 	private string audioChannelName = "Narration";
+	protected bool canNarrate = false;
+	public bool complete = false;
 
-	private bool canNarrate = false;
-
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	protected void Update()
     {
 		if (Input.GetKeyDown(KeyCode.Space) && canNarrate)
 		{
@@ -40,7 +40,7 @@ public class NarrationObject : MonoBehaviour
 		}
 	}
 
-	public void StartMovie()
+	protected void StartMovie()
 	{
 		for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 		{
@@ -52,7 +52,7 @@ public class NarrationObject : MonoBehaviour
 		StartCoroutine(LevelManager.Instance.MovieTransitionStart(StartNarration));
 	}
 
-	public void StartNarration()
+	protected void StartNarration()
 	{
 		LevelManager.Instance.narrationUI.gameObject.SetActive(true);
 		LevelManager.Instance.text.text = narrationText[narrationIndex];
@@ -60,14 +60,18 @@ public class NarrationObject : MonoBehaviour
 		AudioManager.Instance.Play(audioChannelName);
 		canNarrate = true;
 	}
-	public void EndNarration()
+	protected void EndNarration()
 	{
 		LevelManager.Instance.playerUI.gameObject.SetActive(true);
+		complete = true;
 	}
 
 	//TODO: make this whole class a base, and just override this function for conditions needed
-	private void OnTriggerEnter(Collider other)
+	protected virtual void OnTriggerEnter(Collider other)
 	{
-		StartMovie();
+		if (other.tag == "Player" && !complete)
+		{
+			StartMovie();
+		}
 	}
 }

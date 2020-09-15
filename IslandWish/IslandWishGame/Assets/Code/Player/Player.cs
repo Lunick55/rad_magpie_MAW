@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     [Header("Shield Stats")]
     [SerializeField] GameObject shield;
+    private Animator shieldAnim;
     bool blocking = false;
     bool shieldBroken = false;
     public int shieldMaxHealth = 100;
@@ -71,6 +72,8 @@ public class Player : MonoBehaviour
 		{
             SheathWeapons();
 		}
+
+        shieldAnim = shield.GetComponent<Animator>();
 
         StartCoroutine(RegenShield());
 
@@ -252,6 +255,7 @@ public class Player : MonoBehaviour
         if (isBlock)
         {
             shield.SetActive(true);
+            shieldAnim.SetTrigger("Start");
             blocking = true;
             //other stuff i dunno
         }
@@ -271,6 +275,7 @@ public class Player : MonoBehaviour
             {
                 AudioManager.Instance.Play("ShieldBreak");
                 hud.BreakShield();
+                shieldAnim.SetTrigger("Break");
                 shieldBroken = true;
                 Block(false);
             }

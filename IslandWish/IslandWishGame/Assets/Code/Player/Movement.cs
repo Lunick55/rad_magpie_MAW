@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		anim = player.GetComponent<Animator>();
+		anim = player.anim;
 		prevMousePos = Input.mousePosition;
     }
 

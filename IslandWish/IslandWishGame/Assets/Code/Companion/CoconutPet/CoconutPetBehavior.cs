@@ -36,7 +36,7 @@ public class CoconutPetBehavior : MonoBehaviour
     {
         if(displayMode)
 		{
-            GetComponent<Animator>().enabled = false;
+            //GetComponent<Animator>().enabled = false;
             GetComponent<NavMeshAgent>().enabled = false;
             GetComponent<NavMeshObstacle>().enabled = false;
             enabled = false;

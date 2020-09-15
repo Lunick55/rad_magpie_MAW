@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Events;
 using TMPro;
+using System;
 
 public abstract class LevelManager : BaseSingleton<LevelManager>
 {
 	[SerializeField] protected PostProcessVolume postProcess;
+	[SerializeField] List<NarrationObject> narrationObjects;
 
 	[Header("The Movie Stuff")]
 	[SerializeField] Animator anim;
@@ -35,4 +37,19 @@ public abstract class LevelManager : BaseSingleton<LevelManager>
 
 		evnt.Invoke();
 	}
+}
+
+//for later
+[Serializable]
+public abstract class LevelData
+{
+	public LevelData(LevelManager level)
+	{
+
+
+	}
+
+	public bool newGame;
+	public bool[] openDoors;
+	public bool[] completeNarrations;
 }
