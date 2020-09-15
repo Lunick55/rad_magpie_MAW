@@ -5,9 +5,11 @@ using UnityEngine.AI;
 
 public class CoconutPetBehavior : MonoBehaviour
 {
-    private Transform cocoHolder;
+    public Transform cocoHolder;
     public GameObject body;
+    [HideInInspector] public int bodyIndex;
     public GameObject accessory;
+    [HideInInspector] public int accessoryIndex;
     //TODO: maybe also make an ID var to save, that correlates to the position of the child. this way I can just get rid of the cocoData object
 
     private NavMeshAgent agent;
@@ -37,6 +39,10 @@ public class CoconutPetBehavior : MonoBehaviour
         if(displayMode)
 		{
             //GetComponent<Animator>().enabled = false;
+            cocoHolder.GetChild(0).gameObject.SetActive(false);
+            body.SetActive(true);
+            anim = body.GetComponent<Animator>();
+            anim.enabled = false;
             GetComponent<NavMeshAgent>().enabled = false;
             GetComponent<NavMeshObstacle>().enabled = false;
             enabled = false;
@@ -44,17 +50,13 @@ public class CoconutPetBehavior : MonoBehaviour
 		}
 
         //create a LOOK kiddo
-        cocoHolder = transform.GetChild(0);
         int bodyOptions = cocoHolder.childCount;
-        for(int i = 0; i < bodyOptions; i++)
-		{
-
-		}
-        int randBody = Random.Range(0, bodyOptions);
+        bodyIndex = Random.Range(0, bodyOptions);
         cocoHolder.GetChild(0).gameObject.SetActive(false);
-        body = cocoHolder.GetChild(randBody).gameObject;
+        body = cocoHolder.GetChild(bodyIndex).gameObject;
         body.SetActive(true);
         anim = body.GetComponent<Animator>();
+        
 
         player = GameManager.Instance.GetPlayer(0);
         playerTrans = GameManager.Instance.GetPlayerTrans(0);

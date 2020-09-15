@@ -8,7 +8,6 @@ public class Level2Manager : LevelManager
 {
 	[Header("World Stuff")]
 	[SerializeField] List<DoorScript> doors;
-	[SerializeField] Canvas playerUI, talkUI;
 
 	void Awake()
 	{
@@ -27,6 +26,13 @@ public class Level2Manager : LevelManager
 	public override void LoadLevel()
 	{
 		//TODO: load the level
+
+		throw new NotImplementedException();
+	}
+
+	public override void SaveLevel()
+	{
+
 
 		throw new NotImplementedException();
 	}

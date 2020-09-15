@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject uiHud;
 
     [SerializeField] GameObject playerSelection;
+
+    private bool music = true;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +26,13 @@ public class MenuManager : MonoBehaviour
 	{
         playerSelection.SetActive(false);
     }
-    public void StartGame(string scene)
+    public void StartSingleGame(string scene)
 	{
-        SceneLoader.Instance.LoadScene(scene);
+        SceneLoader.Instance.StartGame(scene, 1);
+	}
+    public void StartMultiGame(string scene)
+	{
+        SceneLoader.Instance.StartGame(scene, 2);
 	}
 
     public void NextLevel()
@@ -35,11 +40,17 @@ public class MenuManager : MonoBehaviour
         SceneLoader.Instance.NextLevel();
     }
 
-    public void LoadGame(string scene)
+    public void LoadSinglePlayerGame(string scene)
 	{
-        SceneLoader.Instance.loadData = true;
+        SceneLoader.Instance.loadSingleData = true;
         SceneLoader.Instance.LoadScene(scene);
     }
+    public void LoadMultiPlayerGame(string scene)
+    {
+        SceneLoader.Instance.loadMultiData = true;
+        SceneLoader.Instance.LoadScene(scene);
+    }
+
 
     public void Pause()
 	{
@@ -81,5 +92,18 @@ public class MenuManager : MonoBehaviour
 	{
         SceneLoader.Instance.Reset();
         SceneLoader.Instance.LoadScene("Menu");
+	}
+
+    public void ToggleMusic()
+	{
+        music = !music;
+        if (music)
+        {
+            AudioManager.Instance.Play("MenuMusic");
+        }
+        else
+        {
+            AudioManager.Instance.Stop("MenuMusic");
+        }
 	}
 }

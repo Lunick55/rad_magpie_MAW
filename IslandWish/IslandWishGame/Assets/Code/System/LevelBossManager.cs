@@ -31,6 +31,13 @@ public class LevelBossManager : LevelManager
 		throw new NotImplementedException();
 	}
 
+	public override void SaveLevel()
+	{
+
+
+		throw new NotImplementedException();
+	}
+
 	private void Update()
 	{
 

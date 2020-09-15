@@ -6,6 +6,8 @@ using System;
 
 public class Level1Manager : LevelManager
 {
+	public bool levelSkip = false;
+
 	[Header("World Stuff")]
 	[SerializeField] GameObject fire;
 	[SerializeField] GameObject fireParticles;
@@ -16,7 +18,9 @@ public class Level1Manager : LevelManager
 	[SerializeField] GameObject ghost;
 	private bool runGhost;
 	[SerializeField] List<string> ghostTalk;
-	[SerializeField] List<string> ghostAudioNames;
+	[SerializeField] List<AudioClip> ghostAudio;
+	[SerializeField] AudioClip ghostMusic;
+	[SerializeField] AudioClip normalMusic;
 	private int ghostTalkIndex = 0;
 
 	void Awake()
@@ -52,6 +56,13 @@ public class Level1Manager : LevelManager
 	public override void LoadLevel()
 	{
 		//TODO: load the level
+
+		throw new NotImplementedException();
+	}
+
+	public override void SaveLevel()
+	{
+
 
 		throw new NotImplementedException();
 	}
@@ -95,7 +106,11 @@ public class Level1Manager : LevelManager
 
 			narrationUI.gameObject.SetActive(true);
 			text.text = ghostTalk[ghostTalkIndex];
-			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+			AudioManager.Instance.Stop("MenuMusic");
+			AudioManager.Instance.SetClip("MenuMusic", ghostMusic);
+			AudioManager.Instance.Play("MenuMusic");
+			AudioManager.Instance.SetClip("Narration", ghostAudio[ghostTalkIndex]);
+			AudioManager.Instance.Play("Narration");
 
 			newGame = false;
 		}
@@ -105,7 +120,7 @@ public class Level1Manager : LevelManager
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			AudioManager.Instance.Stop(ghostAudioNames[ghostTalkIndex]);
+			AudioManager.Instance.Stop("Narration");
 			if (++ghostTalkIndex >= ghostTalk.Count)
 			{
 				runGhost = false;
@@ -124,7 +139,8 @@ public class Level1Manager : LevelManager
 			}
 
 			text.text = ghostTalk[ghostTalkIndex];
-			AudioManager.Instance.Play(ghostAudioNames[ghostTalkIndex]);
+			AudioManager.Instance.SetClip("Narration", ghostAudio[ghostTalkIndex]);
+			AudioManager.Instance.Play("Narration");
 		}
 	}
 
@@ -132,14 +148,16 @@ public class Level1Manager : LevelManager
 	{
 		ghost.SetActive(false);
 
-
 		playerUI.gameObject.SetActive(true);
 
+		AudioManager.Instance.Stop("MenuMusic");
+		AudioManager.Instance.SetClip("MenuMusic", normalMusic);
+		AudioManager.Instance.Play("MenuMusic");
 	}
 
 	public override void ExitLevel()
 	{
-		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count)
+		if ((CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count) || levelSkip)
 		{
 			//go to next level
 			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);
@@ -148,19 +166,25 @@ public class Level1Manager : LevelManager
 		}
 
 	}
-}
 
-//for later
-[Serializable]
-public class Level1Data
-{
-	public Level1Data(Level1Manager level)
+	//for later
+	[Serializable]
+	public class Level1Data : LevelData
 	{
-		newGame = level.newGame;
+		public Level1Data(Level1Manager level)
+		{
+			newGame = level.newGame;
 
-		
+			openDoors = new bool[level.doors.Count];
+			for (int i = 0; i < openDoors.Length; i++)
+			{
+				openDoors[i] = level.doors[i].IsLocked();
+			}
+
+		}
+
+		public bool newGame;
 	}
-
-	public bool newGame;
-	public bool[] openDoors;
 }
+
+

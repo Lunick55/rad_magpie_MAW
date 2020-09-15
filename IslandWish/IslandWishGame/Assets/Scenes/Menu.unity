@@ -737,11 +737,22 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 384817098}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2065123655}
+        m_MethodName: StartMultiGame
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PrologueTest
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &384817098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2520,7 +2531,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2065123655}
-        m_MethodName: StartGame
+        m_MethodName: StartSingleGame
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2668,7 +2679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
-  optionsMenu: {fileID: 0}
   uiHud: {fileID: 0}
   playerSelection: {fileID: 741556361}
 --- !u!114 &2065123656

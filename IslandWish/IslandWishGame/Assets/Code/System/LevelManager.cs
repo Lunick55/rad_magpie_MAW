@@ -18,6 +18,7 @@ public abstract class LevelManager : BaseSingleton<LevelManager>
 	[SerializeField] public TextMeshProUGUI text;
 
 	public abstract void LoadLevel();
+	public abstract void SaveLevel();
 
 	public abstract void ExitLevel();
 
@@ -43,13 +44,11 @@ public abstract class LevelManager : BaseSingleton<LevelManager>
 [Serializable]
 public abstract class LevelData
 {
-	public LevelData(LevelManager level)
-	{
-
-
-	}
-
-	public bool newGame;
 	public bool[] openDoors;
+	public bool[] collectedKeys;
+	public int[] collectedKeysID; // for the inventory, if you've got any keys on you
 	public bool[] completeNarrations;
+	public bool[] enemiesDead;
+	public float[] checkpointPosition;
+	public bool[] coconutsSaved;
 }

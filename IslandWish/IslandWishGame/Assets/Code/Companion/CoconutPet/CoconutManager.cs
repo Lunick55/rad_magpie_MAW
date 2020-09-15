@@ -10,15 +10,17 @@ public class CoconutData
         name = newName; 
     }
 
-    public CoconutData(string newName, GameObject newAccessory)
+    public CoconutData(string newName, int newAccessory, int newBody)
 	{
         name = newName;
-        accessory = newAccessory;
+        accessoryIndex = newAccessory;
+        bodyIndex = newBody;
 	}
 
     public string name;
     public bool isSaved = false;
-    public GameObject accessory;
+    public int accessoryIndex;
+    public int bodyIndex;
 }
 
 [System.Serializable]
@@ -34,12 +36,14 @@ public class CoconutSaveData
 		{
 			name[i] = coconuts[i].name;
 			isSaved[i] = coconuts[i].isSaved;
-            accessoryID[i] = CoconutManager.Instance.cocoAttach.GetIDFromAccessory(coconuts[i].accessory);
+            bodyID[i] = coconuts[i].bodyIndex;
+            accessoryID[i] = coconuts[i].accessoryIndex;
 		}
 	}
 
     public string[] name;
     public bool[] isSaved;
+    public int[] bodyID;
     public int[] accessoryID;
 }
 

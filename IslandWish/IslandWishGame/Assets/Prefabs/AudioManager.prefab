@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1640170954318273155
+--- !u!1 &1087909793216849248
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1640170954318273153}
-  - component: {fileID: 1640170954318273154}
+  - component: {fileID: 1087909793216849250}
+  - component: {fileID: 1087909793216849249}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1640170954318273153
+--- !u!4 &1087909793216849250
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1640170954318273155}
+  m_GameObject: {fileID: 1087909793216849248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 227.2171, y: 13.10169, z: -366.82126}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1640170954318273154
+--- !u!114 &1087909793216849249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1640170954318273155}
+  m_GameObject: {fileID: 1087909793216849248}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5b7ad10c6ba9ba4c8a1b07d1814a3dc, type: 3}
@@ -57,97 +57,193 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: MenuMusic
-    clip: {fileID: 8300000, guid: e861f421335bd144599988b8dec402cf, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: e270291851eca8e4b9a9a6a0ab4b48f9, type: 3}
+    volume: 0.23
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: PCDash
-    clip: {fileID: 8300000, guid: 65c9ba1dcc7dcec42a3af32409b99c63, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 184d84a97dc1b3f448d0480174a9e809, type: 3}
+    volume: 0.47
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: PCCageHit
-    clip: {fileID: 8300000, guid: 7edd3a03b83001f48b2909205f81931e, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: fed24b7b5c832244891e5f260247f5b0, type: 3}
+    volume: 0.73
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: ShieldHit
-    clip: {fileID: 8300000, guid: 2a2f1a2ddc320904d9ebeb906e0b91c4, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 4dd01c2122c4ec14b80d95c9df347e40, type: 3}
+    volume: 0.89
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: ShieldBreak
-    clip: {fileID: 8300000, guid: 334876741cf3c4f4a9aaff4a4b4aedaf, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 951e197f1e0e8a140beb6d39e2abab90, type: 3}
+    volume: 0.76
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: ShieldReady
-    clip: {fileID: 8300000, guid: 1123575d2d1935043abe238fa62a2a3c, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: f4a9cc93ea398354ba1e03043a9990b8, type: 3}
+    volume: 0.66
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SlingHit
-    clip: {fileID: 8300000, guid: ae38fce829892c84e8e53f556681100a, type: 3}
+    clip: {fileID: 8300000, guid: 0126dae60e7140844ba0e9aa785b6acf, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SlingshotRock
-    clip: {fileID: 8300000, guid: b8dcc981c4ca7bd4dbc0b13e4e46d227, type: 3}
+    clip: {fileID: 8300000, guid: 65691ba28e600004ea9c45dcdcd30a8a, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SlingshotTree
-    clip: {fileID: 8300000, guid: 3463be64d8ec11f4696681f432741f3b, type: 3}
+    clip: {fileID: 8300000, guid: ae4d30229147e8a46b5039df8472c366, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SlingshotRelease
-    clip: {fileID: 8300000, guid: ad51e9ac15fb7a34b86256fd678526d1, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 3c6aa8332ee58cd44a087ce346c19a5c, type: 3}
+    volume: 0.47
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SlingshotPull
-    clip: {fileID: 8300000, guid: 0d469c137322c7f4ca1222af3bd9fcc7, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 1a3e726d78f74ac43a4362c9b50c2cff, type: 3}
+    volume: 0.38
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SpearHit
-    clip: {fileID: 8300000, guid: a23afc5d61a8aa64b9d75a89eb9a528e, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 1277452d1d8e86349b555db612fc8d96, type: 3}
+    volume: 0.25
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SpearRock
-    clip: {fileID: 8300000, guid: d5d66f28caef250498abf9599e5be1f9, type: 3}
+    clip: {fileID: 8300000, guid: 0089e224d1553f04d8f8661f7fcf9457, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SpearTree
-    clip: {fileID: 8300000, guid: 6dd26681612c9ec428fa645cc539ac55, type: 3}
+    clip: {fileID: 8300000, guid: 617e2c26e0c153349b81eb6afb6c6d75, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SwingSpear
-    clip: {fileID: 8300000, guid: e4e5092cdd33dac44b047f9fc32d5eaf, type: 3}
+    clip: {fileID: 8300000, guid: 035095d709c49e14cbaa481378b7297f, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: PCWalking
-    clip: {fileID: 8300000, guid: 1dfd2cf51b5b2e84583bf7f70626ad76, type: 3}
+    clip: {fileID: 8300000, guid: 79a64e3ca72330a4db4ee7d068b6122b, type: 3}
+    volume: 0.17
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperAttack
+    clip: {fileID: 8300000, guid: 3f2b3dce351d6794289beb663eb4bcc8, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperDamaged
+    clip: {fileID: 8300000, guid: 93291dbcf6ef43c4f9611a24872d4bb6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperDeath
+    clip: {fileID: 8300000, guid: 9bef80cf66dd18f47a32151aaf0f4ce9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CoconapperDualAttack
+    clip: {fileID: 8300000, guid: 0a7b527ce04813b4498b2ec32baf38f0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PelletAttack
+    clip: {fileID: 8300000, guid: 7feba5cf31a27ac40822d0b42c2a7fd0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PelletDamaged
+    clip: {fileID: 8300000, guid: 168182a2f3fc531489d4b7ad87844482, type: 3}
+    volume: 0.68
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PelletDeath
+    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    volume: 0.62
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WolfDeerAttack
+    clip: {fileID: 8300000, guid: 21b715f590d80ff4e8cf5b55096a5596, type: 3}
+    volume: 0.85
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WolfDeerDamaged
+    clip: {fileID: 8300000, guid: 1b156de3aee276a4bac8ef981feac7aa, type: 3}
+    volume: 0.85
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WolfDeerDeath
+    clip: {fileID: 8300000, guid: a04d3d1a28e96654695f1f54147d2de3, type: 3}
+    volume: 0.85
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BunnyBirdAttack
+    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BunnyBirdDamaged
+    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    volume: 0.68
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BunnyBirdDeath
+    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    volume: 0.62
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Pickup
+    clip: {fileID: 8300000, guid: 3a4ead50f414d854ba81d8ef466200df, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Door
+    clip: {fileID: 8300000, guid: 0647c13da23f0ca419ce0538d81930fc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Narration
+    clip: {fileID: 8300000, guid: 0647c13da23f0ca419ce0538d81930fc, type: 3}
     volume: 1
     pitch: 1
     loop: 0

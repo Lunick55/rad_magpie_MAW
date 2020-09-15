@@ -291,10 +291,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517c8e90ba5e4a646923acca523426b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cocoHolder: {fileID: 3513703391864987888}
+  body: {fileID: 0}
+  bodyIndex: 0
   accessory: {fileID: 0}
+  accessoryIndex: 0
   cage: {fileID: 0}
   hide: 0
-  anim: {fileID: 4827938887598338396}
   wanderRange: 4
   wanderHeight: 1
   findRange: 1

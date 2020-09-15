@@ -92,8 +92,8 @@ public class Movement : MonoBehaviour
 
 				if ((Input.GetKey(KeyCode.Space) || Input.GetButton("Dash_P" + player.stats.playerNumber)) && !dashing && inputDir != Vector3.zero)
 				{
-					print("DASH");
 					AudioManager.Instance.Play("PCDash");
+					anim.SetTrigger("Dash");
 
 					dashing = true;
 					acceptInput = false;

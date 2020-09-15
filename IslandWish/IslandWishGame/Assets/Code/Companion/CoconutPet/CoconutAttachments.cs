@@ -28,23 +28,23 @@ public class CoconutAttachments : ScriptableObject
         return -1;
     }
 
-    public GameObject GetAccessoryFromID(int ID)
-	{
-        if(attachments.Count <= ID)
-		{
-            return attachments[ID];
-        }
+ //   public GameObject GetAccessoryFromID(int ID)
+	//{
+ //       if(attachments.Count <= ID)
+	//	{
+ //           return attachments[ID];
+ //       }
 
-        return null;
-	}
+ //       return null;
+	//}
 
-    public GameObject GetBodyFromID(int ID)
-	{
-        if(bodies.Count <= ID)
-		{
-            return bodies[ID];
-        }
+ //   public GameObject GetBodyFromID(int ID)
+	//{
+ //       if(bodies.Count <= ID)
+	//	{
+ //           return bodies[ID];
+ //       }
 
-        return null;
-	}
+ //       return null;
+	//}
 }
