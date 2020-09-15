@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject uiHud;
 
     [SerializeField] GameObject playerSelection;
 
@@ -56,12 +55,12 @@ public class MenuManager : MonoBehaviour
 	{
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
-        uiHud.SetActive(false);
 
         for(int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 		{
-            GameManager.Instance.GetPlayer(0).SheathWeapons();
-            GameManager.Instance.GetPlayer(0).canMove = false;
+            GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(false);
+            GameManager.Instance.GetPlayer(i).SheathWeapons();
+            GameManager.Instance.GetPlayer(i).canMove = false;
         }
     }
 
@@ -69,11 +68,14 @@ public class MenuManager : MonoBehaviour
 	{
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
-        uiHud.SetActive(true);
         for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
         {
-            GameManager.Instance.GetPlayer(0).DrawWeapons();
-            GameManager.Instance.GetPlayer(0).canMove = true;
+            GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(false);
+            if (GameManager.Instance.GetPlayer(i).armed)
+            {
+                GameManager.Instance.GetPlayer(i).DrawWeapons();
+            }
+            GameManager.Instance.GetPlayer(i).canMove = true;
         }
     }
 
