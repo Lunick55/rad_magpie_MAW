@@ -10,11 +10,23 @@ public class GameManager : BaseSingleton<GameManager>
     [HideInInspector] List<Movement> playersMove;
     [HideInInspector] List<Transform> playersTrans;
 
+    [SerializeField] GameObject singlePlayerUI;
+    [SerializeField] GameObject coopUI;
+    [SerializeField] List<Camera> cameras;
+    [SerializeField] List<HUDScript> huds;
+
     [SerializeField] List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
 
     //do i even like this?
     [SerializeField] MenuManager menuManager;
+
+    [SerializeField] PlayersCount debugPlayersCount;
+	public enum PlayersCount
+	{
+        SINGLE = 1,
+        COOP = 2
+    }
 
 	// Start is called before the first frame update
 	void Awake()
@@ -31,7 +43,7 @@ public class GameManager : BaseSingleton<GameManager>
             Debug.Log("Fill out the Player field");
         }
         else
-		{
+        {
             playersTrans = new List<Transform>(players.Count);
             playersMove = new List<Movement>(players.Count);
             for (int i = 0; i < players.Count; i++)
@@ -39,9 +51,76 @@ public class GameManager : BaseSingleton<GameManager>
                 playersTrans.Add(players[i].GetComponent<Transform>());
                 playersMove.Add(players[i].GetComponent<Movement>());
             }
+
+            int count = SceneLoader.Instance.playerCount;
+            if (count == 0)
+			{
+                SceneLoader.Instance.playerCount = count = (int)debugPlayersCount;
+			}
+            if (count == 1)
+            {
+                //setup player 1 UI
+                cameras[0].gameObject.SetActive(true);                
+                cameras[1].gameObject.SetActive(false);
+
+                cameras[0].rect = new Rect(0.0f, 0.0f, 1f, 1f);
+
+                players[0].hud = huds[0];
+                players[0].gameObject.SetActive(true);
+                players[1].gameObject.SetActive(false);
+
+                singlePlayerUI.SetActive(true);
+                coopUI.SetActive(false);
+            }
+            else
+			{
+                //setup player 2 UI
+                cameras[0].gameObject.SetActive(true);
+                cameras[1].gameObject.SetActive(true);
+
+                cameras[0].rect = new Rect(0.0f, 0.0f, 0.5f, 1f);
+                cameras[1].rect = new Rect(0.5f, 0.0f, 0.5f, 1f);
+
+                players[0].hud = huds[1];
+                players[1].hud = huds[2];
+                players[0].gameObject.SetActive(true);
+                players[1].gameObject.SetActive(true);
+
+                singlePlayerUI.SetActive(false);
+                coopUI.SetActive(true);
+            }
         }
 
         LoadGame();
+    }
+
+    public void EnableHud()
+	{
+        int count = SceneLoader.Instance.playerCount;
+        if (count == 1)
+        {
+            singlePlayerUI.SetActive(true);
+            coopUI.SetActive(false);
+        }
+        else
+        {
+            singlePlayerUI.SetActive(false);
+            coopUI.SetActive(true);
+        }
+    }
+    public void DisableHud()
+	{
+        int count = SceneLoader.Instance.playerCount;
+        if (count == 1)
+        {
+            singlePlayerUI.SetActive(false);
+            coopUI.SetActive(false);
+        }
+        else
+        {
+            singlePlayerUI.SetActive(false);
+            coopUI.SetActive(false);
+        }
     }
 
     public void LoadGame()
@@ -60,7 +139,10 @@ public class GameManager : BaseSingleton<GameManager>
         }
         else
         {
-            players[0].currentHealth = players[0].stats.health;
+            for (int i = 0; i < GetPlayerCount(); i++)
+            {
+                players[i].currentHealth = players[i].stats.health;
+            }
         }
     }
 
@@ -88,7 +170,7 @@ public class GameManager : BaseSingleton<GameManager>
 	}
     public int GetPlayerCount()
 	{
-        return players.Count;
+        return SceneLoader.Instance.playerCount;
 	}
 
     public int GetClosestPlayer(Vector3 point, out Transform closestTrans)

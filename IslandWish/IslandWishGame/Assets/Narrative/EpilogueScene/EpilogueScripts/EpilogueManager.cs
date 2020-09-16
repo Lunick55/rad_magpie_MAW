@@ -26,7 +26,7 @@ public class EpilogueManager : MonoBehaviour
 
     void UpdateClicks()
     {
-        if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit"))
         {
             ChangeText();
         }

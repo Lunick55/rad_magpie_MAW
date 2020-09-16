@@ -14,7 +14,7 @@ public abstract class LevelManager : BaseSingleton<LevelManager>
 	[Header("The Movie Stuff")]
 	[SerializeField] Animator anim;
 	[SerializeField] float transitionTime = 1f;
-	[SerializeField] public Canvas playerUI, narrationUI;
+	[SerializeField] public Canvas narrationUI;
 	[SerializeField] public TextMeshProUGUI text;
 
 	public abstract void LoadLevel();

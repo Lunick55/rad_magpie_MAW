@@ -183,8 +183,8 @@ public class WolfDeerBehavior : EnemyBehavior
 
     void EnableObstacle()
     {
-        obstacle.enabled = true;
         agent.enabled = false;
+        obstacle.enabled = true;
     }
 
     private bool IsFacingPlayer()

@@ -2679,7 +2679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
-  uiHud: {fileID: 0}
   playerSelection: {fileID: 741556361}
 --- !u!114 &2065123656
 MonoBehaviour:

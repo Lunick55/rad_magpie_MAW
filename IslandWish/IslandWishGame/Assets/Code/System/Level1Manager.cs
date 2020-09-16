@@ -88,7 +88,7 @@ public class Level1Manager : LevelManager
 			GameManager.Instance.GetPlayer(i).canMove = false;
 		}
 
-		playerUI.gameObject.SetActive(false);
+		GameManager.Instance.DisableHud();
 
 		StartCoroutine(MovieTransitionStart(ActivateGhostScene));
 	}
@@ -118,7 +118,7 @@ public class Level1Manager : LevelManager
 
 	public void RunGhostScene()
 	{
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
 		{
 			AudioManager.Instance.Stop("Narration");
 			if (++ghostTalkIndex >= ghostTalk.Count)
@@ -148,7 +148,7 @@ public class Level1Manager : LevelManager
 	{
 		ghost.SetActive(false);
 
-		playerUI.gameObject.SetActive(true);
+		GameManager.Instance.EnableHud();
 
 		AudioManager.Instance.Stop("MenuMusic");
 		AudioManager.Instance.SetClip("MenuMusic", normalMusic);

@@ -16,7 +16,7 @@ public class NarrationObject : MonoBehaviour
 	// Update is called once per frame
 	protected void Update()
     {
-		if (Input.GetKeyDown(KeyCode.Space) && canNarrate)
+		if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit")) && canNarrate)
 		{
 			AudioManager.Instance.Stop(audioChannelName);
 			if (++narrationIndex >= narrationAudio.Count)
@@ -49,7 +49,7 @@ public class NarrationObject : MonoBehaviour
 			GameManager.Instance.GetPlayer(i).canAttack = false;
 		}
 
-		LevelManager.Instance.playerUI.gameObject.SetActive(false);
+		GameManager.Instance.DisableHud();
 
 		StartCoroutine(LevelManager.Instance.MovieTransitionStart(StartNarration));
 	}
@@ -64,7 +64,7 @@ public class NarrationObject : MonoBehaviour
 	}
 	protected void EndNarration()
 	{
-		LevelManager.Instance.playerUI.gameObject.SetActive(true);
+		GameManager.Instance.EnableHud();
 		complete = true;
 	}
 

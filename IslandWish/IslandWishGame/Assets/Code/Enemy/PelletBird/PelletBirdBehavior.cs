@@ -167,8 +167,8 @@ public class PelletBirdBehavior : EnemyBehavior
 
     void EnableObstacle()
     {
-        obstacle.enabled = true;
         agent.enabled = false;
+        obstacle.enabled = true;
     }
 
     void RotateTowardsPlayer()

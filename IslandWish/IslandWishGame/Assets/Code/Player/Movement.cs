@@ -63,7 +63,7 @@ public class Movement : MonoBehaviour
 			//apply speed
 			if (acceptInput)
 			{
-				inputDir = new Vector3(Input.GetAxisRaw("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxisRaw("Vertical_P" + player.stats.playerNumber));
+				inputDir = new Vector3(Input.GetAxis("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxis("Vertical_P" + player.stats.playerNumber));
 				//all for them anims baybee
 				//prepare the corrected "forward vector"
 				Vector3 forwardVec = Vector3.forward;

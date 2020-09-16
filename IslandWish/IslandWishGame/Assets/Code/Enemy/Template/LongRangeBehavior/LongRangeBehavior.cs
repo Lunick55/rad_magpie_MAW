@@ -118,11 +118,11 @@ public class LongRangeBehavior : MonoBehaviour
 
     void EnableObstacle()
 	{
-        obstacle.enabled = true;
         agent.enabled = false;
+        obstacle.enabled = true;
     }
 
-	private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "PlayerAttack")
 		{
