@@ -10,8 +10,6 @@ public class HUDScript : MonoBehaviour
     [SerializeField] int playerIndex = 0;
     public GameObject[] uiLives;
     public GameObject[] uiLifeBackgrounds;
-    public GameObject spearImage;
-    public GameObject slingshotImage;
 
     GameObject checkpointManager;
     public Animation anim;
@@ -25,10 +23,6 @@ public class HUDScript : MonoBehaviour
     public TextMeshProUGUI uiSlingerAmmo;
     public TextMeshProUGUI uiShieldHealth;
 
-    private int coconutsRescued = 0;
-    private int slingerAmmo = 0;
-    private int shieldHealth = 0;
-
     [Header("Collectible Stuff")]
     public List<Image> keyImages;
     public List<KeyScript> keys;
@@ -41,25 +35,6 @@ public class HUDScript : MonoBehaviour
         EventManager.instance.AddListener(SetbackPlayer, EventTag.FAILSTATE);
 
         checkpointManager = GameObject.Find("CheckpointManager");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            GainLife();
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            LoseLife();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            ToggleWeapon();
-        }
     }
 
     //can become a full InitUI function as things get added and need to be saved
@@ -182,12 +157,6 @@ public class HUDScript : MonoBehaviour
 	{
         //indicate broken shield somehow
 	}
-
-    public void ToggleWeapon()
-    {
-        spearImage.SetActive(!spearImage.activeSelf);
-        slingshotImage.SetActive(!slingshotImage.activeSelf);
-    }
 
     public void AddKey(KeyScript key)
 	{

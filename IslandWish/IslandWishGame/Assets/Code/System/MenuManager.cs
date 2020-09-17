@@ -82,6 +82,7 @@ public class MenuManager : MonoBehaviour
     public void SaveAndQuit()
 	{
         //save
+        Time.timeScale = 1;
         SceneLoader.Instance.LoadScene("Menu");
     }
 
