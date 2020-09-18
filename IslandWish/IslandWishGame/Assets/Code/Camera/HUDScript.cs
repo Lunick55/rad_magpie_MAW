@@ -139,7 +139,7 @@ public class HUDScript : MonoBehaviour
 
     public void UpdateSlingAmmo(int playerAmmo)
 	{
-        uiSlingerAmmo.text = "Sling Ammo: " + playerAmmo;
+        uiSlingerAmmo.text = "" + playerAmmo;
 	}
 
     //Shield Functions(s)? //might be both an add/remove shield or just an updateShield
