@@ -57,17 +57,11 @@ public class CoconapperBehavior : EnemyBehavior
             anim.SetBool(playerInSight, true);
             EnableAgent();
         }
-
-        if (agent.enabled)
-        {
-            agent.destination = transform.position;
-        }
     }
 
     public void ChasePlayer()
     {
         print("Chase Player");
-        walkingPuffs.SetActive(true);
         //if player is within attack range, stop and attack
         if (GetPlayerDistanceSquared() < (attackRange * attackRange))
         {
@@ -77,7 +71,6 @@ public class CoconapperBehavior : EnemyBehavior
             if (IsFacingPlayer())
             {
                 anim.SetTrigger(playerInRange);
-                walkingPuffs.SetActive(false);
             }
 
         }
@@ -86,8 +79,7 @@ public class CoconapperBehavior : EnemyBehavior
         {
             canRotate = false;
             anim.SetBool(playerInSight, false);
-            walkingPuffs.SetActive(false);
-            EnableAgent();
+            EnableObstacle();
         }
         else
         {
@@ -171,12 +163,14 @@ public class CoconapperBehavior : EnemyBehavior
     {
         agent.enabled = true;
         obstacle.enabled = false;
+        walkingPuffs.SetActive(true);
     }
 
     public void EnableObstacle()
     {
         agent.enabled = false;
         obstacle.enabled = true;
+        walkingPuffs.SetActive(false);
     }
 
     void RotateTowardsPlayer()
@@ -263,6 +257,7 @@ public class CoconapperBehavior : EnemyBehavior
         }
         isDead = true;
 
+        EnableObstacle();
         modelHolder.gameObject.SetActive(false);
         anim.enabled = false;
         enabled = false;

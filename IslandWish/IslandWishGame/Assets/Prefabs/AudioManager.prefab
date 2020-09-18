@@ -213,19 +213,19 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: BunnyBirdAttack
-    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    clip: {fileID: 8300000, guid: b62978f40c4a02148bc37ce5964fe8d6, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: BunnyBirdDamaged
-    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    clip: {fileID: 8300000, guid: a6f93222e4e101b4aa930cf73744935d, type: 3}
     volume: 0.68
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: BunnyBirdDeath
-    clip: {fileID: 8300000, guid: af381088fc08d5d418f3f2f5c0961c63, type: 3}
+    clip: {fileID: 8300000, guid: 57c00f66bd82b114081846cc2f61df16, type: 3}
     volume: 0.62
     pitch: 1
     loop: 0

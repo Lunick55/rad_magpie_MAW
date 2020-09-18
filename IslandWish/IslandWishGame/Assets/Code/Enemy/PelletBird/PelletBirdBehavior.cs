@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class PelletBirdBehavior : EnemyBehavior
 {
+    [SerializeField] GameObject walkingPuffs;
+    public ParticleSystem shootParticles, featherPoofParticles;
     [SerializeField] GameObject rangedAttack;
 
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
@@ -18,7 +20,6 @@ public class PelletBirdBehavior : EnemyBehavior
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
-        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
@@ -57,8 +58,8 @@ public class PelletBirdBehavior : EnemyBehavior
             return;
         }
 
-        if (agent.enabled)
-            agent.destination = transform.position;
+        //if (agent.enabled)
+            //agent.destination = transform.position;
     }
 
     public void ChasePlayer()
@@ -75,7 +76,7 @@ public class PelletBirdBehavior : EnemyBehavior
         else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             anim.SetTrigger(idle);
-            EnableAgent();
+            EnableObstacle();
             return;
         }
         
@@ -146,11 +147,12 @@ public class PelletBirdBehavior : EnemyBehavior
         print("ATTACK");
         AudioManager.Instance.Play("PelletAttack");
         //instantiate attack, send it out
+        shootParticles.Play();
 
         timer = 0;
         GameObject newRangedAttack = Instantiate(rangedAttack, pelletSpawn.position, transform.rotation);
         newRangedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
-        
+
         newRangedAttack.GetComponent<Rigidbody>().velocity = transform.forward * 8;
     }
 
@@ -163,12 +165,14 @@ public class PelletBirdBehavior : EnemyBehavior
     {
         obstacle.enabled = false;
         agent.enabled = true;
+        walkingPuffs.SetActive(true);
     }
 
     void EnableObstacle()
     {
         agent.enabled = false;
         obstacle.enabled = true;
+        walkingPuffs.SetActive(false);
     }
 
     void RotateTowardsPlayer()
@@ -204,19 +208,12 @@ public class PelletBirdBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.spearDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("PelletDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
 			{
                 AudioManager.Instance.Play("PelletDamaged");
+                featherPoofParticles.Play();
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -225,23 +222,36 @@ public class PelletBirdBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.slingDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("PelletDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
 			{
                 AudioManager.Instance.Play("PelletDamaged");
+                featherPoofParticles.Play();
             }
         }
     }
 
+    IEnumerator Die()
+    {
+        print("Enemy is Dead and You Killed Them You Monster");
+        AudioManager.Instance.Play("PelletBirdDeath");
+        if (aggro)
+        {
+            DeAggro();
+        }
+        isDead = true;
+
+        EnableObstacle();
+        modelHolder.gameObject.SetActive(false);
+        anim.enabled = false;
+        enabled = false;
+        deathPoof.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        gameObject.SetActive(false);
+    }
     private void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR

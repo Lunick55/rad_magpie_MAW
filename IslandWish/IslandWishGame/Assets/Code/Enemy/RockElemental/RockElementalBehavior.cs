@@ -5,8 +5,10 @@ using UnityEngine.AI;
 
 public class RockElementalBehavior : EnemyBehavior
 {
+    [SerializeField] GameObject walkingPoofs;
     [SerializeField] GameObject lobbedAttack;
     [SerializeField] Collider[] smashAttack;
+    [SerializeField] Transform throwSpawn;
 
     [SerializeField] float sightRange = 0, outerRange = 0, innerRange = 0, lobbedAngle = 45;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
@@ -18,7 +20,6 @@ public class RockElementalBehavior : EnemyBehavior
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
-        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
@@ -55,9 +56,6 @@ public class RockElementalBehavior : EnemyBehavior
             canRotate = false;
             return;
         }
-
-        if (agent.enabled)
-            agent.destination = transform.position;
     }
 
     public void ChasePlayer()
@@ -76,7 +74,7 @@ public class RockElementalBehavior : EnemyBehavior
         else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             anim.SetTrigger(idle);
-            EnableAgent();
+            EnableObstacle();
             return;
         }
 
@@ -170,11 +168,11 @@ public class RockElementalBehavior : EnemyBehavior
         timer = 0;
         AudioManager.Instance.Play("RockElementalAttack");
 
-        GameObject newLobbedAttack = Instantiate(lobbedAttack, transform.position, transform.rotation);
+        GameObject newLobbedAttack = Instantiate(lobbedAttack, throwSpawn.position, transform.rotation);
         newLobbedAttack.GetComponent<RangedAttackCollision>().InitDamage(stats.attack, 3);
         Vector3 target = playerTransClosest.position;
 
-        Vector3 targetDir = target - transform.position; // get Target Direction
+        Vector3 targetDir = target - throwSpawn.position; // get Target Direction
         float height = targetDir.y; // get height difference
         targetDir.y = 0; // retain only the horizontal difference
         float dist = targetDir.magnitude; // get horizontal direction
@@ -207,12 +205,14 @@ public class RockElementalBehavior : EnemyBehavior
     {
         obstacle.enabled = false;
         agent.enabled = true;
+        walkingPoofs.SetActive(true);
     }
 
     void EnableObstacle()
     {
         agent.enabled = false;
         obstacle.enabled = true;
+        walkingPoofs.SetActive(false);
     }
 
     void RotateTowardsPlayer()
@@ -248,15 +248,7 @@ public class RockElementalBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.spearDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("RockElementalDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
             {
@@ -269,21 +261,34 @@ public class RockElementalBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.slingDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("RockElementalDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
             {
                 AudioManager.Instance.Play("RockElementalDamaged");
             }
         }
+    }
+
+    IEnumerator Die()
+    {
+        print("Enemy is Dead and You Killed Them You Monster");
+        AudioManager.Instance.Play("RockElementalDeath");
+        if (aggro)
+        {
+            DeAggro();
+        }
+        isDead = true;
+
+        EnableObstacle();
+        modelHolder.gameObject.SetActive(false);
+        anim.enabled = false;
+        enabled = false;
+        deathPoof.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()

@@ -5,12 +5,15 @@ using UnityEngine.AI;
 
 public class WolfDeerBehavior : EnemyBehavior
 {
+    [SerializeField] GameObject walkingPuffs;
     [SerializeField] GameObject hurtbox;
+    [SerializeField] GameObject zoomParticles;
 
     [SerializeField] float outerRange = 0, innerRange = 0, sightRange = 0;
     private string playerTooClose = "PlayerTooClose", playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle", attack = "Attack";
 
     private bool canRotate = false;
+    private bool attacking = false;
 
     [SerializeField] float attackSpeed = 0, attackDistance = 0, safetyTimer = 1;
     Vector3 destination = Vector3.zero;
@@ -20,7 +23,6 @@ public class WolfDeerBehavior : EnemyBehavior
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
-        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
@@ -58,9 +60,6 @@ public class WolfDeerBehavior : EnemyBehavior
             canRotate = false;
             return;
         }
-
-        if (agent.enabled)
-            agent.destination = transform.position;
     }
 
     public void ChasePlayer()
@@ -79,7 +78,7 @@ public class WolfDeerBehavior : EnemyBehavior
         else if (GetPlayerDistanceSquared() > (sightRange * sightRange))
         {
             anim.SetTrigger(idle);
-            EnableAgent();
+            EnableObstacle();
             return;
         }
         else
@@ -148,8 +147,11 @@ public class WolfDeerBehavior : EnemyBehavior
     public void ChargeAttack()
     {
         timer += Time.deltaTime;
+        attacking = true;
+        zoomParticles.SetActive(true);
 
         transform.Translate(Vector3.forward * attackSpeed);
+        hurtbox.SetActive(true);
 
         if ((transform.position - destination).magnitude < 1f || timer > safetyTimer)
         {
@@ -160,6 +162,10 @@ public class WolfDeerBehavior : EnemyBehavior
     public void EndAttack()
     {
         //disable collisions n'stuff
+        zoomParticles.SetActive(false);
+
+        hurtbox.SetActive(true);
+        attacking = false;
         canRotate = true;
     }
 
@@ -179,12 +185,14 @@ public class WolfDeerBehavior : EnemyBehavior
     {
         obstacle.enabled = false;
         agent.enabled = true;
+        walkingPuffs.SetActive(true);
     }
 
     void EnableObstacle()
     {
         agent.enabled = false;
         obstacle.enabled = true;
+        walkingPuffs.SetActive(false);
     }
 
     private bool IsFacingPlayer()
@@ -236,15 +244,7 @@ public class WolfDeerBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.spearDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("WolfDeerDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
             {
@@ -257,28 +257,48 @@ public class WolfDeerBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.slingDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("WolfDeerDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
             {
                 AudioManager.Instance.Play("WolfDeerDamaged");
             }
         }
+        else if(other.tag == "Player" && attacking)
+		{
+            anim.SetTrigger("DoneAttacking");
+        }
+    }
+
+    IEnumerator Die()
+    {
+        print("Enemy is Dead and You Killed Them You Monster");
+        AudioManager.Instance.Play("WolfDeerDeath");
+        if (aggro)
+        {
+            DeAggro();
+        }
+        isDead = true;
+
+        EnableObstacle();
+        modelHolder.gameObject.SetActive(false);
+        anim.enabled = false;
+        enabled = false;
+        deathPoof.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
+        UnityEditor.Handles.color = Color.green;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, sightRange);
+        UnityEditor.Handles.color = Color.yellow;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, outerRange);
+        UnityEditor.Handles.color = Color.red;
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, innerRange);
 
         UnityEditor.Handles.DrawLine(transform.position, transform.position + transform.forward * attackDistance);

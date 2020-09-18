@@ -5,16 +5,17 @@ using UnityEngine.AI;
 
 public class BunnyBirdBehavior : EnemyBehavior
 {
-    [SerializeField] GameObject hitbox;
     [SerializeField] GameObject hurtbox;
+    public ParticleSystem featherPoofParticles;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
     [SerializeField] float attackHeight, attackBuffer;
     private string playerInSight = "PlayerInSight", playerInRange = "PlayerInRange", idle = "Idle";
+    private Transform referenceTrans;
 
     private bool canRotate = false;
     private Vector3 preHuntPos = Vector3.zero;
-    [SerializeField] int recoilTimer;
+    [SerializeField] int restTimer = 0;
     void Start()
     {
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
@@ -30,6 +31,8 @@ public class BunnyBirdBehavior : EnemyBehavior
             agent = transform.parent.GetComponent<NavMeshAgent>();
             obstacle = transform.parent.GetComponent<NavMeshObstacle>();
         }
+
+        referenceTrans = agent.transform;
 
         SceneLinkedSMB<BunnyBirdBehavior>.Initialise(anim, this);
 
@@ -48,12 +51,6 @@ public class BunnyBirdBehavior : EnemyBehavior
         }
     }
 
-	// Update is called once per frame
-	void FixedUpdate()
-    {
-
-    }
-
     public void Idle()
     {
         playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
@@ -68,17 +65,12 @@ public class BunnyBirdBehavior : EnemyBehavior
             EnableAgent();
             return;
         }
-
-        if (agent.enabled)
-        {
-            agent.destination = transform.position;
-        }
     }
 
     public void ChasePlayer()
     {
         //if player is within attack range, stop and attack
-        if (GetPlayerDistanceSquared() < (attackRange * attackRange))
+        if (GetPlayerDistanceSquared() <= (attackRange * attackRange))
         {
             canRotate = true;
             EnableObstacle();
@@ -92,7 +84,7 @@ public class BunnyBirdBehavior : EnemyBehavior
         {
             canRotate = false;
             anim.SetTrigger(idle);
-            EnableAgent();
+            EnableObstacle();
 
             return;
         }
@@ -115,6 +107,7 @@ public class BunnyBirdBehavior : EnemyBehavior
         timer += Time.deltaTime;
         if (timer >= stats.timeBetweenAttacks)
         {
+            timer = 0;
             if (IsFacingPlayer())
             {
                 anim.SetTrigger("Swipe");
@@ -164,26 +157,26 @@ public class BunnyBirdBehavior : EnemyBehavior
         AudioManager.Instance.Play("BunnyBirdAttack");
     }
 
-    public void RecoilMeleeAttack()
+    public void RestMeleeAttack()
 	{
-        timer = 0;
         timer += Time.deltaTime;
-        if(timer >= recoilTimer)
+        if(timer >= restTimer)
 		{
-            anim.SetTrigger("EndRecoil");
+            timer = 0;
+            StartCoroutine(LerpToPos(preHuntPos, 0.15f));
+            anim.SetTrigger("EndRest");
 		}
     }
 
     public void FinishMeleeAttack()
 	{
-        StartCoroutine(LerpToPos(preHuntPos, 0.15f));
         hurtbox.SetActive(false);
 	}
 
     public void EnableAgent()
     {
-        agent.enabled = true;
         obstacle.enabled = false;
+        agent.enabled = true;
     }
 
     public void EnableObstacle()
@@ -245,7 +238,7 @@ public class BunnyBirdBehavior : EnemyBehavior
 
     float GetPlayerDistanceSquared()
     {
-        return (playerTransClosest.position - transform.position).sqrMagnitude;
+        return (playerTransClosest.position - referenceTrans.position).sqrMagnitude;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -256,19 +249,12 @@ public class BunnyBirdBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.spearDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("BunnyBirdDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
             {
                 AudioManager.Instance.Play("BunnyBirdDamaged");
+                featherPoofParticles.Play();
             }
         }
         else if (other.tag == "SlingshotAttack")
@@ -277,21 +263,35 @@ public class BunnyBirdBehavior : EnemyBehavior
             currentHealth -= playerClosest.stats.slingDamage;
             if (currentHealth <= 0)
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("BunnyBirdDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                StartCoroutine(Die());
             }
             else
             {
                 AudioManager.Instance.Play("BunnyBirdDamaged");
+                featherPoofParticles.Play();
             }
         }
+    }
+
+    IEnumerator Die()
+    {
+        print("Enemy is Dead and You Killed Them You Monster");
+        AudioManager.Instance.Play("BunnyBirdDeath");
+        if (aggro)
+        {
+            DeAggro();
+        }
+        isDead = true;
+
+        EnableObstacle();
+        modelHolder.gameObject.SetActive(false);
+        anim.enabled = false;
+        enabled = false;
+        deathPoof.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()

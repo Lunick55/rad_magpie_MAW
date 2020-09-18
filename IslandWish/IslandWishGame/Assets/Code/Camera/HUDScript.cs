@@ -14,12 +14,9 @@ public class HUDScript : MonoBehaviour
     GameObject checkpointManager;
     public Animation anim;
 
-    [Header("Replace These Petra")]
+    [Header("Player UI")]
     //you can change the type to be whatever you want (text object, game object, image?), however you see fit to display the info. 
     //I can set the logic up to better match your vision once you've decided on how the final thing should look.act
-    public List<Image> uiCoconutSad;
-    public List<Image> uiCoconutHappy;
-    public List<Image> uiCoconutAll;
     public TextMeshProUGUI uiSlingerAmmo;
     public TextMeshProUGUI uiShieldHealth;
 
@@ -98,32 +95,7 @@ public class HUDScript : MonoBehaviour
 
     public void UpdateCoconut(int updatedCoconutsRescued)
 	{
-        if (updatedCoconutsRescued < uiCoconutAll.Count)
-        {
 
-            int i = 0;
-            for (; i < updatedCoconutsRescued; i++)
-            {
-                uiCoconutHappy[i].enabled = true;
-                uiCoconutSad[i].enabled = false;
-                uiCoconutAll[i].enabled = false;
-            }
-            for (; i < uiCoconutSad.Count; i++)
-            {
-                uiCoconutHappy[i].enabled = false;
-                uiCoconutSad[i].enabled = true;
-                uiCoconutAll[i].enabled = false;
-            }
-        }
-        else
-		{
-            for (int i = 0; i < updatedCoconutsRescued; i++)
-            {
-                uiCoconutHappy[i].enabled = false;
-                uiCoconutSad[i].enabled = false;
-                uiCoconutAll[i].enabled = true;
-            }
-        }
     }
 
     //Slinger functions
