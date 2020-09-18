@@ -12,7 +12,9 @@ public class EnemyBehavior : MonoBehaviour
     protected Transform playerTransClosest;
     protected int playerIndex = 0;
 
+    [SerializeField] protected Transform modelHolder;
     [SerializeField] protected Animator anim;
+    [SerializeField] protected GameObject deathPoof;
 
     public EnemyStats stats;
     protected int currentHealth;

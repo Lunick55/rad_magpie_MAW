@@ -7,7 +7,6 @@ public class BunnyBirdBehavior : EnemyBehavior
 {
     [SerializeField] GameObject hitbox;
     [SerializeField] GameObject hurtbox;
-    [SerializeField] Transform modelHolder;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
     [SerializeField] float attackHeight, attackBuffer;
