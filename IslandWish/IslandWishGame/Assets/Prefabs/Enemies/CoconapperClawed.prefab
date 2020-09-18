@@ -77,6 +77,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1086910871030849966, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1281986875506468578, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -107,6 +112,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.25237
       objectReference: {fileID: 0}
+    - target: {fileID: 2675807305414171931, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3566712361253238712, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -125,7 +135,12 @@ PrefabInstance:
     - target: {fileID: 3586206478905127263, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
         type: 3}
       propertyPath: m_Name
-      value: Coconapper
+      value: CoconapperClawed
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274794701380203425, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5521369777380004413, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
         type: 3}
@@ -211,6 +226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -3.05266
+      objectReference: {fileID: 0}
+    - target: {fileID: 8311533166371149101, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8374506421580458811, guid: f9f85a6a33727cd46b84ba2ee4a2ecef,
         type: 3}

@@ -12,6 +12,9 @@ public class CoconutPetBehavior : MonoBehaviour
     [HideInInspector] public int accessoryIndex;
     //TODO: maybe also make an ID var to save, that correlates to the position of the child. this way I can just get rid of the cocoData object
 
+    public ParticleSystem beamingParticle;
+    [SerializeField] GameObject walkingPuffs;
+
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
 
@@ -135,6 +138,7 @@ public class CoconutPetBehavior : MonoBehaviour
 
     public void Wander()
     {
+        walkingPuffs.SetActive(true);
         if (GetPlayerDistanceSquared() > (wanderRange * wanderRange)) //if out of wanderRange follow the player directly
         {
             anim.SetTrigger(playerTooFar);
@@ -189,6 +193,7 @@ public class CoconutPetBehavior : MonoBehaviour
 
     public void FollowPlayer()
     {
+        walkingPuffs.SetActive(true);
         if (GetPlayerDistanceSquared() < (wanderRange * wanderRange))                  //if within wanderRange, wander
         {
             anim.SetTrigger(wander);
@@ -219,6 +224,7 @@ public class CoconutPetBehavior : MonoBehaviour
     {
         if ((cage && !cage.isBroken) || hide || player.inCombat)
         {
+            walkingPuffs.SetActive(false);
             EnableObstacle();
 
             if (hide && (GetPlayerDistanceSquared() < (findRange * findRange)))
@@ -270,6 +276,7 @@ public class CoconutPetBehavior : MonoBehaviour
 
     void EnableObstacle()
     {
+        walkingPuffs.SetActive(false);
         agent.enabled = false;
         obstacle.enabled = true;
     }

@@ -9,4 +9,10 @@ public class CoconutPetHideState : SceneLinkedSMB<CoconutPetBehavior>
 		base.OnSLStateNoTransitionUpdate(animator, stateInfo, layerIndex);
 		m_MonoBehaviour.Hide();
 	}
+
+	public override void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		base.OnSLStateExit(animator, stateInfo, layerIndex);
+		m_MonoBehaviour.beamingParticle.Play();
+	}
 }

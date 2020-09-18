@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class CoconapperBehavior : EnemyBehavior
 {
+    [SerializeField] GameObject walkingPuffs;
     [SerializeField] Collider[] hurtbox;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
@@ -17,7 +18,6 @@ public class CoconapperBehavior : EnemyBehavior
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 
-        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
@@ -67,7 +67,7 @@ public class CoconapperBehavior : EnemyBehavior
     public void ChasePlayer()
     {
         print("Chase Player");
-
+        walkingPuffs.SetActive(true);
         //if player is within attack range, stop and attack
         if (GetPlayerDistanceSquared() < (attackRange * attackRange))
         {
@@ -77,6 +77,7 @@ public class CoconapperBehavior : EnemyBehavior
             if (IsFacingPlayer())
             {
                 anim.SetTrigger(playerInRange);
+                walkingPuffs.SetActive(false);
             }
 
         }
@@ -85,6 +86,7 @@ public class CoconapperBehavior : EnemyBehavior
         {
             canRotate = false;
             anim.SetBool(playerInSight, false);
+            walkingPuffs.SetActive(false);
             EnableAgent();
         }
         else
@@ -220,48 +222,55 @@ public class CoconapperBehavior : EnemyBehavior
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MeleeAttack")
+        if (!isDead)
         {
-            AudioManager.Instance.Play("SpearHit");
-            currentHealth -= playerClosest.stats.spearDamage;
-            if (currentHealth <= 0)
+            if (other.tag == "MeleeAttack")
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("CoconapperDeath");
-                if (aggro)
-				{
-                    DeAggro();
-				}
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
-            }
-            else
-			{
-                AudioManager.Instance.Play("CoconapperDamaged");
-            }
-        }
-        else if (other.tag == "SlingshotAttack")
-        {
-            AudioManager.Instance.Play("SlingHit");
-            currentHealth -= playerClosest.stats.slingDamage;
-            if (currentHealth <= 0)
-            {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("CoconapperDeath");
-                if (aggro)
+                AudioManager.Instance.Play("SpearHit");
+                currentHealth -= playerClosest.stats.spearDamage;
+                if (currentHealth <= 0)
                 {
-                    DeAggro();
+                    StartCoroutine(Die());
                 }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                else
+                {
+                    AudioManager.Instance.Play("CoconapperDamaged");
+                }
             }
-            else
-			{
-                AudioManager.Instance.Play("CoconapperDamaged");
+            else if (other.tag == "SlingshotAttack")
+            {
+                AudioManager.Instance.Play("SlingHit");
+                currentHealth -= playerClosest.stats.slingDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("CoconapperDamaged");
+                }
             }
         }
+    }
+
+    IEnumerator Die()
+	{
+        print("Enemy is Dead and You Killed Them You Monster");
+        AudioManager.Instance.Play("CoconapperDeath");
+        if (aggro)
+        {
+            DeAggro();
+        }
+        isDead = true;
+
+        modelHolder.gameObject.SetActive(false);
+        anim.enabled = false;
+        enabled = false;
+        deathPoof.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()

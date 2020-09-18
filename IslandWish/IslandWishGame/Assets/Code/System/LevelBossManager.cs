@@ -8,7 +8,6 @@ public class LevelBossManager : LevelManager
 {
 	[Header("World Stuff")]
 	[SerializeField] List<DoorScript> doors;
-	[SerializeField] Canvas playerUI, talkUI;
 
 	void Awake()
 	{
