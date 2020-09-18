@@ -3677,7 +3677,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 52.3
+  far clip plane: 100
   field of view: 56.357178
   orthographic: 0
   orthographic size: 5
@@ -43098,7 +43098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010708501322, guid: 7a8a5bb6f2e71b143aff5818ec77dbcd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.5
+      value: -25.1
       objectReference: {fileID: 0}
     - target: {fileID: 4000010708501322, guid: 7a8a5bb6f2e71b143aff5818ec77dbcd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -43106,7 +43106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010708501322, guid: 7a8a5bb6f2e71b143aff5818ec77dbcd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 74.7
+      value: 80.2
       objectReference: {fileID: 0}
     - target: {fileID: 4000010708501322, guid: 7a8a5bb6f2e71b143aff5818ec77dbcd, type: 3}
       propertyPath: m_LocalRotation.x
@@ -43913,7 +43913,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: bf6ca00c5208407458a016f3c3b732e9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.993
+      value: 3.82
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: bf6ca00c5208407458a016f3c3b732e9,
         type: 3}
@@ -44002,7 +44002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 0}
   isCollected: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 94b87caac70753a49878fbe13346bbd1, type: 3}
 --- !u!65 &1702985308
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50077,7 +50077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 1864607140}
+  volumeTrigger: {fileID: 247149468}
   volumeLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -50162,7 +50162,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 52.3
+  far clip plane: 100
   field of view: 56.357178
   orthographic: 0
   orthographic size: 5
