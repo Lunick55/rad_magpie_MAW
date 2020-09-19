@@ -540,6 +540,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: bunnybird
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6e64d5b981738eb479621950c2b2798a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2399036896358917257, guid: 6e64d5b981738eb479621950c2b2798a,
         type: 3}
       propertyPath: m_LocalRotation.x

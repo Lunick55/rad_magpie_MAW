@@ -660,6 +660,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: coconapper_wfx
       objectReference: {fileID: 0}
+    - target: {fileID: 3892639855755511410, guid: 9988a0c30b4631f47a2c6b4001823af1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4594520946166565062, guid: 9988a0c30b4631f47a2c6b4001823af1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

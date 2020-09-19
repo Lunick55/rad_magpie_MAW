@@ -209,6 +209,7 @@ public class Movement : MonoBehaviour
 				camRight.Normalize();
 				inputLookDir = camRight * inputLookDir.x + camForward * inputLookDir.z;
 				transform.rotation = Quaternion.LookRotation(inputLookDir, Vector3.up);
+				lookDirection = inputLookDir;
 			}
 		}
 

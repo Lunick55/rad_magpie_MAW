@@ -579,6 +579,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: deerwolf
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 0ffff9caf7249b847902158746dc0ae8,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ffff9caf7249b847902158746dc0ae8, type: 3}
 --- !u!1 &3609937112722513957 stripped
