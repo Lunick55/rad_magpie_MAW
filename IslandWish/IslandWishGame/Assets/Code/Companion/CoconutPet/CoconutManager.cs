@@ -28,6 +28,7 @@ public class CoconutSaveData
 	public CoconutSaveData(List<CoconutData> coconuts)
 	{
 		name = new string[coconuts.Count];
+        bodyID = new int[coconuts.Count];
         accessoryID = new int[coconuts.Count];
 
 		for (int i = 0; i < coconuts.Count; i++)

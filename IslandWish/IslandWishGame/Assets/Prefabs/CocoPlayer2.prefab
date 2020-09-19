@@ -31,7 +31,9 @@ GameObject:
   - component: {fileID: 4299817819853827883}
   - component: {fileID: 4299817819853827882}
   - component: {fileID: 4299817819853827881}
+  - component: {fileID: 3168822182945301081}
   - component: {fileID: 4299817819853827880}
+  - component: {fileID: 8390839857112246397}
   m_Layer: 0
   m_Name: MeleeHitbox
   m_TagString: MeleeAttack
@@ -113,6 +115,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &3168822182945301081
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4299817819853827878}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4299817819853827880
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,14 +136,28 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4299817819853827878}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
+--- !u!114 &8390839857112246397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4299817819853827878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608e58c2665bdf747866f792aa5c75a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 6431897087153070728, guid: 6688c31cbd3d20e49b5f087acaf2e028,
+    type: 3}
 --- !u!1 &6640892912133694437
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +309,8 @@ MonoBehaviour:
     type: 3}
   slingCurrentAmmo: 3
   slingTrans: {fileID: 6336576112444725161}
+  hitParticle: {fileID: 6431897087153070728, guid: 6688c31cbd3d20e49b5f087acaf2e028,
+    type: 3}
   canMove: 1
 --- !u!114 &1574010870126627409
 MonoBehaviour:
@@ -1010,6 +1041,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6741213701960676133}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &7547775090871894788 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3833283813915144225, guid: 190d1cf611bdddf47b3c6013dbf4f1e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 6741213701960676133}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8509512622771624342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6081470830831867213, guid: 190d1cf611bdddf47b3c6013dbf4f1e6,
@@ -1037,12 +1074,6 @@ GameObject:
 --- !u!4 &3024137852048415704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8393161041872431357, guid: 190d1cf611bdddf47b3c6013dbf4f1e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 6741213701960676133}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7547775090871894788 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3833283813915144225, guid: 190d1cf611bdddf47b3c6013dbf4f1e6,
     type: 3}
   m_PrefabInstance: {fileID: 6741213701960676133}
   m_PrefabAsset: {fileID: 0}

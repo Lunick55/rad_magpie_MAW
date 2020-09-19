@@ -161,7 +161,7 @@ public class GameManager : BaseSingleton<GameManager>
 
     public void LoadGame()
 	{
-        if (SceneLoader.Instance.loadSingleData)
+        if (SceneLoader.Instance.loadSingleData || SceneLoader.Instance.loadMultiData)
         {
             SceneLoader.Instance.loadSingleData = false;
 

@@ -8,8 +8,11 @@ public class SlingshotPellet : MonoBehaviour
 
 	private float timer = 0;
 
-	public void InitSlingshot(float newDuration)
+	public GameObject hitParticles;
+
+	public void InitSlingshot(float newDuration, GameObject newHitParticle)
 	{
+		hitParticles = newHitParticle;
 		duration = newDuration;
 	}
 
@@ -26,6 +29,12 @@ public class SlingshotPellet : MonoBehaviour
 	{
 		if (other.tag != "Player")
 		{
+			if (other.tag == "Enemy")
+			{
+				GameObject newHitParticle = Instantiate(hitParticles);
+				newHitParticle.transform.position = transform.position;
+				newHitParticle.GetComponent<ParticleSystem>().Play();
+			}
 			Destroy(gameObject);
 		}
 	}

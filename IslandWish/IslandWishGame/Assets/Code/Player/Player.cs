@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject slingshotBullet;
     [SerializeField] public int slingCurrentAmmo = 1;
     [SerializeField] private Transform slingTrans;
+    [SerializeField] GameObject hitParticle;
 
     public bool canMove = true;
     private bool invincible = false;
@@ -196,7 +197,7 @@ public class Player : MonoBehaviour
         if (slingCurrentAmmo > 0)
         {
             GameObject newSlingshotBullet = Instantiate(slingshotBullet, slingTrans.position, slingTrans.rotation);
-            newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration);
+            newSlingshotBullet.GetComponent<SlingshotPellet>().InitSlingshot(stats.slingDuration, hitParticle);
 
             AudioManager.Instance.Play("SlingshotRelease");
             newSlingshotBullet.GetComponent<Rigidbody>().velocity = transform.forward * stats.slingSpeed;
