@@ -111,6 +111,8 @@ public class GameManager : BaseSingleton<GameManager>
 		{
             narrateComplete.CocosFound();
         }
+
+        huds[0].boatCommand.SetActive(true);
 	}
 
     public void PauseEnemies()

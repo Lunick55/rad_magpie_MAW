@@ -18,7 +18,7 @@ MonoBehaviour:
   iFrameFlashDuration: 0.05
   speed: 8
   spearDamage: 5
-  slingDamage: 2
+  slingDamage: 5
   shieldMaxHealth: 10
   shieldRechargeRate: 2
   slingMaxAmmo: 8

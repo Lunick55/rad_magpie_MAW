@@ -50,6 +50,9 @@ public class BoatScreenManager : MonoBehaviour
             Vector3 spawnPoint = spawnPoints[randomSpawn].position + new Vector3(0, height, 0);
 
             GameObject coco = Instantiate(coconutReference, spawnPoint, Quaternion.identity);
+            Vector3 parentRot = Vector3.zero;
+            parentRot.y = spawnPoints[randomSpawn].eulerAngles.y;
+            coco.transform.eulerAngles = parentRot;
             CoconutPetBehavior cocoBe = coco.GetComponent<CoconutPetBehavior>();
 
             cocoBe.LoadCoconut(cocoData);            

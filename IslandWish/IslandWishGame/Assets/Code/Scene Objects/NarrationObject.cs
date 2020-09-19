@@ -6,8 +6,9 @@ using TMPro;
 public class NarrationObject : MonoBehaviour
 {
 	private int narrationIndex = 0;
+	public bool exitComp = false;
 
-    [SerializeField] protected List<string> narrationText;
+	[SerializeField] protected List<string> narrationText;
     [SerializeField] protected List<AudioClip> narrationAudio;
 	private string audioChannelName = "Narration";
 	protected bool canNarrate = false;
@@ -68,7 +69,10 @@ public class NarrationObject : MonoBehaviour
 	protected void EndNarration()
 	{
 		GameManager.Instance.EnableHud();
-		complete = true;
+		if (exitComp)
+		{
+			LevelManager.Instance.ExitLevel();
+		}
 	}
 
 	//TODO: make this whole class a base, and just override this function for conditions needed
@@ -77,6 +81,7 @@ public class NarrationObject : MonoBehaviour
 		if (other.tag == "Player" && !complete)
 		{
 			StartMovie();
+			complete = true;
 		}
 	}
 }

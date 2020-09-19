@@ -4186,6 +4186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db32d164d3a22c14187ca285df7e63b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exitComp: 0
   narrationText:
   - This path is rough, have no doubt, and the trail is fraught with woe. But to
     save the kingdom and end your quest, to the peak you must go.
@@ -4199,7 +4200,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8024c73d8eba8a34b93a9e845d863d33, type: 3}
   - {fileID: 8300000, guid: ca0b9851ecfc97d4eb41a2abe446f318, type: 3}
   - {fileID: 8300000, guid: cbb75bb737afc1c439541d9c48915e9b, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: a10d61eaee2d56b429bd884d2b019a29, type: 3}
   complete: 0
 --- !u!135 &309619493
 SphereCollider:
@@ -7346,6 +7347,7 @@ MonoBehaviour:
   - {fileID: 1334447932}
   - {fileID: 1287775292}
   menuManager: {fileID: 671772152}
+  narrateComplete: {fileID: 0}
   debugPlayersCount: 1
 --- !u!4 &494927686
 Transform:
@@ -7380,7 +7382,7 @@ MonoBehaviour:
   narrationUI: {fileID: 2143585459}
   text: {fileID: 1535372367}
   doors: []
-  boss: {fileID: 0}
+  boss: {fileID: 4028070629044232523}
 --- !u!1001 &510878977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12424,6 +12426,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9759087e89a37249a155199127207ec, type: 3}
+--- !u!1 &1153762336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: d9759087e89a37249a155199127207ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 1153762335}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1153762337
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153762336}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4691269762944524499, guid: d9759087e89a37249a155199127207ec, type: 3}
 --- !u!1001 &1161690389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13362,6 +13384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db32d164d3a22c14187ca285df7e63b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exitComp: 0
   narrationText:
   - "Who\u2019s this? A foolish hero on my peak. You are but a child, a worm, a pipsqueak."
   - "I have stayed in the shadows my whole miserable life. Wouldn\u2019t you agree
@@ -13369,9 +13392,9 @@ MonoBehaviour:
   - "So take up arms, and say your last prayer. You\u2019ll regret stepping foot
     in the Coconapper\u2019s lair."
   narrationAudio:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 88465d814c7515548a66bde4c8914dd7, type: 3}
+  - {fileID: 8300000, guid: be9aee329b88dae4f99006baf135d5c5, type: 3}
+  - {fileID: 8300000, guid: b07c738efab1ea946ae58cc5d611a6d4, type: 3}
   complete: 0
 --- !u!65 &1292212743
 BoxCollider:
@@ -13381,7 +13404,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292212740}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -53411,7 +53434,7 @@ PrefabInstance:
     - target: {fileID: 3492839441029984368, guid: 61eef913bf8b89b43a9a0c93713e87d7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.191973
+      value: -4.65
       objectReference: {fileID: 0}
     - target: {fileID: 3492839441029984368, guid: 61eef913bf8b89b43a9a0c93713e87d7,
         type: 3}
@@ -53421,7 +53444,7 @@ PrefabInstance:
     - target: {fileID: 3492839441029984368, guid: 61eef913bf8b89b43a9a0c93713e87d7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 57.77
+      value: 51.35
       objectReference: {fileID: 0}
     - target: {fileID: 3492839441029984368, guid: 61eef913bf8b89b43a9a0c93713e87d7,
         type: 3}
@@ -53462,6 +53485,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972575463126415189, guid: 61eef913bf8b89b43a9a0c93713e87d7,
+        type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 242b05a223b071547bef2ea18d596cbd,
+        type: 2}
+    - target: {fileID: 5972575463126415189, guid: 61eef913bf8b89b43a9a0c93713e87d7,
+        type: 3}
+      propertyPath: sightRange
+      value: 13.44
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61eef913bf8b89b43a9a0c93713e87d7, type: 3}

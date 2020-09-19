@@ -10,6 +10,7 @@ public class EpilogueManager : MonoBehaviour
     public GameObject stills;
     public List<AudioClip> narrClips;
     private int narrationIndex = 0;
+    private bool complete = false;
 
     // Start is called before the first frame update
     void Start()
@@ -79,8 +80,9 @@ public class EpilogueManager : MonoBehaviour
             narr.text = "We praise you, young hero, for not giving up the fight. We praise you, dear child, the new Cocoknight.".ToString();
             PlayAudio();
         }
-        else if (epilogueClick >= 9)
+        else if (epilogueClick >= 9 && !complete)
         {
+            complete = true;
             SceneLoader.Instance.LoadScene("CreditsScene");
         }
         epilogueClick++;

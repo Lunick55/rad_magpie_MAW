@@ -250,7 +250,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: CocoRescue
     clip: {fileID: 8300000, guid: e7994639026f33b4788144d95165b6ca, type: 3}
-    volume: 1
+    volume: 0.4
     pitch: 1
     loop: 0
     source: {fileID: 0}

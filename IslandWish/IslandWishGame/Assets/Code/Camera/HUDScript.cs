@@ -23,6 +23,7 @@ public class HUDScript : MonoBehaviour
     public List<KeyScript> keys;
 
     public ParticleSystem hooray;
+    public GameObject boatCommand;
 
     //can become a full InitUI function as things get added and need to be saved
     public void InitLife()

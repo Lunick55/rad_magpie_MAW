@@ -10,7 +10,7 @@ public class PrologueManager : MonoBehaviour
     public GameObject stills;
     public List<AudioClip> narrClips;
     private int narrationIndex = 0;
-
+    private bool complete = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,8 +75,9 @@ public class PrologueManager : MonoBehaviour
             narr.text = "Wait no longer, no ifs, ands, or buts. Venture forth and rescue these poor coconuts.".ToString();
             PlayAudio();
         }
-        else if (prologueClick > 7)
+        else if (prologueClick > 7 && !complete)
         {
+            complete = true;
             narr.text = "".ToString();
             stills.SetActive(false);
             SceneLoader.Instance.LoadScene("Level 1");
