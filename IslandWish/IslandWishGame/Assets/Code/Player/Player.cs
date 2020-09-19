@@ -15,9 +15,10 @@ public class Player : MonoBehaviour
 {
     [Header("Player Info")]
     public PlayerStats stats;
+    [SerializeField] Material playerMat;
     [HideInInspector] public int currentHealth;
     [SerializeField] public Animator anim;
-    public HUDScript hud;
+    [HideInInspector] public HUDScript hud;
     [HideInInspector] public AttackLevel currentAttackLevel = AttackLevel.LEVEL0;
     [SerializeField] GameObject hurtBox;
     public bool canAttack = true;
@@ -53,26 +54,28 @@ public class Player : MonoBehaviour
 
         hurtBox.SetActive(false);
 
-  //      if (SceneLoader.Instance.loadData)
-  //      {
-  //          SceneLoader.Instance.loadData = false;
+        //      if (SceneLoader.Instance.loadData)
+        //      {
+        //          SceneLoader.Instance.loadData = false;
 
-  //          //load all the data calls needed here
-  //          LoadPlayer();
-  //      }
-  //      else
-		//{
-  //          currentHealth = stats.health;
-  //      }
+        //          //load all the data calls needed here
+        //          LoadPlayer();
+        //      }
+        //      else
+        //{
+        //          currentHealth = stats.health;
+        //      }
 
-        if(canAttack)
-		{
+        if (canAttack)
+        {
             DrawWeapons();
-		}
+        }
         else
-		{
+        {
             SheathWeapons();
-		}
+        }
+
+        //playerMat.EnableKeyword("_EMISSION");
 
         shieldAnim = shield.GetComponent<Animator>();
 
@@ -82,6 +85,8 @@ public class Player : MonoBehaviour
         hud.UpdateSlingAmmo(slingCurrentAmmo);
 
         weapons[4].SetActive(false);
+
+        ResetFlash();
     }
 
     // Update is called once per frame
@@ -91,6 +96,11 @@ public class Player : MonoBehaviour
 		{
             Debug.Log("ur dead bruh");
         }
+
+        if(Input.GetKeyDown(KeyCode.K))
+		{
+            FlashHit();
+		}
 
         if (canAttack)
         {
@@ -308,10 +318,24 @@ public class Player : MonoBehaviour
 	{
         invincible = true;
 
+        InvokeRepeating("FlashHit", 0, stats.iFrameFlashTimer);
+
         yield return new WaitForSeconds(stats.iFrameTimer);
+
+        CancelInvoke("FlashHit");
+        ResetFlash();
 
         invincible = false;
 	}
+
+    void FlashHit()
+    {
+        playerMat.SetColor("_Emission", Color.white);
+    }
+    void ResetFlash()
+    {
+        playerMat.SetColor("_Emission", Color.black);
+    }
 
     public void DrawWeapons()
 	{
