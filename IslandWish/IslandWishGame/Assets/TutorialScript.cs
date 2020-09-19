@@ -31,6 +31,7 @@ public class TutorialScript : MonoBehaviour
         if(other.tag == "Player")
         {
             tutorialUI.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }
