@@ -170,6 +170,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: BossDeath
+    clip: {fileID: 8300000, guid: 9bef80cf66dd18f47a32151aaf0f4ce9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: CoconapperDualAttack
     clip: {fileID: 8300000, guid: 0a7b527ce04813b4498b2ec32baf38f0, type: 3}
     volume: 1
@@ -232,6 +238,24 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Pickup
     clip: {fileID: 8300000, guid: 3a4ead50f414d854ba81d8ef466200df, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AmmoPickup
+    clip: {fileID: 8300000, guid: 70aceffa991c95646b0526e43f2172dd, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CocoRescue
+    clip: {fileID: 8300000, guid: e7994639026f33b4788144d95165b6ca, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BreakObject
+    clip: {fileID: 8300000, guid: ca1dc73db29846646afbf82390c5a84d, type: 3}
     volume: 1
     pitch: 1
     loop: 0

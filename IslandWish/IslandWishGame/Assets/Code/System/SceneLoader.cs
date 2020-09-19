@@ -83,7 +83,6 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 		for (int i = 0; i < data.name.Length; i++)
 		{
 			CoconutData coconut = new CoconutData(data.name[i], data.accessoryID[i], data.bodyID[i]);
-			coconut.isSaved = data.isSaved[i];
 
 			coconuts.Add(coconut);
 		}

@@ -8,6 +8,7 @@ public class LevelBossManager : LevelManager
 {
 	[Header("World Stuff")]
 	[SerializeField] List<DoorScript> doors;
+	[SerializeField] EnemyBehavior boss;
 
 	void Awake()
 	{
@@ -26,15 +27,11 @@ public class LevelBossManager : LevelManager
 	public override void LoadLevel()
 	{
 		//TODO: load the level
-
-		throw new NotImplementedException();
 	}
 
 	public override void SaveLevel()
 	{
 
-
-		throw new NotImplementedException();
 	}
 
 	private void Update()
@@ -44,7 +41,7 @@ public class LevelBossManager : LevelManager
 
 	public override void ExitLevel()
 	{
-		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count)
+		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count && boss.isDead)
 		{
 			//go to next level
 			SceneLoader.Instance.AddSavedCoconuts(CoconutManager.Instance.coconutsFreed);

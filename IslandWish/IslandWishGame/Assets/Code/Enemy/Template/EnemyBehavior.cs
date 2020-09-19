@@ -22,4 +22,16 @@ public class EnemyBehavior : MonoBehaviour
     protected float timer = 0;
 
     public bool isDead = false;
+    private float prevAnimSpeed;
+
+    public void Pause()
+	{
+        prevAnimSpeed = anim.speed;
+        anim.speed = 0;
+	}
+
+    public void Resume()
+	{
+        anim.speed = prevAnimSpeed;
+    }
 }

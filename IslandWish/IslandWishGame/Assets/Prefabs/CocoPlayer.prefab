@@ -254,13 +254,12 @@ MonoBehaviour:
   - {fileID: 6592220651009013506}
   - {fileID: 4434573729619481521}
   shield: {fileID: 8440488972000833644}
-  shieldMaxHealth: 100
+  shieldMat: {fileID: 2100000, guid: 2dd6cef697204344aab1c73d0fd40c09, type: 2}
   shieldCurrentHealth: 100
-  shieldRechargeRate: 0.2
   inCombat: 0
   slingshotBullet: {fileID: 5044857425206683539, guid: b09bd56c5456659408c6be64261e4314,
     type: 3}
-  slingCurrentAmmo: 1
+  slingCurrentAmmo: 3
   slingTrans: {fileID: 2226316320957018365}
   canMove: 1
 --- !u!114 &180864101691658529
@@ -281,7 +280,6 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   cc: {fileID: 180864101691658531}
   playerSpeed: 4
-  playerSprintSpeed: 8
   playerJumpSpeed: 5
   playerDashSpeed: 10
   dashDistance: 3

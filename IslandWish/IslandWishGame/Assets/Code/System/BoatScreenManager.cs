@@ -51,8 +51,9 @@ public class BoatScreenManager : MonoBehaviour
 
             GameObject coco = Instantiate(coconutReference, spawnPoint, Quaternion.identity);
             CoconutPetBehavior cocoBe = coco.GetComponent<CoconutPetBehavior>();
-            cocoBe.body = cocoBe.cocoHolder.GetChild(cocoData.bodyIndex).gameObject;
-            //cocoBe.accessory = cocoData.accessory;
+
+            cocoBe.LoadCoconut(cocoData);            
+            
             cocoBe.displayMode = true;
             usedSpawnPoints.Add(spawnPoints[randomSpawn]);
             spawnPoints.RemoveAt(randomSpawn);
@@ -72,8 +73,8 @@ public class BoatScreenManager : MonoBehaviour
 
             GameObject coco = Instantiate(coconutReference, spawnPoint, Quaternion.identity);
             CoconutPetBehavior cocoBe = coco.GetComponent<CoconutPetBehavior>();
-            cocoBe.body = cocoBe.cocoHolder.GetChild(cocoData.bodyIndex).gameObject;
-            //cocoBe.accessory = cocoData.accessory;
+            cocoBe.LoadCoconut(cocoData);
+
             cocoBe.displayMode = true;
             usedSpawnPoints.Add(spawnPoints[randomSpawn]);
             spawnPoints.RemoveAt(randomSpawn);

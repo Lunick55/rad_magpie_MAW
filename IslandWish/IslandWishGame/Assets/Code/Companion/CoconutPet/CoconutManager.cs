@@ -18,7 +18,6 @@ public class CoconutData
 	}
 
     public string name;
-    public bool isSaved = false;
     public int accessoryIndex;
     public int bodyIndex;
 }
@@ -29,20 +28,17 @@ public class CoconutSaveData
 	public CoconutSaveData(List<CoconutData> coconuts)
 	{
 		name = new string[coconuts.Count];
-		isSaved = new bool[coconuts.Count];
         accessoryID = new int[coconuts.Count];
 
 		for (int i = 0; i < coconuts.Count; i++)
 		{
 			name[i] = coconuts[i].name;
-			isSaved[i] = coconuts[i].isSaved;
             bodyID[i] = coconuts[i].bodyIndex;
             accessoryID[i] = coconuts[i].accessoryIndex;
 		}
 	}
 
     public string[] name;
-    public bool[] isSaved;
     public int[] bodyID;
     public int[] accessoryID;
 }
@@ -121,6 +117,13 @@ public class CoconutManager : BaseSingleton<CoconutManager>
             coconutsFreed.Add(newRecruit);
             GameManager.Instance.GetPlayer(0).hud.GainCoconut();
             GameManager.Instance.GetPlayer(0).hud.UpdateCoconut(coconutsFreed.Count);
+            AudioManager.Instance.Play("CocoRescue");
+
+            if(coconutsFreed.Count >= coconuts.Count)
+			{
+                Debug.Log("Level Complete!");
+                GameManager.Instance.CoconutCelebration();
+			}
         }
 	}
 

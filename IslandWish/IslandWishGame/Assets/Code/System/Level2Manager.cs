@@ -27,14 +27,12 @@ public class Level2Manager : LevelManager
 	{
 		//TODO: load the level
 
-		throw new NotImplementedException();
 	}
 
 	public override void SaveLevel()
 	{
 
 
-		throw new NotImplementedException();
 	}
 
 	private void Update()

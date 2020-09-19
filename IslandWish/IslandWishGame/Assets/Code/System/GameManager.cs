@@ -15,7 +15,7 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] List<Camera> cameras;
     [SerializeField] List<HUDScript> huds;
 
-    [SerializeField] List<EnemyBehavior> enemies;
+    [SerializeField] public List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
 
     //do i even like this?
@@ -86,12 +86,40 @@ public class GameManager : BaseSingleton<GameManager>
                 players[0].gameObject.SetActive(true);
                 players[1].gameObject.SetActive(true);
 
+                cameras[0].transform.position = new Vector3(playersTrans[0].position.x + 2.4f, playersTrans[0].position.y + 7f, playersTrans[0].position.z + -2.4f);
+                cameras[0].transform.eulerAngles = new Vector3(56, -45, 0);
+                cameras[1].transform.position = new Vector3(playersTrans[1].position.x + 2.4f, playersTrans[1].position.y + 7f, playersTrans[1].position.z + -2.4f);
+                cameras[1].transform.eulerAngles = new Vector3(56, -45, 0);
+
                 singlePlayerUI.SetActive(false);
                 coopUI.SetActive(true);
             }
         }
 
         LoadGame();
+    }
+
+    public void CoconutCelebration()
+	{
+        foreach(HUDScript hud in huds)
+		{
+            hud.hooray.Play();
+		}
+	}
+
+    public void PauseEnemies()
+	{
+        for(int i = 0; i < enemies.Count; i++)
+		{
+            enemies[i].Pause();
+		}
+	}
+    public void ResumeEnemies()
+	{
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].Resume();
+        }
     }
 
     public void EnableHud()

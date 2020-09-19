@@ -243,32 +243,36 @@ public class BunnyBirdBehavior : EnemyBehavior
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MeleeAttack")
+        if (!isDead)
         {
-            AudioManager.Instance.Play("SpearHit");
-            currentHealth -= playerClosest.stats.spearDamage;
-            if (currentHealth <= 0)
+
+            if (other.tag == "MeleeAttack")
             {
-                StartCoroutine(Die());
+                AudioManager.Instance.Play("SpearHit");
+                currentHealth -= playerClosest.stats.spearDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("BunnyBirdDamaged");
+                    featherPoofParticles.Play();
+                }
             }
-            else
+            else if (other.tag == "SlingshotAttack")
             {
-                AudioManager.Instance.Play("BunnyBirdDamaged");
-                featherPoofParticles.Play();
-            }
-        }
-        else if (other.tag == "SlingshotAttack")
-        {
-            AudioManager.Instance.Play("SlingHit");
-            currentHealth -= playerClosest.stats.slingDamage;
-            if (currentHealth <= 0)
-            {
-                StartCoroutine(Die());
-            }
-            else
-            {
-                AudioManager.Instance.Play("BunnyBirdDamaged");
-                featherPoofParticles.Play();
+                AudioManager.Instance.Play("SlingHit");
+                currentHealth -= playerClosest.stats.slingDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("BunnyBirdDamaged");
+                    featherPoofParticles.Play();
+                }
             }
         }
     }

@@ -6,10 +6,9 @@ using UnityEngine.AI;
 public class CoconutPetBehavior : MonoBehaviour
 {
     public Transform cocoHolder;
-    [HideInInspector] public Transform accessoryHolder;
     public GameObject body;
     [HideInInspector] public int bodyIndex;
-    public GameObject accessory;
+    public CoconutAttachmentReference accessory;
     [HideInInspector] public int accessoryIndex;
     //TODO: maybe also make an ID var to save, that correlates to the position of the child. this way I can just get rid of the cocoData object
 
@@ -22,6 +21,7 @@ public class CoconutPetBehavior : MonoBehaviour
     Transform playerTrans;
     Player player;
     [SerializeField] EnemyCage cage;
+    public bool isSaved = false;
     public bool hide = false;
 
     Animator anim;
@@ -38,10 +38,24 @@ public class CoconutPetBehavior : MonoBehaviour
 
     public bool displayMode = false;
 
+    public void LoadCoconut(CoconutData cocoData)
+	{
+        //load your LOOK kiddo
+        //body look
+        cocoHolder.GetChild(0).gameObject.SetActive(false);
+        body = cocoHolder.GetChild(cocoData.bodyIndex).gameObject;
+        body.SetActive(true);
+        anim = body.GetComponent<Animator>();
+        //accessory look
+        accessory = body.GetComponent<CoconutAttachmentReference>();
+        accessory.SetAttachmentStatus(cocoData.accessoryIndex, true);
+    }
+
     void Start()
     {
         if(displayMode)
 		{
+            isSaved = true;
             //GetComponent<Animator>().enabled = false;
             cocoHolder.GetChild(0).gameObject.SetActive(false);
             body.SetActive(true);
@@ -53,6 +67,11 @@ public class CoconutPetBehavior : MonoBehaviour
             return;
 		}
 
+        if(isSaved)
+		{
+            cage.Break();
+		}
+
         //create a LOOK kiddo
         //body look
         int bodyOptions = cocoHolder.childCount;
@@ -62,12 +81,10 @@ public class CoconutPetBehavior : MonoBehaviour
         body.SetActive(true);
         anim = body.GetComponent<Animator>();
         //accessory look
-        accessoryHolder = body.transform.GetChild(0);
-        int accessoryOptions = accessoryHolder.transform.childCount;
+        accessory = body.GetComponent<CoconutAttachmentReference>();
+        int accessoryOptions = accessory.GetAttachmentCount();
         accessoryIndex = Random.Range(0, accessoryOptions);
-        accessory = accessoryHolder.GetChild(accessoryIndex).gameObject;
-        accessory.SetActive(true);
-
+        accessory.SetAttachmentStatus(accessoryIndex, true);
 
         player = GameManager.Instance.GetPlayer(0);
         playerTrans = GameManager.Instance.GetPlayerTrans(0);
@@ -242,7 +259,7 @@ public class CoconutPetBehavior : MonoBehaviour
 
             return;
         }
-
+        isSaved = true;
 
         if (GetPlayerDistanceSquared() > (wanderRange * wanderRange)) //if out of wanderRange follow the player directly
         {

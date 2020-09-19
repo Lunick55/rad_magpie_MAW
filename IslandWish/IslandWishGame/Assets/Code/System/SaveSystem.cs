@@ -63,11 +63,11 @@ public static class SaveSystem
 		stream.Close();
 	}
 
-	public static PlayerData LoadPlayer()
+	public static PlayerData LoadPlayer(int playerIndex)
 	{
-		string path = Application.persistentDataPath + "/player.coconut";
+		string path = Application.persistentDataPath + "/player" + playerIndex + ".coconut";
 
-		if(File.Exists(path))
+		if (File.Exists(path))
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			FileStream stream = new FileStream(path, FileMode.Open);
@@ -83,8 +83,67 @@ public static class SaveSystem
 			return null;
 		}
 	}
-
 	public static CoconutSaveData LoadCoconuts()
+	{
+		string path = Application.persistentDataPath + string.Format("/coconuts.coconut");
+
+		if (File.Exists(path))
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			CoconutSaveData data = formatter.Deserialize(stream) as CoconutSaveData;
+			stream.Close();
+
+			return data;
+		}
+		else
+		{
+			Debug.LogError("File not found at: " + path);
+			return null;
+		}
+	}
+	public static Level1Manager.Level1Data LoadLevel1()
+	{
+		string path = Application.persistentDataPath + ("/level1.level"); ;
+
+		if (File.Exists(path))
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			Level1Manager.Level1Data data = formatter.Deserialize(stream) as Level1Manager.Level1Data;
+			stream.Close();
+
+			return data;
+		}
+		else
+		{
+			Debug.LogError("File not found at: " + path);
+			return null;
+		}
+	}
+	public static CoconutSaveData LoadLevel2()
+	{
+		string path = Application.persistentDataPath + string.Format("/coconuts.coconut");
+
+		if (File.Exists(path))
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			CoconutSaveData data = formatter.Deserialize(stream) as CoconutSaveData;
+			stream.Close();
+
+			return data;
+		}
+		else
+		{
+			Debug.LogError("File not found at: " + path);
+			return null;
+		}
+	}
+	public static CoconutSaveData LoadBossLevel()
 	{
 		string path = Application.persistentDataPath + string.Format("/coconuts.coconut");
 

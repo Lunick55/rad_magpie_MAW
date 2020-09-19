@@ -129,6 +129,7 @@ public class WolfDeerBehavior : EnemyBehavior
 
         if (IsFacingPlayer())
         {
+            EnableAgent();
             canRotate = false;
             anim.SetTrigger(attack);
         }
@@ -141,6 +142,20 @@ public class WolfDeerBehavior : EnemyBehavior
 
         //TODO: maybe don't fly off the edge. try to math it out with spherecasts or something
         destination = transform.position + transform.forward * attackDistance;
+
+        NavMeshHit navHit;
+
+        //if (NavMesh.SamplePosition(destination, out navHit, 1f, NavMesh.AllAreas))
+        //{
+        //    agent.destination = destination = navHit.position;
+        //}
+        //else
+        //{
+        //    print("Sorry, couldn't find a good place");
+            agent.destination = destination;
+        agent.stoppingDistance = 1f;
+        //}
+
         AudioManager.Instance.Play("WolfDeerAttack");
     }
 
@@ -150,12 +165,14 @@ public class WolfDeerBehavior : EnemyBehavior
         attacking = true;
         zoomParticles.SetActive(true);
 
-        transform.Translate(Vector3.forward * attackSpeed);
+        //transform.Translate(Vector3.forward * (attackSpeed * Time.timeScale * anim.speed));
         hurtbox.SetActive(true);
 
         if ((transform.position - destination).magnitude < 1f || timer > safetyTimer)
         {
             anim.SetTrigger("DoneAttacking");
+            agent.stoppingDistance = outerRange;
+            EnableObstacle();
         }
     }
 
@@ -238,35 +255,39 @@ public class WolfDeerBehavior : EnemyBehavior
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MeleeAttack")
+        if (!isDead)
         {
-            AudioManager.Instance.Play("SpearHit");
-            currentHealth -= playerClosest.stats.spearDamage;
-            if (currentHealth <= 0)
+
+            if (other.tag == "MeleeAttack")
             {
-                StartCoroutine(Die());
+                AudioManager.Instance.Play("SpearHit");
+                currentHealth -= playerClosest.stats.spearDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("WolfDeerDamaged");
+                }
             }
-            else
+            else if (other.tag == "SlingshotAttack")
             {
-                AudioManager.Instance.Play("WolfDeerDamaged");
+                AudioManager.Instance.Play("SlingHit");
+                currentHealth -= playerClosest.stats.slingDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("WolfDeerDamaged");
+                }
             }
-        }
-        else if (other.tag == "SlingshotAttack")
-        {
-            AudioManager.Instance.Play("SlingHit");
-            currentHealth -= playerClosest.stats.slingDamage;
-            if (currentHealth <= 0)
+            else if (other.tag == "Player" && attacking)
             {
-                StartCoroutine(Die());
+                anim.SetTrigger("DoneAttacking");
             }
-            else
-            {
-                AudioManager.Instance.Play("WolfDeerDamaged");
-            }
-        }
-        else if(other.tag == "Player" && attacking)
-		{
-            anim.SetTrigger("DoneAttacking");
         }
     }
 

@@ -8,7 +8,15 @@ public class KeyScript : MonoBehaviour
     public bool isCollected = false;
     public Sprite sprite;
 
-    public void CollectKey(Player player)
+	private void Start()
+	{
+		if(isCollected)
+		{
+            gameObject.SetActive(false);
+        }
+    }
+
+	public void CollectKey(Player player)
 	{
         //door.UnlockLock();
         isCollected = true;

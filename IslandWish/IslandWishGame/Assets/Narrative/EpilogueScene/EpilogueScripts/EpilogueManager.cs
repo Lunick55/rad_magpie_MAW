@@ -81,7 +81,7 @@ public class EpilogueManager : MonoBehaviour
         }
         else if (epilogueClick >= 9)
         {
-            SceneLoader.Instance.LoadScene("Menu");
+            SceneLoader.Instance.LoadScene("CreditsScene");
         }
         epilogueClick++;
     }

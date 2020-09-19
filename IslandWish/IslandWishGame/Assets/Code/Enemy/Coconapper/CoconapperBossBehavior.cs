@@ -5,7 +5,11 @@ using UnityEngine.AI;
 
 public class CoconapperBossBehavior : EnemyBehavior
 {
+    [SerializeField] GameObject walkingPuffs;
     [SerializeField] Collider[] hurtbox;
+    [SerializeField] List<AudioClip> deathSounds;
+    [SerializeField] AudioClip fightSong;
+    [SerializeField] AudioClip levelSong;
 
     [SerializeField] float sightRange = 0, attackRange = 0;
     [SerializeField] float rangedAttackCooldown = 1f;
@@ -52,6 +56,9 @@ public class CoconapperBossBehavior : EnemyBehavior
             playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
             anim.SetBool(playerInSight, true);
             EnableAgent();
+            AudioManager.Instance.Stop("MenuMusic");
+            AudioManager.Instance.SetClip("MenuMusic", fightSong);
+            AudioManager.Instance.Play("MenuMusic");
         }
 
         if (agent.enabled)
@@ -89,7 +96,10 @@ public class CoconapperBossBehavior : EnemyBehavior
         {
             canRotate = false;
             anim.SetBool(playerInSight, false);
-            EnableAgent();
+            EnableObstacle();
+            AudioManager.Instance.Stop("MenuMusic");
+            AudioManager.Instance.SetClip("MenuMusic", levelSong);
+            AudioManager.Instance.Play("MenuMusic");
         }
         else
         {
@@ -192,12 +202,14 @@ public class CoconapperBossBehavior : EnemyBehavior
     {
         agent.enabled = true;
         obstacle.enabled = false;
+        walkingPuffs.SetActive(true);
     }
 
     public void EnableObstacle()
     {
         agent.enabled = false;
         obstacle.enabled = true;
+        walkingPuffs.SetActive(false);
     }
 
     void RotateTowardsPlayer()
@@ -243,48 +255,63 @@ public class CoconapperBossBehavior : EnemyBehavior
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MeleeAttack")
+        if (!isDead)
         {
-            AudioManager.Instance.Play("SpearHit");
-            currentHealth -= playerClosest.stats.spearDamage;
-            if (currentHealth <= 0)
+
+            if (other.tag == "MeleeAttack")
             {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("CoconapperDeath");
-                if (aggro)
+                AudioManager.Instance.Play("SpearHit");
+                currentHealth -= playerClosest.stats.spearDamage;
+                if (currentHealth <= 0)
                 {
-                    DeAggro();
+                    StartCoroutine(Die());
                 }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
+                else
+                {
+                    AudioManager.Instance.Play("CoconapperDamaged");
+                }
             }
-            else
+            else if (other.tag == "SlingshotAttack")
             {
-                AudioManager.Instance.Play("CoconapperDamaged");
+                AudioManager.Instance.Play("SlingHit");
+                currentHealth -= playerClosest.stats.slingDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("CoconapperDamaged");
+                }
             }
         }
-        else if (other.tag == "SlingshotAttack")
+    }
+
+    IEnumerator Die()
+    {
+        print("Enemy is Dead and You Killed Them You Monster");
+        int randNum = Random.Range(0, deathSounds.Count);
+        AudioManager.Instance.SetClip("BossDeath", deathSounds[randNum]);
+        AudioManager.Instance.Play("BossDeath");
+        if (aggro)
         {
-            AudioManager.Instance.Play("SlingHit");
-            currentHealth -= playerClosest.stats.slingDamage;
-            if (currentHealth <= 0)
-            {
-                print("Enemy is Dead and You Killed Them You Monster");
-                AudioManager.Instance.Play("CoconapperDeath");
-                if (aggro)
-                {
-                    DeAggro();
-                }
-                isDead = true;
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
-            }
-            else
-            {
-                AudioManager.Instance.Play("CoconapperDamaged");
-            }
+            DeAggro();
         }
+        isDead = true;
+
+        EnableObstacle();
+        modelHolder.gameObject.SetActive(false);
+        anim.enabled = false;
+        enabled = false;
+        deathPoof.SetActive(true);
+        
+        AudioManager.Instance.Stop("MenuMusic");
+        AudioManager.Instance.SetClip("MenuMusic", levelSong);
+        AudioManager.Instance.Play("MenuMusic");
+
+        yield return new WaitForSeconds(3);
+
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()

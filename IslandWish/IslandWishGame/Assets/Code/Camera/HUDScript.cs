@@ -11,28 +11,18 @@ public class HUDScript : MonoBehaviour
     public GameObject[] uiLives;
     public GameObject[] uiLifeBackgrounds;
 
-    GameObject checkpointManager;
     public Animation anim;
 
     [Header("Player UI")]
     //you can change the type to be whatever you want (text object, game object, image?), however you see fit to display the info. 
     //I can set the logic up to better match your vision once you've decided on how the final thing should look.act
     public TextMeshProUGUI uiSlingerAmmo;
-    public TextMeshProUGUI uiShieldHealth;
 
     [Header("Collectible Stuff")]
     public List<Image> keyImages;
     public List<KeyScript> keys;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //EventManager.instance.AddListener(IncomingDamage, EventTag.DAMAGE);
-        //EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
-        EventManager.instance.AddListener(SetbackPlayer, EventTag.FAILSTATE);
-
-        checkpointManager = GameObject.Find("CheckpointManager");
-    }
+    public ParticleSystem hooray;
 
     //can become a full InitUI function as things get added and need to be saved
     public void InitLife()
@@ -67,7 +57,6 @@ public class HUDScript : MonoBehaviour
             AudioManager.Instance.Play("PCDeath");
             anim.Play();
             Invoke("FailState", 2);
-
         }
     }
 
@@ -114,22 +103,6 @@ public class HUDScript : MonoBehaviour
         uiSlingerAmmo.text = "" + playerAmmo;
 	}
 
-    //Shield Functions(s)? //might be both an add/remove shield or just an updateShield
-    public void UpdateShield(int playerShield)
-	{
-        uiShieldHealth.text = "Shield: " + playerShield;
-	}
-    public void FixedShield()
-	{
-        uiShieldHealth.text = "Shield: " + 100;
-
-        //indicate fixed shield somehow
-    }
-    public void BreakShield()
-	{
-        //indicate broken shield somehow
-	}
-
     public void AddKey(KeyScript key)
 	{
         if(!keys.Contains(key))
@@ -167,9 +140,9 @@ public class HUDScript : MonoBehaviour
 
     void FailState()
     {
-        FailstateEvent failstateEvent = new FailstateEvent();
-        EventManager.instance.FireEvent(failstateEvent);
-        foreach(GameObject lifeImage in uiLives)
+        GameManager.Instance.GetPlayer(playerIndex).GoToCheckpoint();
+
+        foreach (GameObject lifeImage in uiLives)
         {
             lifeImage.SetActive(true);
         }
@@ -182,22 +155,4 @@ public class HUDScript : MonoBehaviour
 
         GameManager.Instance.GetPlayer(playerIndex).currentHealth = GameManager.Instance.GetPlayer(playerIndex).stats.health;
     }
-
-    void SetbackPlayer(Event newFailstateEvent)
-    {
-        Debug.Log("Player is dead!");
-        FailstateEvent failstateEvent = (FailstateEvent)newFailstateEvent;
-
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //GameManager.Instance.player.canMove = false;
-        //GameManager.Instance.audioManager.Play("PCDeath");
-        //Invoke("ResetScene", 2);
-    }
-
-    void ResetScene()
-	{
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
-    }
-
 }

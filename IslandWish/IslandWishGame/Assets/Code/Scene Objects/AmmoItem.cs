@@ -11,6 +11,7 @@ public class AmmoItem : MonoBehaviour
 		if(other.tag == "Player")
 		{
 			other.gameObject.GetComponent<Player>().PickupSlingAmmo(ammo);
+			AudioManager.Instance.Play("AmmoPickup");
 			//maybe put on a hidden timer?
 			Destroy(gameObject);
 		}

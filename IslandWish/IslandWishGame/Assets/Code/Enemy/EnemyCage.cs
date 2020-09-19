@@ -14,23 +14,22 @@ public class EnemyCage : MonoBehaviour
         currHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Break()
+	{
+        currHealth -= 1;
+        AudioManager.Instance.Play("PCCageHit");
+        if (currHealth <= 0)
+        {
+            isBroken = true;
+            gameObject.SetActive(false);
+        }
     }
 
-	private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "MeleeAttack")
 		{
-            currHealth-=1;
-            AudioManager.Instance.Play("PCCageHit");
-            if (currHealth <= 0)
-			{
-                isBroken = true;
-                gameObject.SetActive(false);
-			}
+            Break();
 		}
 	}
 }

@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   health: 5
-  spearDamage: 5
-  slingDamage: 2
-  speed: 8
-  slingSpeed: 15
-  slingDuration: 5
-  slingMaxAmmo: 8
   iFrameDuration: 1.5
   iFrameFlashDuration: 0.05
+  speed: 8
+  spearDamage: 5
+  slingDamage: 2
+  shieldMaxHealth: 10
+  shieldRechargeRate: 2
+  slingMaxAmmo: 8
+  slingSpeed: 15
+  slingDuration: 5

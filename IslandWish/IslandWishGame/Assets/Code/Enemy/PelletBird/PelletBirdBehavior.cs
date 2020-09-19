@@ -202,32 +202,36 @@ public class PelletBirdBehavior : EnemyBehavior
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MeleeAttack")
+        if (!isDead)
         {
-            AudioManager.Instance.Play("SpearHit");
-            currentHealth -= playerClosest.stats.spearDamage;
-            if (currentHealth <= 0)
+
+            if (other.tag == "MeleeAttack")
             {
-                StartCoroutine(Die());
+                AudioManager.Instance.Play("SpearHit");
+                currentHealth -= playerClosest.stats.spearDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("PelletDamaged");
+                    featherPoofParticles.Play();
+                }
             }
-            else
-			{
-                AudioManager.Instance.Play("PelletDamaged");
-                featherPoofParticles.Play();
-            }
-        }
-        else if (other.tag == "SlingshotAttack")
-        {
-            AudioManager.Instance.Play("SlingHit");
-            currentHealth -= playerClosest.stats.slingDamage;
-            if (currentHealth <= 0)
+            else if (other.tag == "SlingshotAttack")
             {
-                StartCoroutine(Die());
-            }
-            else
-			{
-                AudioManager.Instance.Play("PelletDamaged");
-                featherPoofParticles.Play();
+                AudioManager.Instance.Play("SlingHit");
+                currentHealth -= playerClosest.stats.slingDamage;
+                if (currentHealth <= 0)
+                {
+                    StartCoroutine(Die());
+                }
+                else
+                {
+                    AudioManager.Instance.Play("PelletDamaged");
+                    featherPoofParticles.Play();
+                }
             }
         }
     }
@@ -235,7 +239,7 @@ public class PelletBirdBehavior : EnemyBehavior
     IEnumerator Die()
     {
         print("Enemy is Dead and You Killed Them You Monster");
-        AudioManager.Instance.Play("PelletBirdDeath");
+        AudioManager.Instance.Play("PelletDeath");
         if (aggro)
         {
             DeAggro();

@@ -13,6 +13,8 @@ public class Level1Manager : LevelManager
 	[SerializeField] GameObject fireParticles;
 	public bool newGame = false;
 	[SerializeField] List<DoorScript> doors;
+	[SerializeField] List<KeyScript> keys;
+	[SerializeField] NarrationObject startNarrObj;
 
 	[Header("The Ghost Stuff")]
 	[SerializeField] GameObject ghost;
@@ -22,6 +24,7 @@ public class Level1Manager : LevelManager
 	[SerializeField] AudioClip ghostMusic;
 	[SerializeField] AudioClip normalMusic;
 	private int ghostTalkIndex = 0;
+	public int ghostAppear, ghostDisappear;
 
 	void Awake()
 	{
@@ -38,6 +41,7 @@ public class Level1Manager : LevelManager
 				GameManager.Instance.GetPlayer(i).SheathWeapons();
 			}
 
+			startNarrObj.complete = true;
 			fire.SetActive(false);
 		}
 		else
@@ -56,15 +60,51 @@ public class Level1Manager : LevelManager
 	public override void LoadLevel()
 	{
 		//TODO: load the level
+		Level1Data data = SaveSystem.LoadLevel1();
 
-		throw new NotImplementedException();
+		newGame = data.newGame;
+
+		//unlock the right doors
+		for (int i = 0; i < data.openDoors.Length; i++)
+		{
+			doors[i].SetLocked(data.openDoors[i]);
+		}
+
+		//collect the right keys
+		for (int i = 0; i < data.collectedKeys.Length; i++)
+		{
+			keys[i].isCollected = data.collectedKeys[i];
+
+			if (data.collectedKeysID[i] == 1)
+			{
+				keys[i].CollectKey(GameManager.Instance.GetPlayer(data.collectedKeysID[i] - 1));
+			}
+			else if (data.collectedKeysID[i] == 2)
+			{
+				keys[i].CollectKey(GameManager.Instance.GetPlayer(data.collectedKeysID[i] - 1));
+			}
+		}
+
+		for (int i = 0; i < data.completeNarrations.Length; i++)
+		{
+			narrationObjects[i].complete = data.completeNarrations[i];
+		}
+
+		for (int i = 0; i < data.enemiesDead.Length; i++)
+		{
+			GameManager.Instance.enemies[i].isDead = data.enemiesDead[i];
+		}
+
+		for (int i = 0; i < data.coconutsSaved.Length; i++)
+		{
+			CoconutManager.Instance.coconuts[i].isSaved = data.coconutsSaved[i];
+		}
+
 	}
 
 	public override void SaveLevel()
 	{
-
-
-		throw new NotImplementedException();
+		SaveSystem.SaveLevel1(this);
 	}
 
 	private void Update()
@@ -97,9 +137,6 @@ public class Level1Manager : LevelManager
 	{
 		if (newGame)
 		{
-			ghost.SetActive(true);
-			ghost.transform.position = GameManager.Instance.GetPlayerTrans(0).position;
-			ghost.transform.position += GameManager.Instance.GetPlayerTrans(0).forward.normalized * 2;
 			runGhost = true;
 
 			fire.SetActive(true);
@@ -138,6 +175,19 @@ public class Level1Manager : LevelManager
 				return;
 			}
 
+			if(ghostTalkIndex == ghostAppear)
+			{
+				ghost.SetActive(true);
+				ghost.transform.position = GameManager.Instance.GetPlayerTrans(0).position;
+				ghost.transform.position += GameManager.Instance.GetPlayerTrans(0).forward.normalized * 2;
+
+				ghost.transform.LookAt(GameManager.Instance.GetPlayerTrans(0));
+			}
+			else if(ghostTalkIndex == ghostDisappear)
+			{
+				ghost.SetActive(false);
+			}
+
 			text.text = ghostTalk[ghostTalkIndex];
 			AudioManager.Instance.SetClip("Narration", ghostAudio[ghostTalkIndex]);
 			AudioManager.Instance.Play("Narration");
@@ -146,8 +196,6 @@ public class Level1Manager : LevelManager
 
 	public void EndGhostScene()
 	{
-		ghost.SetActive(false);
-
 		GameManager.Instance.EnableHud();
 
 		AudioManager.Instance.Stop("MenuMusic");
@@ -181,10 +229,48 @@ public class Level1Manager : LevelManager
 				openDoors[i] = level.doors[i].IsLocked();
 			}
 
+			collectedKeys = new bool[level.keys.Count];
+			collectedKeysID = new int[level.keys.Count];
+			for (int i = 0; i < collectedKeys.Length; i++)
+			{
+				collectedKeys[i] = level.keys[i].isCollected;
+				for(int j = 0; j < GameManager.Instance.GetPlayerCount(); j++)
+				{
+					if(GameManager.Instance.GetPlayer(j).hud.keys.Contains(level.keys[i]))
+					{
+						collectedKeysID[i] = j + 1;
+					}
+				}
+			}
+
+			completeNarrations = new bool[level.narrationObjects.Count];
+			for (int i = 0; i < completeNarrations.Length; i++)
+			{
+				completeNarrations[i] = level.narrationObjects[i].complete;
+			}
+
+			enemiesDead = new bool[GameManager.Instance.enemies.Count];
+			for (int i = 0; i < enemiesDead.Length; i++)
+			{
+				enemiesDead[i] = GameManager.Instance.enemies[i].isDead;
+			}
+
+			coconutsSaved = new bool[CoconutManager.Instance.coconuts.Count];
+			for (int i = 0; i < coconutsSaved.Length; i++)
+			{
+				coconutsSaved[i] = CoconutManager.Instance.coconuts[i].isSaved;
+			}
+
 		}
 
 		public bool newGame;
 	}
 }
-
+//public bool[] openDoors;
+//public bool[] collectedKeys;
+//public int[] collectedKeysID; // for the inventory, if you've got any keys on you
+//public bool[] completeNarrations;
+//public bool[] enemiesDead;
+//public float[] checkpointPosition;
+//public bool[] coconutsSaved;
 

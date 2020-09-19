@@ -15,10 +15,11 @@ public class Movement : MonoBehaviour
 
 	[Header("Player Stats")]
 	[SerializeField] float playerSpeed = 1;
-	[SerializeField] float playerSprintSpeed = 2, playerJumpSpeed = 1, playerDashSpeed = 3, dashDistance = 1, gravity = 9.8f;
+	[SerializeField] float playerJumpSpeed = 1, playerDashSpeed = 3, dashDistance = 1, gravity = 9.8f;
 	[SerializeField] Player player;
 	float vSpeed = 0;
 	Vector3 inputDir = Vector3.zero; //the vector determining player direction
+	private Vector3 rawInputDir = Vector3.zero;
 	Vector3 inputLookDir = Vector3.zero;
 	Vector3 dashStartPosition = Vector3.zero;
 	Vector3 dashDestination = Vector3.zero;
@@ -63,7 +64,7 @@ public class Movement : MonoBehaviour
 			//apply speed
 			if (acceptInput)
 			{
-				inputDir = new Vector3(Input.GetAxis("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxis("Vertical_P" + player.stats.playerNumber));
+				inputDir = rawInputDir = new Vector3(Input.GetAxis("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxis("Vertical_P" + player.stats.playerNumber));
 				//all for them anims baybee
 				//prepare the corrected "forward vector"
 				Vector3 forwardVec = Vector3.forward;
@@ -77,7 +78,6 @@ public class Movement : MonoBehaviour
 				anim.SetFloat("MovementForward", directionMoving.z);
 				anim.SetFloat("MovementSide", directionMoving.x);
 
-
 				if (inputDir != Vector3.zero)
 				{
 					AudioManager.Instance.SafePlay("PCWalking");
@@ -90,7 +90,7 @@ public class Movement : MonoBehaviour
 				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
-				if ((Input.GetKey(KeyCode.Space) || Input.GetButton("Dash_P" + player.stats.playerNumber)) && !dashing && inputDir != Vector3.zero)
+				if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Dash_P" + player.stats.playerNumber)) && !dashing && inputDir != Vector3.zero)
 				{
 					AudioManager.Instance.Play("PCDash");
 					anim.SetTrigger("Dash");
@@ -102,10 +102,6 @@ public class Movement : MonoBehaviour
 					dashStartPosition = playerTrans.position;
 					dashDestination = playerTrans.position + (inputDir.normalized * dashDistance);
 
-				}
-				else if (Input.GetKey(KeyCode.LeftShift))
-				{
-					inputDir *= playerSprintSpeed;
 				}
 				else
 				{

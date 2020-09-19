@@ -12,6 +12,7 @@ public class BreakableEnvironment : MonoBehaviour
 		{
 			if (breakable != null)
 			{
+				AudioManager.Instance.Play("BreakObject");
 				Destroy(breakable);
 			}
 		}

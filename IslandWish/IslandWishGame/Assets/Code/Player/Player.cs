@@ -28,11 +28,10 @@ public class Player : MonoBehaviour
     [Header("Shield Stats")]
     [SerializeField] GameObject shield;
     private Animator shieldAnim;
+    [SerializeField] Material shieldMat;
     bool blocking = false;
     bool shieldBroken = false;
-    public int shieldMaxHealth = 100;
     public int shieldCurrentHealth;
-    public float shieldRechargeRate;
     public bool inCombat = false;
 
     [Header("Slingshot")]
@@ -46,10 +45,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //EventManager.instance.AddListener(TakeDamage, EventTag.DAMAGE);
-        //EventManager.instance.AddListener(HealDamage, EventTag.HEAL);
-        EventManager.instance.AddListener(GoToCheckpoint, EventTag.FAILSTATE);
-
         SceneLinkedSMB<Player>.Initialise(anim, this);
 
         hurtBox.SetActive(false);
@@ -113,14 +108,14 @@ public class Player : MonoBehaviour
             }
             if (slingCurrentAmmo > 0)
             {
-                if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Sling_P" + stats.playerNumber))
+                if (Input.GetMouseButtonDown(1) || (Input.GetAxis("Sling_P" + stats.playerNumber) > 0))
                 {
                     AudioManager.Instance.Play("SlingshotPull");
                     anim.SetBool("Sling", true);
                     //maybe also add GetMouseButton() for the aim line
                     //draw the "aim" line
                 }
-                if (Input.GetMouseButtonUp(1) || Input.GetButtonUp("Sling_P" + stats.playerNumber))
+                if (Input.GetMouseButtonUp(1) || (Input.GetAxis("Sling_P" + stats.playerNumber) == 0 && !Input.GetMouseButton(1)))
                 {
                     anim.SetBool("Sling", false);
                 }
@@ -130,12 +125,12 @@ public class Player : MonoBehaviour
                 anim.SetBool("Sling", false);
             }
 
-            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown("Block_P" + stats.playerNumber)) && !shieldBroken)
+            if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("Block_P" + stats.playerNumber)) && !shieldBroken)
             {
                 AudioManager.Instance.Play("ShieldReady");
                 Block(true);
             }
-            if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetButtonUp("Block_P" + stats.playerNumber))
+            if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetButtonUp("Block_P" + stats.playerNumber))
             {
                 Block(false);
             }
@@ -164,11 +159,10 @@ public class Player : MonoBehaviour
                 float damageAngle = Vector3.Angle(transform.forward, damageDirection);
                 if (damageAngle < 90)
                 {
-                    damage = 10;
                     Debug.Log("BLOCKED BITCH");
                     AudioManager.Instance.Play("ShieldHit");
                     shieldCurrentHealth -= damage;
-                    hud.UpdateShield(shieldCurrentHealth);
+                   
                     return;
                 }
             }
@@ -281,6 +275,20 @@ public class Player : MonoBehaviour
 		}
 	}
 
+    IEnumerator BreakShield()
+	{
+        AudioManager.Instance.Play("ShieldBreak");
+        shieldMat.SetColor("_Color", Color.white);
+
+        shieldAnim.SetTrigger("Break");
+        shieldBroken = true;
+        blocking = false;
+
+        yield return new WaitForSeconds(1.35f); //the animation time, close enough
+
+        Block(false);
+    }
+
     //can move to Update if needed
     IEnumerator RegenShield()
 	{
@@ -288,27 +296,34 @@ public class Player : MonoBehaviour
 		{
             if (shieldCurrentHealth <= 0)
             {
-                AudioManager.Instance.Play("ShieldBreak");
-                hud.BreakShield();
-                shieldAnim.SetTrigger("Break");
-                shieldBroken = true;
-                Block(false);
+				//AudioManager.Instance.Play("ShieldBreak");
+
+				//shieldMat.SetColor("_Color", Color.white);
+
+				//shieldAnim.SetTrigger("Break");
+				//shieldBroken = true;
+				StartCoroutine(BreakShield());// Block(false);
             }
 
-            if (shieldCurrentHealth < shieldMaxHealth)
+            if (shieldCurrentHealth < stats.shieldMaxHealth)
             {
                 shieldCurrentHealth += 1;
-                hud.UpdateShield(shieldCurrentHealth);
-                yield return new WaitForSeconds(shieldRechargeRate);
+
+                Color shieldColor = Color.white;
+                shieldColor.a = shieldCurrentHealth * 0.01f;
+                shieldMat.SetColor("_Color", shieldColor);
+
+                yield return new WaitForSeconds(stats.shieldRechargeRate);
             }
             else
 			{
-                if(shieldCurrentHealth > shieldMaxHealth)
+                if(shieldCurrentHealth > stats.shieldMaxHealth)
 				{
-                    shieldCurrentHealth = shieldMaxHealth;
+                    shieldCurrentHealth = stats.shieldMaxHealth;
 				}
-                hud.FixedShield();
                 shieldBroken = false;
+                shieldMat.SetColor("_Color", Color.white);
+
                 yield return null;
 			}
 		}
@@ -382,7 +397,7 @@ public class Player : MonoBehaviour
 
     public void LoadPlayer()
 	{
-        PlayerData data = SaveSystem.LoadPlayer();
+        PlayerData data = SaveSystem.LoadPlayer(stats.playerNumber);
 
         GetComponent<CharacterController>().enabled = false;
         transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
@@ -393,7 +408,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void GoToCheckpoint(Event newFailstateEvent)
+    public void GoToCheckpoint()
     {
         GetComponent<CharacterController>().enabled = false;
         transform.position = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>().GetCheckpoint();

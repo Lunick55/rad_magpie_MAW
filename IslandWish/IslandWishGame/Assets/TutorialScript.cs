@@ -20,7 +20,7 @@ public class TutorialScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && (CoconutManager.Instance.coconutsFreed.Count < CoconutManager.Instance.coconuts.Count))
         {
             tutorialUI.SetActive(true);
         }

@@ -9,7 +9,7 @@ using System;
 public abstract class LevelManager : BaseSingleton<LevelManager>
 {
 	[SerializeField] protected PostProcessVolume postProcess;
-	[SerializeField] List<NarrationObject> narrationObjects;
+	[SerializeField] protected List<NarrationObject> narrationObjects;
 
 	[Header("The Movie Stuff")]
 	[SerializeField] Animator anim;
@@ -46,7 +46,7 @@ public abstract class LevelData
 {
 	public bool[] openDoors;
 	public bool[] collectedKeys;
-	public int[] collectedKeysID; // for the inventory, if you've got any keys on you
+	public int[] collectedKeysID; // player ID that owns key. 0 = no one, 1 = P1, 2 = P2
 	public bool[] completeNarrations;
 	public bool[] enemiesDead;
 	public float[] checkpointPosition;
