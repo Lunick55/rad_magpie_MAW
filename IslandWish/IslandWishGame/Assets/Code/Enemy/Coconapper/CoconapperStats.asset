@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: CoconapperStats
   m_EditorClassIdentifier: 
   enemyName: Coconapper
-  health: 10
+  health: 20
   attack: 3
-  defense: 5
-  attackRange: 10
-  moveSpeed: 6
   timeBetweenAttacks: 2

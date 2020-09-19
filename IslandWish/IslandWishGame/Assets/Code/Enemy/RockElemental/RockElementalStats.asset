@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: RockElementalStats
   m_EditorClassIdentifier: 
   enemyName: RockElemental
-  health: 20
+  health: 25
   attack: 8
-  defense: 600
-  attackRange: 12
-  moveSpeed: 5
   timeBetweenAttacks: 2

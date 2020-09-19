@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: WolfDeerStats
   m_EditorClassIdentifier: 
   enemyName: Wolf Deer
-  health: 12
+  health: 15
   attack: 3
-  defense: 5
-  attackRange: 2
-  moveSpeed: 2
+  timeBetweenAttacks: 0
