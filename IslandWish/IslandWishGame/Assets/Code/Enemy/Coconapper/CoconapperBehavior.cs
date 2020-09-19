@@ -161,8 +161,8 @@ public class CoconapperBehavior : EnemyBehavior
 
     public void EnableAgent()
     {
-        agent.enabled = true;
         obstacle.enabled = false;
+        agent.enabled = true;
         walkingPuffs.SetActive(true);
     }
 
