@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class NarrationCompletion : NarrationObject
 {
+	public void CocosFound()
+	{
+		if (!complete)
+		{
+			StartMovie();
+		}
+	}
+
 	protected override void OnTriggerEnter(Collider other)
 	{
-		if (CoconutManager.Instance.coconutsFreed.Count >= CoconutManager.Instance.coconuts.Count)
-		{
-			base.OnTriggerEnter(other);
-		}
+		//does nothing
 	}
 }
