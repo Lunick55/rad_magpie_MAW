@@ -612,6 +612,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4300232777102757463, guid: a78d15f2ca55f164da1169e8f5900c60,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300232777102757463, guid: a78d15f2ca55f164da1169e8f5900c60,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 4300232777294185714, guid: a78d15f2ca55f164da1169e8f5900c60,
         type: 3}
       propertyPath: m_Name
