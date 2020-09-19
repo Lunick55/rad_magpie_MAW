@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyName: RockElemental
   health: 25
   attack: 8
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 1

@@ -55,8 +55,6 @@ public class CoconutManager : BaseSingleton<CoconutManager>
 
     public List<Transform> hidingSpots;
 
-    public CoconutAttachments cocoAttach;
-
     void Init()
     {
         //EventManager.instance.AddListener(ScatterCoconuts, EventTag.FAILSTATE);

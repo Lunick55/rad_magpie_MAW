@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyName: Pellet Bird
   health: 10
   attack: 10
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 1

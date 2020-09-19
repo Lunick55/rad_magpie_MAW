@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
             AudioManager.Instance.Play("PCDamage");
             currentHealth -= damage;
             hud.LoseLife();
-            StartCoroutine(IFrames());
+            StartCoroutine(IFrames(stats.iFrameDuration));
         }
     }
 
@@ -314,17 +314,30 @@ public class Player : MonoBehaviour
 		}
 	}
 
-    IEnumerator IFrames()
+    IEnumerator IFrames(float iFrameDuration)
 	{
         invincible = true;
 
-        InvokeRepeating("FlashHit", 0, stats.iFrameFlashTimer);
+        bool toggle = false;
 
-        yield return new WaitForSeconds(stats.iFrameTimer);
+        while (iFrameDuration >= 0f)
+        {
+            iFrameDuration -= (Time.deltaTime + stats.iFrameFlashDuration);
+            //toggle renderer
+            if (toggle)
+            {
+                FlashHit();
+            }
+            else
+			{
+                ResetFlash();
+			}
+            toggle = !toggle;
 
-        CancelInvoke("FlashHit");
+            yield return new WaitForSeconds(stats.iFrameFlashDuration);
+        }
+
         ResetFlash();
-
         invincible = false;
 	}
 

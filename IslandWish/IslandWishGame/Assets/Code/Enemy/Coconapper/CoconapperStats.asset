@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyName: Coconapper
   health: 20
   attack: 3
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 1

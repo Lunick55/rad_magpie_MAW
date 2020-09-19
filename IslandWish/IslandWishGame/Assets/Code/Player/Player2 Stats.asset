@@ -20,5 +20,5 @@ MonoBehaviour:
   slingSpeed: 15
   slingDuration: 5
   slingMaxAmmo: 8
-  iFrameTimer: 2
-  iFrameFlashTimer: 0
+  iFrameDuration: 1.5
+  iFrameFlashDuration: 0.05

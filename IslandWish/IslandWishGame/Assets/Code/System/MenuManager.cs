@@ -55,7 +55,6 @@ public class MenuManager : MonoBehaviour
 	{
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
-
         for(int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 		{
             GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(false);
@@ -70,7 +69,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         for (int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
         {
-            GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(false);
+            GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(true);
             if (GameManager.Instance.GetPlayer(i).armed)
             {
                 GameManager.Instance.GetPlayer(i).DrawWeapons();

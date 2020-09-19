@@ -11,6 +11,6 @@ public class PlayerStats : ScriptableObject
 	public float speed;
 	public float slingSpeed, slingDuration;
 	public int slingMaxAmmo;
-	public float iFrameTimer;
-	public float iFrameFlashTimer;
+	public float iFrameDuration;
+	public float iFrameFlashDuration;
 }

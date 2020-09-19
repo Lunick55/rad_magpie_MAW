@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class CoconutPetBehavior : MonoBehaviour
 {
     public Transform cocoHolder;
+    [HideInInspector] public Transform accessoryHolder;
     public GameObject body;
     [HideInInspector] public int bodyIndex;
     public GameObject accessory;
@@ -53,13 +54,20 @@ public class CoconutPetBehavior : MonoBehaviour
 		}
 
         //create a LOOK kiddo
+        //body look
         int bodyOptions = cocoHolder.childCount;
         bodyIndex = Random.Range(0, bodyOptions);
         cocoHolder.GetChild(0).gameObject.SetActive(false);
         body = cocoHolder.GetChild(bodyIndex).gameObject;
         body.SetActive(true);
         anim = body.GetComponent<Animator>();
-        
+        //accessory look
+        accessoryHolder = body.transform.GetChild(0);
+        int accessoryOptions = accessoryHolder.transform.childCount;
+        accessoryIndex = Random.Range(0, accessoryOptions);
+        accessory = accessoryHolder.GetChild(accessoryIndex).gameObject;
+        accessory.SetActive(true);
+
 
         player = GameManager.Instance.GetPlayer(0);
         playerTrans = GameManager.Instance.GetPlayerTrans(0);
