@@ -20,7 +20,8 @@ public class GameManager : BaseSingleton<GameManager>
 
     //do i even like this?
     [SerializeField] MenuManager menuManager;
-
+    [SerializeField] NarrationCompletion narrateComplete;
+ 
     [SerializeField] PlayersCount debugPlayersCount;
 	public enum PlayersCount
 	{
@@ -105,6 +106,11 @@ public class GameManager : BaseSingleton<GameManager>
 		{
             hud.hooray.Play();
 		}
+
+        if(narrateComplete)
+		{
+            narrateComplete.CocosFound();
+        }
 	}
 
     public void PauseEnemies()

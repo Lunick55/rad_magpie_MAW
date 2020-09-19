@@ -155,7 +155,7 @@ public class Level1Manager : LevelManager
 
 	public void RunGhostScene()
 	{
-		if(Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit"))
 		{
 			AudioManager.Instance.Stop("Narration");
 			if (++ghostTalkIndex >= ghostTalk.Count)
@@ -179,7 +179,7 @@ public class Level1Manager : LevelManager
 			{
 				ghost.SetActive(true);
 				ghost.transform.position = GameManager.Instance.GetPlayerTrans(0).position;
-				ghost.transform.position += GameManager.Instance.GetPlayerTrans(0).forward.normalized * 2;
+				ghost.transform.position += GameManager.Instance.GetPlayerTrans(0).forward.normalized * 3;
 
 				ghost.transform.LookAt(GameManager.Instance.GetPlayerTrans(0));
 			}

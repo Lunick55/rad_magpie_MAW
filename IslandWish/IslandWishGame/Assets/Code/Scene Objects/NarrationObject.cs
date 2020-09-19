@@ -16,7 +16,7 @@ public class NarrationObject : MonoBehaviour
 	// Update is called once per frame
 	protected void Update()
     {
-		if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit")) && canNarrate)
+		if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit")) && canNarrate)
 		{
 			AudioManager.Instance.Stop(audioChannelName);
 			if (++narrationIndex >= narrationAudio.Count)
