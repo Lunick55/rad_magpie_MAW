@@ -262,7 +262,7 @@ public class RockElementalBehavior : EnemyBehavior
                 else
                 {
                     AudioManager.Instance.Play("RockElementalDamaged");
-                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(GameManager.Instance.GetPlayer(0).stats.pauseDuration));
                 }
             }
             else if (other.tag == "SlingshotAttack")
@@ -276,7 +276,7 @@ public class RockElementalBehavior : EnemyBehavior
                 else
                 {
                     AudioManager.Instance.Play("RockElementalDamaged");
-                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(GameManager.Instance.GetPlayer(0).stats.pauseDuration));
                 }
             }
         }

@@ -16,6 +16,8 @@ MonoBehaviour:
   health: 5
   iFrameDuration: 1.5
   iFrameFlashDuration: 0.05
+  pauseTime: 0
+  pauseDuration: 0.1
   speed: 8
   spearDamage: 5
   slingDamage: 5

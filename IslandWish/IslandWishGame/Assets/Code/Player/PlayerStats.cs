@@ -10,6 +10,8 @@ public class PlayerStats : ScriptableObject
 	public int health;
 	public float iFrameDuration;
 	public float iFrameFlashDuration;
+	public float pauseTime;
+	public float pauseDuration;
 	public float speed;
 	[Header("Equipment Stats")]
 	public int spearDamage, slingDamage;
