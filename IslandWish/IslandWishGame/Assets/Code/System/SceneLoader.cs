@@ -20,7 +20,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 		{
 			coconuts = new List<CoconutData>();
 
-			progressData = new ProgressData(SceneManager.GetActiveScene().name);
+			progressData = new ProgressData(SceneManager.GetActiveScene().name, playerCount, false);
 
 			isInit = true;
 		}
@@ -95,21 +95,28 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	public void LoadProgress()
 	{
 		progressData = SaveSystem.LoadProgress();
+		playerCount = progressData.playerCount;
 	}
 	public void SaveProgress()
 	{
 		progressData.currentLevelName = SceneManager.GetActiveScene().name;
-		SaveSystem.SaveProgress(progressData.currentLevelName);
+		progressData.playerCount = playerCount;
+		progressData.saveGame = true;
+		SaveSystem.SaveProgress(progressData);
 	}
 }
 
 [Serializable]
 public class ProgressData
 {
-	public ProgressData(string newLevelName)
+	public ProgressData(string newLevelName, int newPlayerCount, bool saveStatus)
 	{
 		currentLevelName = newLevelName;
+		playerCount = newPlayerCount;
+		saveGame = saveStatus;
 	}
 
 	public string currentLevelName;
+	public int playerCount;
+	public bool saveGame;
 }

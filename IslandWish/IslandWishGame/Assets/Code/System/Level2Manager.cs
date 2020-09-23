@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class Level2Manager : LevelManager
 {
-	[Header("World Stuff")]
-	[SerializeField] List<DoorScript> doors;
-
 	void Awake()
 	{
 		Init();

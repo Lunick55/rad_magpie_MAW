@@ -223,6 +223,7 @@ public class PelletBirdBehavior : EnemyBehavior
                 {
                     AudioManager.Instance.Play("PelletDamaged");
                     featherPoofParticles.Play();
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
                 }
             }
             else if (other.tag == "SlingshotAttack")
@@ -237,6 +238,7 @@ public class PelletBirdBehavior : EnemyBehavior
                 {
                     AudioManager.Instance.Play("PelletDamaged");
                     featherPoofParticles.Play();
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
                 }
             }
         }

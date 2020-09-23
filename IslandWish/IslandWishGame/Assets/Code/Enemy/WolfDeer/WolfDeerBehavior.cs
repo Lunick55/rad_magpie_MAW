@@ -275,6 +275,7 @@ public class WolfDeerBehavior : EnemyBehavior
                 else
                 {
                     AudioManager.Instance.Play("WolfDeerDamaged");
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
                 }
             }
             else if (other.tag == "SlingshotAttack")
@@ -293,6 +294,7 @@ public class WolfDeerBehavior : EnemyBehavior
             else if (other.tag == "Player" && attacking)
             {
                 anim.SetTrigger("DoneAttacking");
+                StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
             }
         }
     }

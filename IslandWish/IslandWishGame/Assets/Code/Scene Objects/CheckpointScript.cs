@@ -19,7 +19,6 @@ public class CheckpointScript : MonoBehaviour
         {
             checkpointManager.GetComponent<CheckpointManager>().SetCheckpoint(gameObject.transform.position) ;
             ActivateObjects();
-            //gameObject.SetActive(false);
             GameManager.Instance.SaveGame();
         }
     }

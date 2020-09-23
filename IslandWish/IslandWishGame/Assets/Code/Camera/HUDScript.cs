@@ -17,6 +17,7 @@ public class HUDScript : MonoBehaviour
     //you can change the type to be whatever you want (text object, game object, image?), however you see fit to display the info. 
     //I can set the logic up to better match your vision once you've decided on how the final thing should look.act
     public TextMeshProUGUI uiSlingerAmmo;
+    [SerializeField] public GameObject saveUI;
 
     [Header("Collectible Stuff")]
     public List<Image> keyImages;

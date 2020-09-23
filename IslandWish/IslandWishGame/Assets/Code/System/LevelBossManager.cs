@@ -7,7 +7,6 @@ using UnityEngine;
 public class LevelBossManager : LevelManager
 {
 	[Header("World Stuff")]
-	[SerializeField] List<DoorScript> doors;
 	[SerializeField] EnemyBehavior boss;
 
 	void Awake()

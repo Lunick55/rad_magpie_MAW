@@ -45,12 +45,6 @@ public class CoconapperBehavior : EnemyBehavior
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-
-    }
-
     public void Idle()
     {
         playerIndex = GameManager.Instance.GetClosestPlayer(transform.position, out playerTransClosest);
@@ -235,6 +229,7 @@ public class CoconapperBehavior : EnemyBehavior
                 else
                 {
                     AudioManager.Instance.Play("CoconapperDamaged");
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.2f));
                 }
             }
             else if (other.tag == "SlingshotAttack")
@@ -248,6 +243,7 @@ public class CoconapperBehavior : EnemyBehavior
                 else
                 {
                     AudioManager.Instance.Play("CoconapperDamaged");
+                    StartCoroutine(GameManager.Instance.GetPlayer(0).PauseHit(0.1f));
                 }
             }
         }

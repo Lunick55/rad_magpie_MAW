@@ -6,15 +6,18 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager>
 {
+    [Header("Player Info")]
     [SerializeField] List<Player> players;
     [HideInInspector] List<Movement> playersMove;
     [HideInInspector] List<Transform> playersTrans;
 
+    [Header("UI Info")]
     [SerializeField] GameObject singlePlayerUI;
     [SerializeField] GameObject coopUI;
     [SerializeField] List<Camera> cameras;
     [SerializeField] List<HUDScript> huds;
 
+    [Header("Enemy Info")]
     [SerializeField] public List<EnemyBehavior> enemies;
     int numEnemiesAggroed = 0;
 
@@ -207,7 +210,16 @@ public class GameManager : BaseSingleton<GameManager>
         LevelManager.Instance.SaveLevel();
         SaveSystem.SaveCoconuts(SceneLoader.Instance.GetSavedCoconuts());
         SceneLoader.Instance.SaveProgress();
+
+        StartCoroutine(PlaySaveAnim());
     }
+
+    IEnumerator PlaySaveAnim()
+	{
+        huds[0].saveUI.SetActive(true);
+        yield return new WaitForSeconds(2);
+        huds[0].saveUI.SetActive(false);
+	}
 
     public Player GetPlayer(int index)
 	{
@@ -268,14 +280,9 @@ public class GameManager : BaseSingleton<GameManager>
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //SaveGame();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Pause"))
+        {            
             menuManager?.Pause();
-        }
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            SaveGame();
         }
     }
 }

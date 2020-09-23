@@ -47034,10 +47034,20 @@ PrefabInstance:
       propertyPath: hooray
       value: 
       objectReference: {fileID: 1812626611}
+    - target: {fileID: 5453139295675885379, guid: d0f8c87c43106fc468ef29889d6802a4,
+        type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5885515510033677879, guid: d0f8c87c43106fc468ef29889d6802a4,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918491395707785328, guid: d0f8c87c43106fc468ef29889d6802a4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6997856146320504430, guid: d0f8c87c43106fc468ef29889d6802a4,
         type: 3}

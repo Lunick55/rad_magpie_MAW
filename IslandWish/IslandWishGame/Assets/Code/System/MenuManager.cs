@@ -41,17 +41,14 @@ public class MenuManager : MonoBehaviour
 
     public void LoadSinglePlayerGame()
 	{
-        SceneLoader.Instance.loadSingleData = true;
         SceneLoader.Instance.LoadProgress();
-        SceneLoader.Instance.LoadScene(SceneLoader.Instance.progressData.currentLevelName);
-    }
-    public void LoadMultiPlayerGame()
-    {
-        SceneLoader.Instance.loadMultiData = true;
-        SceneLoader.Instance.LoadProgress();
-        SceneLoader.Instance.LoadScene(SceneLoader.Instance.progressData.currentLevelName);
-    }
 
+        if(SceneLoader.Instance.progressData.saveGame)
+		{
+            SceneLoader.Instance.loadSingleData = true;
+            SceneLoader.Instance.LoadScene(SceneLoader.Instance.progressData.currentLevelName);
+        }
+    }
 
     public void Pause()
 	{

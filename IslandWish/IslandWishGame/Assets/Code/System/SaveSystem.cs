@@ -38,15 +38,13 @@ public static class SaveSystem
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}	
-	public static void SaveProgress(string currentLevelName)
+	public static void SaveProgress(ProgressData progressData)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
 		string path = Application.persistentDataPath + ("/progress.progress");
 		FileStream stream = new FileStream(path, FileMode.Create);
 
-		ProgressData data = new ProgressData(currentLevelName);
-
-		formatter.Serialize(stream, data);
+		formatter.Serialize(stream, progressData);
 		stream.Close();
 	}
 

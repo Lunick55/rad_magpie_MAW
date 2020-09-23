@@ -330,6 +330,13 @@ public class Player : MonoBehaviour
 		}
 	}
 
+    public IEnumerator PauseHit(float pauseTimer)
+	{
+        Time.timeScale = 0.1f;
+        yield return new WaitForSecondsRealtime(pauseTimer);
+        Time.timeScale = 1;
+	}
+
     IEnumerator IFrames(float iFrameDuration)
 	{
         invincible = true;
