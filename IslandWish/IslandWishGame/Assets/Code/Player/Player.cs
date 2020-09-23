@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         //          currentHealth = stats.health;
         //      }
 
-        if (canAttack)
+        if (armed)
         {
             DrawWeapons();
         }
@@ -406,7 +406,7 @@ public class Player : MonoBehaviour
 
         currentHealth = data.health;
         slingCurrentAmmo = data.ammo;
-
+        armed = data.armed;
     }
 
     public void GoToCheckpoint()
@@ -433,9 +433,11 @@ public class PlayerData
 
         health = player.currentHealth;
         ammo = player.slingCurrentAmmo;
+        armed = player.armed;
     }
 
     public float[] position;
     public int health;
     public int ammo;
+    public bool armed;
 }

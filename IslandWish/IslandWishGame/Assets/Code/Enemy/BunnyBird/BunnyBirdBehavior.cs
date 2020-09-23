@@ -18,6 +18,12 @@ public class BunnyBirdBehavior : EnemyBehavior
     [SerializeField] int restTimer = 0;
     void Start()
     {
+        if(isDead)
+		{
+            gameObject.SetActive(false);
+            return;
+		}
+
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 

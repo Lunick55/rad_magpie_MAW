@@ -16,7 +16,6 @@ public static class SaveSystem
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}
-	
 	public static void SaveCoconuts(List<CoconutData> coconuts)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -27,41 +26,30 @@ public static class SaveSystem
 
 		formatter.Serialize(stream, data);
 		stream.Close();
-	}	
-	
-	public static void SaveLevel1(Level1Manager level)
+	}		
+	public static void SaveLevel(LevelManager level)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.persistentDataPath + ("/level1.level");
+		string path = Application.persistentDataPath + ("/level.level");
 		FileStream stream = new FileStream(path, FileMode.Create);
 
-		Level1Manager.Level1Data data = new Level1Manager.Level1Data(level);
+		LevelManager.LevelData data = new LevelManager.LevelData(level);
 
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}	
-	public static void SaveLevel2(Level2Manager level)
+	public static void SaveProgress(string currentLevelName)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.persistentDataPath + ("/level2.level");
+		string path = Application.persistentDataPath + ("/progress.progress");
 		FileStream stream = new FileStream(path, FileMode.Create);
 
-		Level2Data data = new Level2Data(level);
-
-		formatter.Serialize(stream, data);
-		stream.Close();
-	}	
-	public static void SaveLevel3(LevelBossManager level)
-	{
-		BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.persistentDataPath + ("/level3.level");
-		FileStream stream = new FileStream(path, FileMode.Create);
-
-		LevelBossData data = new LevelBossData(level);
+		ProgressData data = new ProgressData(currentLevelName);
 
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}
+
 
 	public static PlayerData LoadPlayer(int playerIndex)
 	{
@@ -103,16 +91,16 @@ public static class SaveSystem
 			return null;
 		}
 	}
-	public static Level1Manager.Level1Data LoadLevel1()
+	public static LevelManager.LevelData LoadLevel()
 	{
-		string path = Application.persistentDataPath + ("/level1.level"); ;
+		string path = Application.persistentDataPath + ("/level.level"); ;
 
 		if (File.Exists(path))
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			FileStream stream = new FileStream(path, FileMode.Open);
 
-			Level1Manager.Level1Data data = formatter.Deserialize(stream) as Level1Manager.Level1Data;
+			LevelManager.LevelData data = formatter.Deserialize(stream) as LevelManager.LevelData;
 			stream.Close();
 
 			return data;
@@ -123,43 +111,23 @@ public static class SaveSystem
 			return null;
 		}
 	}
-	public static CoconutSaveData LoadLevel2()
+	public static ProgressData LoadProgress()
 	{
-		string path = Application.persistentDataPath + string.Format("/coconuts.coconut");
+		string path = Application.persistentDataPath + ("/progress.progress");
 
 		if (File.Exists(path))
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			FileStream stream = new FileStream(path, FileMode.Open);
 
-			CoconutSaveData data = formatter.Deserialize(stream) as CoconutSaveData;
+			ProgressData data = formatter.Deserialize(stream) as ProgressData;
 			stream.Close();
 
 			return data;
 		}
 		else
 		{
-			Debug.LogError("File not found at: " + path);
-			return null;
-		}
-	}
-	public static CoconutSaveData LoadBossLevel()
-	{
-		string path = Application.persistentDataPath + string.Format("/coconuts.coconut");
-
-		if (File.Exists(path))
-		{
-			BinaryFormatter formatter = new BinaryFormatter();
-			FileStream stream = new FileStream(path, FileMode.Open);
-
-			CoconutSaveData data = formatter.Deserialize(stream) as CoconutSaveData;
-			stream.Close();
-
-			return data;
-		}
-		else
-		{
-			Debug.LogError("File not found at: " + path);
+			Debug.LogWarning("File not found at: " + path);
 			return null;
 		}
 	}

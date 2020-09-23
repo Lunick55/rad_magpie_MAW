@@ -22,6 +22,9 @@ public class CoconutData
     public int bodyIndex;
 }
 
+/// <summary>
+/// A container class to hold a list of CoconutData by extracting the info from the list into basic data types, not sure if neccessary //maybe just make array of CoconutData?
+/// </summary>
 [System.Serializable]
 public class CoconutSaveData
 {
@@ -56,7 +59,7 @@ public class CoconutManager : BaseSingleton<CoconutManager>
     {
         //EventManager.instance.AddListener(ScatterCoconuts, EventTag.FAILSTATE);
 
-        coconuts = new List<CoconutPetBehavior>();
+        //coconuts = new List<CoconutPetBehavior>();
         if (hidingSpots == null)
         {
             hidingSpots = new List<Transform>();

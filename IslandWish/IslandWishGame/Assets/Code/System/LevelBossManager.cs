@@ -24,16 +24,6 @@ public class LevelBossManager : LevelManager
 		}
 	}
 
-	public override void LoadLevel()
-	{
-		//TODO: load the level
-	}
-
-	public override void SaveLevel()
-	{
-
-	}
-
 	private void Update()
 	{
 
@@ -50,17 +40,4 @@ public class LevelBossManager : LevelManager
 		}
 
 	}
-}
-
-//for later
-[Serializable]
-public class LevelBossData
-{
-	public LevelBossData(LevelBossManager level)
-	{
-
-	}
-
-	public bool newGame;
-	public bool[] openDoors;
 }

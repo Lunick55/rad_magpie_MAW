@@ -15,6 +15,12 @@ public class CoconapperBehavior : EnemyBehavior
 
     void Start()
     {
+        if (isDead)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        
         playerClosest = GameManager.Instance.GetPlayer(playerIndex);
         playerTransClosest = GameManager.Instance.GetPlayerTrans(playerIndex);
 

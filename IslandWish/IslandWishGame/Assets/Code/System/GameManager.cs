@@ -58,6 +58,7 @@ public class GameManager : BaseSingleton<GameManager>
 			{
                 SceneLoader.Instance.playerCount = count = (int)debugPlayersCount;
 			}
+
             if (count == 1)
             {
                 //setup player 1 UI
@@ -87,17 +88,27 @@ public class GameManager : BaseSingleton<GameManager>
                 players[0].gameObject.SetActive(true);
                 players[1].gameObject.SetActive(true);
 
+                singlePlayerUI.SetActive(false);
+                coopUI.SetActive(true);
+            }
+
+            LoadGame();
+
+            if (count == 1)
+            {
+                cameras[0].transform.position = new Vector3(playersTrans[0].position.x + 4f, playersTrans[0].position.y + 7f, playersTrans[0].position.z + -4f);
+                cameras[0].transform.eulerAngles = new Vector3(45, -45, 0);
+            }
+            else
+            {
                 cameras[0].transform.position = new Vector3(playersTrans[0].position.x + 2.4f, playersTrans[0].position.y + 7f, playersTrans[0].position.z + -2.4f);
                 cameras[0].transform.eulerAngles = new Vector3(56, -45, 0);
                 cameras[1].transform.position = new Vector3(playersTrans[1].position.x + 2.4f, playersTrans[1].position.y + 7f, playersTrans[1].position.z + -2.4f);
                 cameras[1].transform.eulerAngles = new Vector3(56, -45, 0);
-
-                singlePlayerUI.SetActive(false);
-                coopUI.SetActive(true);
             }
+
         }
 
-        LoadGame();
     }
 
     public void CoconutCelebration()
@@ -171,7 +182,7 @@ public class GameManager : BaseSingleton<GameManager>
                 player.LoadPlayer();
             }
             LevelManager.Instance.LoadLevel();
-            SceneLoader.Instance.LoadCoconuts();
+            SceneLoader.Instance.LoadPersistentCoconuts();
         }
         else
         {
@@ -179,6 +190,11 @@ public class GameManager : BaseSingleton<GameManager>
             {
                 players[i].currentHealth = players[i].stats.health;
             }
+
+            foreach(CoconutPetBehavior coco in CoconutManager.Instance.coconuts)
+			{
+                coco.CreateCoconutLook();
+			}            
         }
     }
 
@@ -190,6 +206,7 @@ public class GameManager : BaseSingleton<GameManager>
         }
         LevelManager.Instance.SaveLevel();
         SaveSystem.SaveCoconuts(SceneLoader.Instance.GetSavedCoconuts());
+        SceneLoader.Instance.SaveProgress();
     }
 
     public Player GetPlayer(int index)

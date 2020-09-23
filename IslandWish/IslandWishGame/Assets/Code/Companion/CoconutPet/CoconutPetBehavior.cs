@@ -38,17 +38,37 @@ public class CoconutPetBehavior : MonoBehaviour
 
     public bool displayMode = false;
 
-    public void LoadCoconut(CoconutData cocoData)
+    public void LoadCoconutLook(CoconutData cocoData)
 	{
         //load your LOOK kiddo
-        //body look
         cocoHolder.GetChild(0).gameObject.SetActive(false);
+        accessoryIndex = cocoData.accessoryIndex;
+        bodyIndex = cocoData.bodyIndex;
+        name = cocoData.name;
+
+        //body look
         body = cocoHolder.GetChild(cocoData.bodyIndex).gameObject;
         body.SetActive(true);
         anim = body.GetComponent<Animator>();
         //accessory look
         accessory = body.GetComponent<CoconutAttachmentReference>();
         accessory.SetAttachmentStatus(cocoData.accessoryIndex, true);
+    }
+
+    public void CreateCoconutLook()
+	{
+        //get my body options and pick a random index
+        int bodyOptions = cocoHolder.childCount;
+        bodyIndex = Random.Range(0, bodyOptions);
+        body = cocoHolder.GetChild(bodyIndex).gameObject;
+
+        //get my attachment options and pick a random index
+        accessory = body.GetComponent<CoconutAttachmentReference>();
+        int accessoryOptions = accessory.GetAttachmentCount();
+        accessoryIndex = Random.Range(0, accessoryOptions);
+
+        CoconutData cocoData = new CoconutData(name, accessoryIndex, bodyIndex);
+        LoadCoconutLook(cocoData);
     }
 
     void Start()
@@ -72,19 +92,19 @@ public class CoconutPetBehavior : MonoBehaviour
             cage.Break();
 		}
 
-        //create a LOOK kiddo
-        //body look
-        int bodyOptions = cocoHolder.childCount;
-        bodyIndex = Random.Range(0, bodyOptions);
-        cocoHolder.GetChild(0).gameObject.SetActive(false);
-        body = cocoHolder.GetChild(bodyIndex).gameObject;
-        body.SetActive(true);
-        anim = body.GetComponent<Animator>();
-        //accessory look
-        accessory = body.GetComponent<CoconutAttachmentReference>();
-        int accessoryOptions = accessory.GetAttachmentCount();
-        accessoryIndex = Random.Range(0, accessoryOptions);
-        accessory.SetAttachmentStatus(accessoryIndex, true);
+        ////create a LOOK kiddo
+        ////body look
+        //int bodyOptions = cocoHolder.childCount;
+        //bodyIndex = Random.Range(0, bodyOptions);
+        //cocoHolder.GetChild(0).gameObject.SetActive(false);
+        //body = cocoHolder.GetChild(bodyIndex).gameObject;
+        //body.SetActive(true);
+        //anim = body.GetComponent<Animator>();
+        ////accessory look
+        //accessory = body.GetComponent<CoconutAttachmentReference>();
+        //int accessoryOptions = accessory.GetAttachmentCount();
+        //accessoryIndex = Random.Range(0, accessoryOptions);
+        //accessory.SetAttachmentStatus(accessoryIndex, true);
 
         player = GameManager.Instance.GetPlayer(0);
         playerTrans = GameManager.Instance.GetPlayerTrans(0);
@@ -92,13 +112,10 @@ public class CoconutPetBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
 
-        //agent.stoppingDistance = outerRange;
         EnableObstacle();
         SceneLinkedSMB<CoconutPetBehavior>.Initialise(anim, this);
 
         maxRangeReciprical = 1 / wanderRange;
-
-        CoconutManager.Instance.AddCoconut(this);
     }
 
     public void Flee()

@@ -22,6 +22,12 @@ public class DoorScript : MonoBehaviour
 		{
 			evnt.AddListener(OpenPath);
 		}
+
+		if(!isLocked)
+		{
+			locks = 0;
+			gameObject.SetActive(false);
+		}
 	}
 
 	public void UnlockLock()
@@ -36,7 +42,6 @@ public class DoorScript : MonoBehaviour
 	{
 		gameObject.SetActive(false);
 		AudioManager.Instance.Play("Door");
-
 	}
 
 	public void ConsumeKeys()
@@ -50,7 +55,6 @@ public class DoorScript : MonoBehaviour
 					UnlockLock();
 					if (!isLocked)
 					{
-						//OpenPath();
 						evnt.Invoke();
 					}
 				}

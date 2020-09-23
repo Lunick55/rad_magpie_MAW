@@ -39,15 +39,17 @@ public class MenuManager : MonoBehaviour
         SceneLoader.Instance.NextLevel();
     }
 
-    public void LoadSinglePlayerGame(string scene)
+    public void LoadSinglePlayerGame()
 	{
         SceneLoader.Instance.loadSingleData = true;
-        SceneLoader.Instance.LoadScene(scene);
+        SceneLoader.Instance.LoadProgress();
+        SceneLoader.Instance.LoadScene(SceneLoader.Instance.progressData.currentLevelName);
     }
-    public void LoadMultiPlayerGame(string scene)
+    public void LoadMultiPlayerGame()
     {
         SceneLoader.Instance.loadMultiData = true;
-        SceneLoader.Instance.LoadScene(scene);
+        SceneLoader.Instance.LoadProgress();
+        SceneLoader.Instance.LoadScene(SceneLoader.Instance.progressData.currentLevelName);
     }
 
 

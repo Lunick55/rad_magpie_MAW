@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +11,7 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 	public bool loadSingleData = false;
 	public bool loadMultiData = false;
 	private string nextLevel;
+	public ProgressData progressData;
 	private PostProcessVolume postProcess;
 	public int playerCount;
 	public void Init()
@@ -18,6 +19,8 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 		if(!isInit)
 		{
 			coconuts = new List<CoconutData>();
+
+			progressData = new ProgressData(SceneManager.GetActiveScene().name);
 
 			isInit = true;
 		}
@@ -74,7 +77,8 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 
 	}
 
-	public void LoadCoconuts()
+	//the between scenes coconuts
+	public void LoadPersistentCoconuts()
 	{
 		Reset();
 
@@ -87,4 +91,25 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 			coconuts.Add(coconut);
 		}
 	}
+
+	public void LoadProgress()
+	{
+		progressData = SaveSystem.LoadProgress();
+	}
+	public void SaveProgress()
+	{
+		progressData.currentLevelName = SceneManager.GetActiveScene().name;
+		SaveSystem.SaveProgress(progressData.currentLevelName);
+	}
+}
+
+[Serializable]
+public class ProgressData
+{
+	public ProgressData(string newLevelName)
+	{
+		currentLevelName = newLevelName;
+	}
+
+	public string currentLevelName;
 }

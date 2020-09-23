@@ -31,35 +31,26 @@ public class BoatScreenManager : MonoBehaviour
 
     private void LoadCoconuts()
 	{
-        //List<string> cocoNames = SceneLoader.Instance.GetSavedCoconutNames();
         List<CoconutData> coconuts = SceneLoader.Instance.GetSavedCoconuts();
 
         float height = 0f;
         foreach(CoconutData coconut in coconuts)
 		{
-            //text.text += (coconut.name + "\n");
             PickSpawnPosition(coconut, ref height);
 		}
 	}
 
     private void PickSpawnPosition(CoconutData cocoData, ref float height)
 	{
+        int randomSpawn = 0;
+        Vector3 spawnPoint = Vector3.zero;
+
         if (spawnPoints.Count > 0)
         {
-            int randomSpawn = Random.Range(0, spawnPoints.Count);
-            Vector3 spawnPoint = spawnPoints[randomSpawn].position + new Vector3(0, height, 0);
+            //pick spawn point
+            randomSpawn = Random.Range(0, spawnPoints.Count);
+            spawnPoint = spawnPoints[randomSpawn].position + new Vector3(0, height, 0);
 
-            GameObject coco = Instantiate(coconutReference, spawnPoint, Quaternion.identity);
-            Vector3 parentRot = Vector3.zero;
-            parentRot.y = spawnPoints[randomSpawn].eulerAngles.y;
-            coco.transform.eulerAngles = parentRot;
-            CoconutPetBehavior cocoBe = coco.GetComponent<CoconutPetBehavior>();
-
-            cocoBe.LoadCoconut(cocoData);            
-            
-            cocoBe.displayMode = true;
-            usedSpawnPoints.Add(spawnPoints[randomSpawn]);
-            spawnPoints.RemoveAt(randomSpawn);
         }
         else if (usedSpawnPoints.Count > 0)
 		{
@@ -71,16 +62,20 @@ public class BoatScreenManager : MonoBehaviour
             usedSpawnPoints.Capacity = 0;
             height += 0.5f;
 
-            int randomSpawn = Random.Range(0, spawnPoints.Count);
-            Vector3 spawnPoint = spawnPoints[randomSpawn].position + new Vector3(0, height, 0);
-
-            GameObject coco = Instantiate(coconutReference, spawnPoint, Quaternion.identity);
-            CoconutPetBehavior cocoBe = coco.GetComponent<CoconutPetBehavior>();
-            cocoBe.LoadCoconut(cocoData);
-
-            cocoBe.displayMode = true;
-            usedSpawnPoints.Add(spawnPoints[randomSpawn]);
-            spawnPoints.RemoveAt(randomSpawn);
+            randomSpawn = Random.Range(0, spawnPoints.Count);
+            spawnPoint = spawnPoints[randomSpawn].position + new Vector3(0, height, 0);
         }
+
+        GameObject coco = Instantiate(coconutReference, spawnPoint, Quaternion.identity);
+        Vector3 parentRot = Vector3.zero;
+        parentRot.y = spawnPoints[randomSpawn].eulerAngles.y;
+        coco.transform.eulerAngles = parentRot;
+        CoconutPetBehavior cocoBe = coco.GetComponent<CoconutPetBehavior>();
+
+        cocoBe.LoadCoconutLook(cocoData);
+
+        cocoBe.displayMode = true;
+        usedSpawnPoints.Add(spawnPoints[randomSpawn]);
+        spawnPoints.RemoveAt(randomSpawn);
     }
 }

@@ -3652,14 +3652,6 @@ MonoBehaviour:
   - {fileID: 1817277824}
   - {fileID: 1121416605}
   - {fileID: 65220505}
-  anim: {fileID: 268436220}
-  transitionTime: 1
-  narrationUI: {fileID: 754908355}
-  text: {fileID: 475295775}
-  levelSkip: 0
-  fire: {fileID: 448861293}
-  fireParticles: {fileID: 1683407482}
-  newGame: 1
   doors:
   - {fileID: 65220502}
   - {fileID: 608596098}
@@ -3675,6 +3667,14 @@ MonoBehaviour:
   - {fileID: 1836999871}
   - {fileID: 64756430}
   startNarrObj: {fileID: 1817277824}
+  anim: {fileID: 268436220}
+  transitionTime: 1
+  narrationUI: {fileID: 754908355}
+  text: {fileID: 475295775}
+  levelSkip: 0
+  fire: {fileID: 448861293}
+  fireParticles: {fileID: 1683407482}
+  newGame: 1
   ghost: {fileID: 1341856748}
   ghostTalk:
   - The flames lick close, kind and warm. Across the coals, glows a ghostly form.
@@ -44300,6 +44300,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1564593549}
     m_Modifications:
+    - target: {fileID: 1574010870126627408, guid: 7b551c7074b22c74e8d19e5fa1f4881e,
+        type: 3}
+      propertyPath: armed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1574010870126627409, guid: 7b551c7074b22c74e8d19e5fa1f4881e,
         type: 3}
       propertyPath: playerCamera
@@ -60200,6 +60205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: canAttack
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 180864101691658528, guid: 4baf830d56370ac429468825d264f29f,
+        type: 3}
+      propertyPath: armed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 180864101691658529, guid: 4baf830d56370ac429468825d264f29f,
         type: 3}
