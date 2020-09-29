@@ -279,10 +279,6 @@ ModelImporter:
         weight: 0
       - path: Armature_player/iklegpole.r
         weight: 0
-      - path: Armature_player/spear 1
-        weight: 1
-      - path: Armature_player/spear 1/spearhandle
-        weight: 1
       - path: Armature_player/spine2
         weight: 0
       - path: Armature_player/spine2/neck
@@ -291,6 +287,10 @@ ModelImporter:
         weight: 1
       - path: Armature_player/spine2/robe
         weight: 0
+      - path: Armature_player/spine2/spear 1
+        weight: 1
+      - path: Armature_player/spine2/spear 1/spearhandle
+        weight: 1
       - path: Armature_player/spine2/thigh.l
         weight: 0
       - path: Armature_player/spine2/thigh.l/shin.l
@@ -305,14 +305,16 @@ ModelImporter:
         weight: 1
       - path: Armature_player/spine2/upperarm.l/forearm.l/slingshot 1
         weight: 1
+      - path: Armature_player/spine2/upperarm.l/forearm.l/slingshot 1/slingshot.002
+        weight: 1
       - path: Armature_player/spine2/upperarm.r
         weight: 1
       - path: Armature_player/spine2/upperarm.r/forearm.r
         weight: 1
       - path: backpack
         weight: 0
-      - path: bod
-        weight: 0
+      - path: bod.001
+        weight: 1
       - path: hair
         weight: 0
       - path: legs
@@ -368,10 +370,6 @@ ModelImporter:
         weight: 0
       - path: Armature_player/iklegpole.r
         weight: 0
-      - path: Armature_player/spear 1
-        weight: 1
-      - path: Armature_player/spear 1/spearhandle
-        weight: 1
       - path: Armature_player/spine2
         weight: 1
       - path: Armature_player/spine2/neck
@@ -379,6 +377,10 @@ ModelImporter:
       - path: Armature_player/spine2/neck/head
         weight: 1
       - path: Armature_player/spine2/robe
+        weight: 1
+      - path: Armature_player/spine2/spear 1
+        weight: 1
+      - path: Armature_player/spine2/spear 1/spearhandle
         weight: 1
       - path: Armature_player/spine2/thigh.l
         weight: 0
@@ -394,13 +396,15 @@ ModelImporter:
         weight: 1
       - path: Armature_player/spine2/upperarm.l/forearm.l/slingshot 1
         weight: 1
+      - path: Armature_player/spine2/upperarm.l/forearm.l/slingshot 1/slingshot.002
+        weight: 1
       - path: Armature_player/spine2/upperarm.r
         weight: 1
       - path: Armature_player/spine2/upperarm.r/forearm.r
         weight: 1
       - path: backpack
         weight: 1
-      - path: bod
+      - path: bod.001
         weight: 1
       - path: hair
         weight: 1
