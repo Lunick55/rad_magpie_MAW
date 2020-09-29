@@ -8,6 +8,7 @@ public class PlayerStats : ScriptableObject
 	[Header("Player Stats")]
 	public int playerNumber;
 	public int health;
+	public float dashCooldown;
 	public float iFrameDuration;
 	public float iFrameFlashDuration;
 	public float pauseTime;

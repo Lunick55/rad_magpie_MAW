@@ -8,8 +8,12 @@ public class HealingItem : MonoBehaviour
 	{
 		if(other.tag == "Player")
 		{
-            other.gameObject.GetComponent<Player>().HealDamage(1);
-            Destroy(gameObject);
+            if(other.gameObject.GetComponent<Player>().currentHealth < other.gameObject.GetComponent<Player>().stats.health)
+			{
+				other.gameObject.GetComponent<Player>().HealDamage(1);
+				AudioManager.Instance.Play("Pickup");
+				Destroy(gameObject);
+			}
 		}
 	}
 }

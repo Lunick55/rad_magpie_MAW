@@ -284,5 +284,9 @@ public class GameManager : BaseSingleton<GameManager>
         {            
             menuManager?.Pause();
         }
+        if(menuManager.isPause() && Input.GetButtonDown("Cancel"))
+		{
+            menuManager.Resume();
+		}
     }
 }

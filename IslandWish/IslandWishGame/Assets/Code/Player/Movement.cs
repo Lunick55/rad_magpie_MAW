@@ -15,16 +15,16 @@ public class Movement : MonoBehaviour
 
 	[Header("Player Stats")]
 	[SerializeField] float playerSpeed = 1;
-	[SerializeField] float playerJumpSpeed = 1, playerDashSpeed = 3, dashDistance = 1, gravity = 9.8f;
+	[SerializeField] float playerDashSpeed = 3, dashDistance = 1, gravity = 9.8f;
 	[SerializeField] Player player;
 	float vSpeed = 0;
-	Vector3 inputDir = Vector3.zero; //the vector determining player direction
-	private Vector3 rawInputDir = Vector3.zero;
-	Vector3 inputLookDir = Vector3.zero;
-	Vector3 dashStartPosition = Vector3.zero;
-	Vector3 dashDestination = Vector3.zero;
+	private Vector3 inputDir = Vector3.zero; //the vector determining player direction
+	private Vector3 inputLookDir = Vector3.zero;
+	private Vector3 dashStartPosition = Vector3.zero;
+	private Vector3 dashDestination = Vector3.zero;
 	[SerializeField] float dashSafetyTimer = 1;
 	private float timer = 0;
+	private float timerDash = 0;
 
 	Vector3 lookDirection = Vector3.zero;
 	bool grounded = false;
@@ -38,14 +38,6 @@ public class Movement : MonoBehaviour
     {
 		anim = player.anim;
 		prevMousePos = Input.mousePosition;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-
     }
 
 	private void FixedUpdate()
@@ -64,7 +56,7 @@ public class Movement : MonoBehaviour
 			//apply speed
 			if (acceptInput)
 			{
-				inputDir = rawInputDir = new Vector3(Input.GetAxis("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxis("Vertical_P" + player.stats.playerNumber));
+				inputDir = new Vector3(Input.GetAxis("Horizontal_P" + player.stats.playerNumber), 0.0f, Input.GetAxis("Vertical_P" + player.stats.playerNumber));
 				//all for them anims baybee
 				//prepare the corrected "forward vector"
 				Vector3 forwardVec = Vector3.forward;
@@ -90,8 +82,10 @@ public class Movement : MonoBehaviour
 				}
 				inputDir = camRight * inputDir.x + camForward * inputDir.z;
 
-				if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Dash_P" + player.stats.playerNumber)) && !dashing && inputDir != Vector3.zero)
+				timerDash += Time.deltaTime;
+				if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Dash_P" + player.stats.playerNumber)) && !dashing && inputDir != Vector3.zero && timerDash >= player.stats.dashCooldown)
 				{
+					timerDash = 0;
 					AudioManager.Instance.Play("PCDash");
 					anim.SetTrigger("Dash");
 
@@ -101,7 +95,6 @@ public class Movement : MonoBehaviour
 
 					dashStartPosition = playerTrans.position;
 					dashDestination = playerTrans.position + (inputDir.normalized * dashDistance);
-
 				}
 				else
 				{
@@ -114,11 +107,6 @@ public class Movement : MonoBehaviour
 			if (grounded)
 			{
 				vSpeed = -0.1f;
-
-				//if (Input.GetKeyDown(KeyCode.Space))
-				//{
-				//	Jump();
-				//}
 			}
 
 			//Fall down
@@ -150,12 +138,6 @@ public class Movement : MonoBehaviour
 				acceptInput = true;
 			}
 		}
-	}
-
-	private void Jump()
-	{
-		vSpeed = playerJumpSpeed;
-		inputDir.y = (vSpeed -= Time.deltaTime);
 	}
 
 	public void Teleport(Vector3 position)

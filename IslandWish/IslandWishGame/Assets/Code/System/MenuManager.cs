@@ -1,38 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject pauseSelection;
 
     [SerializeField] GameObject playerSelection;
+    [SerializeField] GameObject saveFileDetected;
 
     private bool music = true;
-
+    int tempPlayerCount = 0;
     // Start is called before the first frame update
     void Start()
     {
         SceneLoader.Instance.Init();
     }
 
-    public void OpenPlayerSelect()
+    public void TogglePlayerSelect(bool toggle)
 	{
-        playerSelection.SetActive(true);
+        playerSelection.SetActive(toggle);
 	}
-    public void ClosePlayerSelect()
+    public void ToggleOverrideSelect(bool toggle)
 	{
-        playerSelection.SetActive(false);
+        saveFileDetected.SetActive(toggle);
+	}
+
+    public void TryStartGame(int playerCount)
+    {
+        SceneLoader.Instance.LoadProgress();
+        tempPlayerCount = playerCount;
+        if (SceneLoader.Instance.progressData.saveGame)
+        {
+            ToggleOverrideSelect(true);
+        }
+        else
+        {
+            StartGame(playerCount);
+        }
     }
-    public void StartSingleGame(string scene)
+    public void StartGame(int playerCount)
 	{
-        SceneLoader.Instance.StartGame(scene, 1);
-	}
-    public void StartMultiGame(string scene)
-	{
-        SceneLoader.Instance.StartGame(scene, 2);
-	}
+        if (playerCount == 0)
+        {
+            SceneLoader.Instance.StartGame("PrologueTest", tempPlayerCount);
+        }
+        else
+		{
+            SceneLoader.Instance.StartGame("PrologueTest", playerCount);
+        }
+    }
 
     public void NextLevel()
 	{
@@ -56,12 +75,17 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(true);
         for(int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 		{
+            EventSystem.current.SetSelectedGameObject(pauseSelection);
+
             GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(false);
             GameManager.Instance.GetPlayer(i).SheathWeapons();
             GameManager.Instance.GetPlayer(i).canMove = false;
         }
     }
-
+    public bool isPause()
+	{
+        return pauseMenu.activeSelf;
+	}
     public void Resume()
 	{
         Time.timeScale = 1;

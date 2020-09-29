@@ -311,7 +311,7 @@ public class Player : MonoBehaviour
                 shieldCurrentHealth += 1;
 
                 Color shieldColor = Color.white;
-                shieldColor.a = shieldCurrentHealth * 0.01f;
+                shieldColor.a = shieldCurrentHealth * stats.shieldMaxHealth * 0.01f;
                 shieldMat.SetColor("_Color", shieldColor);
 
                 yield return new WaitForSeconds(stats.shieldRechargeRate);
