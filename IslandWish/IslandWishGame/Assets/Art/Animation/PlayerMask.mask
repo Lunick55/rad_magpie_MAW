@@ -25,17 +25,17 @@ AvatarMask:
     m_Weight: 0
   - m_Path: Armature_player/iklegpole.r
     m_Weight: 0
-  - m_Path: Armature_player/spear 1
-    m_Weight: 1
-  - m_Path: Armature_player/spear 1/spearhandle
-    m_Weight: 1
   - m_Path: Armature_player/spine2
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Armature_player/spine2/neck
     m_Weight: 1
   - m_Path: Armature_player/spine2/neck/head
     m_Weight: 1
   - m_Path: Armature_player/spine2/robe
+    m_Weight: 0
+  - m_Path: Armature_player/spine2/spear 1
+    m_Weight: 1
+  - m_Path: Armature_player/spine2/spear 1/spearhandle
     m_Weight: 1
   - m_Path: Armature_player/spine2/thigh.l
     m_Weight: 0
@@ -59,7 +59,7 @@ AvatarMask:
     m_Weight: 1
   - m_Path: backpack
     m_Weight: 0
-  - m_Path: bod
+  - m_Path: bod.001
     m_Weight: 0
   - m_Path: hair
     m_Weight: 0
