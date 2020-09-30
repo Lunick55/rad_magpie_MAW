@@ -5,11 +5,28 @@ using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("In Game References")]
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject pauseSelection;
 
-    [SerializeField] GameObject playerSelection;
+    [Header("Main Menu Popups")]
+    [SerializeField] GameObject playerPicker;
     [SerializeField] GameObject saveFileDetected;
+    [SerializeField] GameObject saveFileDeletion;
+
+    [Header("Main Menu Selections")]
+    [SerializeField] GameObject startSelection;
+    [SerializeField] GameObject playerSelection;
+    [SerializeField] GameObject overrideSelection;
+    [SerializeField] GameObject deleteSaveSelection;
+
+    private EventSystem evSys
+	{
+		get
+		{
+            return EventSystem.current;
+		}
+	}
 
     private bool music = true;
     int tempPlayerCount = 0;
@@ -17,21 +34,55 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         SceneLoader.Instance.Init();
+
+        if (startSelection)
+        {
+            evSys.SetSelectedGameObject(startSelection);
+        }
     }
 
     public void TogglePlayerSelect(bool toggle)
 	{
-        playerSelection.SetActive(toggle);
-	}
+        playerPicker.SetActive(toggle);
+        if(toggle)
+		{
+            evSys.SetSelectedGameObject(playerSelection);
+        }
+        else
+		{
+            evSys.SetSelectedGameObject(startSelection);
+        }
+    }
     public void ToggleOverrideSelect(bool toggle)
 	{
         saveFileDetected.SetActive(toggle);
-	}
+        if (toggle)
+        {
+            evSys.SetSelectedGameObject(overrideSelection);
+        }
+        else
+		{
+            evSys.SetSelectedGameObject(playerSelection);
+        }
+    }    
+    public void ToggleDeleteSelect(bool toggle)
+	{
+        saveFileDeletion.SetActive(toggle);
+        if (toggle)
+        {
+            evSys.SetSelectedGameObject(deleteSaveSelection);
+        }
+        else
+		{
+            evSys.SetSelectedGameObject(startSelection);
+        }
+    }
 
     public void TryStartGame(int playerCount)
     {
         SceneLoader.Instance.LoadProgress();
         tempPlayerCount = playerCount;
+        
         if (SceneLoader.Instance.progressData.saveGame)
         {
             ToggleOverrideSelect(true);
@@ -68,6 +119,24 @@ public class MenuManager : MonoBehaviour
             SceneLoader.Instance.LoadScene(SceneLoader.Instance.progressData.currentLevelName);
         }
     }
+    public void LoadScene(string scene)
+	{
+        SceneLoader.Instance.LoadScene(scene);
+    }
+    public void TryDeleteSavedData()
+	{
+        SceneLoader.Instance.LoadProgress();
+
+        if (SceneLoader.Instance.progressData.saveGame)
+        {
+            ToggleDeleteSelect(true);
+        }
+	}
+    public void DeleteSavedData()
+	{
+        SaveSystem.DeleteAllSavedData();
+        ToggleDeleteSelect(false);
+    }
 
     public void Pause()
 	{
@@ -75,7 +144,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(true);
         for(int i = 0; i < GameManager.Instance.GetPlayerCount(); i++)
 		{
-            EventSystem.current.SetSelectedGameObject(pauseSelection);
+            evSys.SetSelectedGameObject(pauseSelection);
 
             GameManager.Instance.GetPlayer(i).hud.gameObject.SetActive(false);
             GameManager.Instance.GetPlayer(i).SheathWeapons();

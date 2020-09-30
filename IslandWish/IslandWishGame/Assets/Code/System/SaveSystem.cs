@@ -5,6 +5,38 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
+	public static void DeleteAllSavedData()
+	{
+		string path;
+
+		//delete player data
+		for (int i = 0; i < 2; i++)
+		{
+			path = Application.persistentDataPath + "/player" + (i+1) + ".coconut";
+			DeleteFile(path);
+		}
+
+		//delete coconut data
+		path = Application.persistentDataPath + ("/coconuts.coconut");
+		DeleteFile(path);
+
+		//delete level data
+		path = Application.persistentDataPath + ("/level.level");
+		DeleteFile(path);
+
+		//delete progress data
+		path = Application.persistentDataPath + ("/progress.progress");
+		DeleteFile(path);
+	}
+	static void DeleteFile(string path)
+	{
+		if (File.Exists(path))
+		{
+			File.Delete(path);
+		}
+	}
+
+	#region Save Data
 	public static void SavePlayer(Player player)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -47,8 +79,9 @@ public static class SaveSystem
 		formatter.Serialize(stream, progressData);
 		stream.Close();
 	}
+	#endregion
 
-
+	#region Load Data
 	public static PlayerData LoadPlayer(int playerIndex)
 	{
 		string path = Application.persistentDataPath + "/player" + playerIndex + ".coconut";
@@ -129,6 +162,7 @@ public static class SaveSystem
 			return null;
 		}
 	}
+	#endregion
 
 	//just a testing thing for myself. don't even know if it'll work
 	public static T LoadData<T>(string fileName) where T : Data

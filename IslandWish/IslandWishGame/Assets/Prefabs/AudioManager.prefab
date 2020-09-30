@@ -254,6 +254,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: AllCocoRescue
+    clip: {fileID: 8300000, guid: 4cccbf21fbd37a54386a40cea27250d3, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: BreakObject
     clip: {fileID: 8300000, guid: ca1dc73db29846646afbf82390c5a84d, type: 3}
     volume: 1

@@ -94,8 +94,11 @@ public class SceneLoader : BasePersistentSingleton<SceneLoader>
 
 	public void LoadProgress()
 	{
-		progressData = SaveSystem.LoadProgress();
-		playerCount = progressData.playerCount;
+		if (SaveSystem.LoadProgress() != null)
+		{
+			progressData = SaveSystem.LoadProgress();
+			playerCount = progressData.playerCount;
+		}
 	}
 	public void SaveProgress()
 	{

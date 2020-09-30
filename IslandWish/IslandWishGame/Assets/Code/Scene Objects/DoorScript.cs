@@ -11,6 +11,8 @@ public class DoorScript : MonoBehaviour
 
 	public UnityEvent evnt;
 
+	[SerializeField] GameObject doorMapUI;
+
 	private void Start()
 	{
 		foreach(KeyScript key in keys)
@@ -27,6 +29,10 @@ public class DoorScript : MonoBehaviour
 		{
 			locks = 0;
 			gameObject.SetActive(false);
+			if (doorMapUI)
+			{
+				doorMapUI.SetActive(false);
+			}
 		}
 	}
 
@@ -35,12 +41,20 @@ public class DoorScript : MonoBehaviour
 		if(--locks <= 0)
 		{
 			isLocked = false;
+			if (doorMapUI)
+			{
+				doorMapUI.SetActive(false);
+			}
 		}
 	}
 
 	public void OpenPath()
 	{
 		gameObject.SetActive(false);
+		if (doorMapUI)
+		{
+			doorMapUI.SetActive(false);
+		}
 		AudioManager.Instance.Play("Door");
 	}
 

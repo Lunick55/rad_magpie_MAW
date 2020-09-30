@@ -126,6 +126,7 @@ public class GameManager : BaseSingleton<GameManager>
             narrateComplete.CocosFound();
         }
 
+        AudioManager.Instance.Play("AllCocoRescue");
         huds[0].boatCommand.SetActive(true);
 	}
 
@@ -284,7 +285,7 @@ public class GameManager : BaseSingleton<GameManager>
         {            
             menuManager?.Pause();
         }
-        if(menuManager.isPause() && Input.GetButtonDown("Cancel"))
+        else if(menuManager.isPause() && Input.GetButtonDown("Cancel"))
 		{
             menuManager.Resume();
 		}
