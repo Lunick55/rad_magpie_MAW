@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   health: 5
-  dashCooldown: 2
+  dashCooldown: 2.5
   iFrameDuration: 1.5
   iFrameFlashDuration: 0.05
   pauseTime: 0
-  pauseDuration: 0.1
-  speed: 8
+  pauseDuration: 0.03
+  speed: 9.5
   spearDamage: 5
   slingDamage: 5
   shieldMaxHealth: 10
